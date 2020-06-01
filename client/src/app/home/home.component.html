@@ -1,0 +1,46 @@
+<div class="content" fxLayout="row" fxLayoutAlign="center none" >
+  <div *ngIf="!isSignedIn()"> 
+    <app-api-card
+    (apiClick)="makeRequest($event)"    
+    username="pacient"
+    password="pacient"
+    fxFlex
+    imgUrl="assets/image/user.png"
+    title='Pacijent'
+  >
+  </app-api-card>
+
+  <app-api-card
+    (apiClick)="makeRequest($event)"    
+    username="medsis"
+    password="medsis"
+    fxFlex
+    imgUrl="assets/image/medical_sister.png"
+    title='Medicinska sestra'
+  >
+  </app-api-card>
+
+  <app-api-card
+    (apiClick)="makeRequest($event)"        
+    
+    username="dokt"
+    password="dokt"
+    fxFlex
+    imgUrl="assets/image/doctor.png"
+    title='Doktor'
+  >
+  </app-api-card>
+  <app-api-card
+  (apiClick)="makeRequest($event)"
+  
+  class="last"
+  username="admin"
+  password="admin"
+  fxFlex
+  imgUrl="assets/image/admin.png"
+  title='Bog'
+>
+</app-api-card>
+</div>
+<app-admin *ngIf="isSignedAsAdmin()"></app-admin>
+</div>
