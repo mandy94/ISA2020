@@ -52,7 +52,6 @@ public class ExaminationReport implements GrantedAuthority {
         return name;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }

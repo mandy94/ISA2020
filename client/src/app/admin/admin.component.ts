@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { UserService } from 'app/service';
+import { UserService, CodebookService } from 'app/service';
 import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
 
@@ -10,7 +11,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
-constructor(private userService: UserService){
+constructor(private userService: UserService,
+        private codebookService: CodebookService){
   
 }
 response:{};

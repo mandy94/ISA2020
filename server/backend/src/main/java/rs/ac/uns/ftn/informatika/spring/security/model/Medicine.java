@@ -28,12 +28,10 @@ public class Medicine{
         this.name = name;
     }
 
-    @JsonIgnore
     public String getName() {
         return name;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }

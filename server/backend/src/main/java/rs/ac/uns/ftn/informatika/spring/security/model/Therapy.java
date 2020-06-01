@@ -1,14 +1,18 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
-@Table(name="EXAMINATION")
-public class Examination implements GrantedAuthority {
+@Table(name="THERAPIES")
+public class Therapy  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,21 +24,17 @@ public class Examination implements GrantedAuthority {
     @Column(name="name")
     String name;
 
-    @Override
-    public String getAuthority() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
 
-   
+    public String getName() {
+		return name;
+	}
+
+
+	@JsonIgnore
     public Long getId() {
         return id;
     }

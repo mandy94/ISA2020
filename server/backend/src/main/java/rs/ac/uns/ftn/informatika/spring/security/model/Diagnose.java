@@ -41,7 +41,7 @@ public class Diagnose  {
         this.name = name;
     }
 
-    @JsonIgnore
+  
     public String getName() {
         return name;
     }

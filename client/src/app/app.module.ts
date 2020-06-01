@@ -13,7 +13,7 @@ import {NotFoundComponent} from './not-found';
 import {AccountMenuComponent} from './component/header/account-menu/account-menu.component';
 import {ApiCardComponent, HeaderComponent} from './component';
 
-import {ApiService, AuthService, ConfigService, FooService, UserService} from './service';
+import {ApiService, AuthService, ConfigService,  UserService} from './service';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {ForbiddenComponent} from './forbidden/forbidden.component';
 import {AdminComponent} from './admin/admin.component';
@@ -23,6 +23,7 @@ import {MatIconRegistry} from '@angular/material';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
+import { CodebookComponent } from './codebook/codebook.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
     ForbiddenComponent,
     AdminComponent,
     SignupComponent,
+    CodebookComponent,
     
   ],
   imports: [
@@ -59,7 +61,7 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
     LoginGuard,
     GuestGuard,
     AdminGuard,
-    FooService,
+    
     AuthService,
     ApiService,
     UserService,

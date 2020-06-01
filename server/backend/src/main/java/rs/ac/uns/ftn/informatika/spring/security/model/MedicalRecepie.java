@@ -31,7 +31,6 @@ public class MedicalRecepie {
         return name;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }

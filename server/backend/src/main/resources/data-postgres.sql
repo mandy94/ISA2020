@@ -10,6 +10,17 @@ INSERT INTO DIAGNOSES (id, code, name) VALUES (6, 'RB7890', 'Asma');
 INSERT INTO DIAGNOSES (id, code, name) VALUES (7, 'RB1120', 'Bronhitis');
 INSERT INTO DIAGNOSES (id, code, name) VALUES (8, 'ZQ9601', 'Dijabetes');
 
+INSERT INTO THERAPIES (id, name) VALUES (1 ,'Fiziklana terapija');
+INSERT INTO THERAPIES (id, name) VALUES (2 ,'Inhalacija');
+
+INSERT INTO OPERATIONROOMS (id, name) VALUES (1, 'Sala 1');
+INSERT INTO OPERATIONROOMS (id, name) VALUES (2, 'Sala 2');
+INSERT INTO OPERATIONROOMS (id, name) VALUES (3, 'Sala 3');
+
+INSERT INTO MEDICATIONS (id, name) VALUES (1, 'Penicilin');
+INSERT INTO MEDICATIONS (id, name) VALUES (2, 'Nixar');
+INSERT INTO MEDICATIONS (id, name) VALUES (3, 'Insulin');
+INSERT INTO MEDICATIONS (id, name) VALUES (4, 'Ventolin');
 
 INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date) VALUES ('dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'user@example.com', true, '2017-10-01 21:58:58.508-07');
 INSERT INTO USERS (username, password, first_name, last_name, email, enabled, last_password_reset_date) VALUES ('medsis', '$2a$04$iSAH8.efg/0KXf8cwW8YQeyLCyLAyV7C7FRTeJCKa6e1bPXuxeute', 'Jelisaveta', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58.508-07');

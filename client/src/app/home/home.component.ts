@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfigService, FooService, UserService, AuthService} from '../service';
+import {ConfigService,  UserService, AuthService} from '../service';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private config: ConfigService,
-    private fooService: FooService,
     private userService: UserService
   ) {
   }
@@ -34,15 +33,7 @@ export class HomeComponent implements OnInit {
     return false;
   }
   makeRequest(path) {
-    if (this.config.foo_url.endsWith(path)) {
-      this.fooService.getFoo()
-        .subscribe(res => {
-          
-          this.forgeResonseObj(this.fooResponse, res, path);
-        }, err => {
-          this.forgeResonseObj(this.fooResponse, err, path);
-        });
-    } else if (this.config.whoami_url.endsWith(path)) {
+     if (this.config.whoami_url.endsWith(path)) {
       this.userService.getMyInfo()
         .subscribe(res => {
           this.forgeResonseObj(this.whoamIResponse, res, path);
