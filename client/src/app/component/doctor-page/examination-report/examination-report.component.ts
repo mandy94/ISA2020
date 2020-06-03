@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import {formatDate} from '@angular/common';
-import { Report } from './report';
+import { Report, Medication } from './report';
 
 @Component({
   selector: 'app-examination-report',
@@ -41,7 +41,7 @@ export class ExaminationReportComponent implements OnInit {
 
   }
   getPacientExaminationReports(){
-    this.apiService.get(this.config.api_url + '/examination-reports/pacient/' + this.pacient_jmbg)
+    this.apiService.get(this.config.api_url + '/examination-report/pacient/' + this.pacient_jmbg)
     .subscribe((data) => {
       this.allVisits = data;
     });
@@ -79,21 +79,21 @@ export class ExaminationReportComponent implements OnInit {
           });
            this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
   }
-  selected_med: any;
+  
+  selected_med = new Array<Number>();
   selected_diagnose: any;
   description: string;
   new_report = new Report();
 
   saveReport(){
-    this.new_report.diagnose_id = this.selected_diagnose;
-    this.new_report.med_id = this.selected_diagnose;
+    
     this.new_report.details = this.description;
-    this.new_report.user_id = this.currentPacient.id;
-    this.new_report.user_jmbg = this.currentPacient.jmbg;
-    this.new_report.doctor_id = this.userService.currentUser.id;
+    this.new_report.pacientid = this.currentPacient.id;
+    this.new_report.medication.push(this.selected_med);
+    this.new_report.doctorid = this.userService.currentUser.id;
 
-    console.log(this.new_report);
-    this.apiService.post(this.config.api_url + '/examination-reports/add', this.new_report)
+    console.log(this.new_report)  ;
+    this.apiService.post(this.config.api_url + '/examination-report/add', this.new_report)
                   .subscribe(() => this.getPacientExaminationReports());
   }
 

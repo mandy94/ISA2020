@@ -1,14 +1,19 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 // POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
 @Table(name="EXAMINATION")
-public class Examination implements GrantedAuthority {
+public class Examination  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,30 +22,25 @@ public class Examination implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
-    String name;
+	
+    @Column(name="details")
+    String details;
 
-    @Override
-    public String getAuthority() {
-        return name;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
+	public String getDetails() {
+		return details;
+	}
 
-   
-    public Long getId() {
-        return id;
-    }
+	public void setDetails(String details) {
+		this.details = details;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
 }

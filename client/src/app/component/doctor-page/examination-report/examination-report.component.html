@@ -22,7 +22,11 @@
     </mat-card-subtitle>    
     <div *ngIf="!firstVisit()">
       <div *ngFor="let visit of allVisits">
-        <mat-list>- {{visit.details}}. Dijagnoza: {{visit.diagnose_id}}</mat-list>
+        <mat-list>- Dijagnoza: {{visit.details}}. </mat-list>
+         Pripisani lekovi:
+           <div *ngFor="let med of visit.medication">
+            <ol> {{med.name}} {{med.dosage}}</ol>
+          </div>
       </div>
     </div>
     <div *ngIf="firstVisit()">
@@ -53,7 +57,7 @@
     <mat-divider></mat-divider>
     <mat-form-field>
       <mat-label>Prepisi lek</mat-label>
-        <mat-select  [(ngModel)]="selected_med" name="selected_med" >
+        <mat-select  [(ngModel)]="selected_med" name="selected_med">
           <mat-option *ngFor="let med of medList" [value]="med.id">
             {{med.name}}
           </mat-option>
@@ -62,6 +66,7 @@
   </section>
     
     <section>
+      
     <button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
   </section>
    </form>

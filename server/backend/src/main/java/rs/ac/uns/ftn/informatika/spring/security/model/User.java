@@ -69,7 +69,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
     
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "pacient")
     private List<ExaminationReport> reports;
 
     public List<ExaminationReport> getReports() {
@@ -189,5 +189,11 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", jmbg=" + jmbg + ", role=" + role + "]";
+	}
 
 }

@@ -1,15 +1,25 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-// POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import rs.ac.uns.ftn.informatika.spring.security.dto.ExaminationReportDTO;
+
 @Entity
 @Table(name="EXAMINATIONREPORTS")
 public class ExaminationReport {
@@ -17,61 +27,32 @@ public class ExaminationReport {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name="id")
+    @Column( 		name="id",columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+	
+	@Column(name="details")
+	private String details;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "examine_medication",
+            joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
+            inverseJoinColumns = {  @JoinColumn(name = "medication_id", referencedColumnName = "id")})
+	private List<Medicine> medication = new ArrayList<Medicine>();
 
-    @Column(name="details")
-    String details;
-    
-    @Column(name ="user_id")
-    private Long user_id;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="is_examined")
+	@JsonIgnore
+	private User pacient;
+	
 
-    @Column(name ="doctor_id")
-    private Long doctor_id;
-
-    @Column(name ="user_jmbg")
-    private Long user_jmbg;
-
-    @Column(name ="med_id")
-    private Long med_id;
-
-    @Column(name ="diagnose_id")
-    private Long diagnose_id;
-    /*
-    @ManyToMany
-    @JoinTable(
-    		name="diagnosed",
-    		  joinColumns = @JoinColumn(name = "examination_id"), 
-    		  inverseJoinColumns = @JoinColumn(name = "diagnose_id"))
-    private List<Diagnose> diagnosed;
-    
-    @ManyToMany
-    @JoinTable(
-    		name="got_medication",
-  		  joinColumns = @JoinColumn(name = "examination_id"), 
-  		  inverseJoinColumns = @JoinColumn(name = "medication_id"))
-    private List<Medicine> med;
-    
-    */		 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-	public Long getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
-
-
-	@Override
-	public String toString() {
-		return "ExaminationReport [id=" + id + ", details=" + details + ", user_id=" + user_id + ", doctor_id="
-				+ doctor_id + ", user_jmbg=" + user_jmbg + ", med_id=" + med_id + ", diagnose_id=" + diagnose_id + "]";
-	}
-
-	public Long getId() {
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="is_doctor")
+	@JsonIgnore
+	private User doctor;
+	
+	public Long getIds() {
 		return id;
 	}
 
@@ -87,38 +68,44 @@ public class ExaminationReport {
 		this.details = details;
 	}
 
-	public Long getDoctor_id() {
-		return doctor_id;
+	public List<Medicine> getMedication() {
+		return medication;
 	}
 
-	public void setDoctor_id(Long doctor_id) {
-		this.doctor_id = doctor_id;
+	public void setMedication(List<Medicine> medication) {
+		this.medication = medication;
 	}
 
-	public Long getUser_jmbg() {
-		return user_jmbg;
+	public User getPacient() {
+		return pacient;
 	}
 
-	public void setUser_jmbg(Long user_jmbg) {
-		this.user_jmbg = user_jmbg;
+	public void setPacient(User pacient) {
+		this.pacient = pacient;
 	}
 
-	public Long getMed_id() {
-		return med_id;
+	public User getDoctor() {
+		return doctor;
 	}
 
-	public void setMed_id(Long med_id) {
-		this.med_id = med_id;
+	public void setDoctor(User doctor) {
+		this.doctor = doctor;
 	}
 
-	public Long getDiagnose_id() {
-		return diagnose_id;
+	public Long getId() {
+		return id;
 	}
 
-	public void setDiagnose_id(Long diagnose_id) {
-		this.diagnose_id = diagnose_id;
+	public void copyFromDTO(ExaminationReportDTO reportdto) {
+		this.details = reportdto.getDetails();
+		
 	}
 
-
-
+	@Override
+	public String toString() {
+		return "ExaminationReport [id=" + id + ", details=" + details + ", pacient=" + pacient + ", doctor=" + doctor
+				+ "]";
+	}
+	
+	
 }
