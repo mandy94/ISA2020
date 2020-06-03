@@ -61,4 +61,21 @@ public class UserServiceImpl implements UserService {
 		return u;
 	}
 
+	@Override
+	public User findByJMBG(Long jmbg) {
+		return userRepository.getByJMBG(jmbg);
+	}
+
+	
+
+	@Override
+	public List<Long> getJMBGs(String role) {
+		return userRepository.getJMBGs(role);
+	}
+
+	@Override
+	public List<User> getPacients() {
+		return userRepository.getUsersFromRole("PACIENT");
+	}
+
 }

@@ -1,0 +1,71 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Unesite jmbg pacijanta" aria-label="Number" matInput [formControl]="myControl"
+      [matAutocomplete]="auto" [(ngModel)]="pacient_jmbg" (keyup.enter)="onSearchClicked()">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+<!-- End of search pacient input-->
+<!-- About pacient -->
+<div *ngIf="currentPacient">
+  <mat-card>
+    <mat-card-title>
+      Pacijent #{{currentPacient.id}} {{currentPacient.firstName}} {{currentPacient.lastName}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      JMBG: {{currentPacient.jmbg}}
+      Datum rodjenja: {{currentPacient.birthdate}}
+    </mat-card-subtitle>    
+    <div *ngIf="!firstVisit()">
+      <div *ngFor="let visit of allVisits">
+        <mat-list>- {{visit.details}}. Dijagnoza: {{visit.diagnose_id}}</mat-list>
+      </div>
+    </div>
+    <div *ngIf="firstVisit()">
+      Nema podatak jos.
+    </div>
+  </mat-card> 
+  <!-- End of pacinet history-->
+  <!-- Begining of new pacient data-->
+  
+  <mat-card>
+    <mat-card-title>Unos novog pregleda</mat-card-title>
+    <mat-card-subtitle>{{today}}</mat-card-subtitle>
+    <mat-card-content>
+      <form class="example-form">
+        <section>
+          <mat-form-field class="example-full-width">
+        <mat-label>Sta muci pacijenta?</mat-label>
+        <textarea matInput  [(ngModel)]="description" name = "description" ></textarea>
+      </mat-form-field>
+    <mat-form-field>
+    <mat-label>Dijagnoza</mat-label>
+      <mat-select  [(ngModel)]="selected_diagnose" name = "selected_diagnose">
+        <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose.id">
+          {{diagnose.code}} - {{diagnose.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>Prepisi lek</mat-label>
+        <mat-select  [(ngModel)]="selected_med" name="selected_med" >
+          <mat-option *ngFor="let med of medList" [value]="med.id">
+            {{med.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </section>
+    
+    <section>
+    <button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
+  </section>
+   </form>
+  </mat-card-content> 
+</mat-card>
+</div>
+<!-- End about pacient-->

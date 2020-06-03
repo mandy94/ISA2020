@@ -39,6 +39,33 @@ export class UserService {
       return false;
     }
   }
+  amIDoctor(){
+    if(this.currentUser != null){
+      var auths = this.currentUser.authorities;
+      for(var auth of auths)
+        if(auth.authority === "ROLE_DOCTOR")
+          return true;
+      return false;
+    }
+  }
+  amIPacient(){
+    if(this.currentUser != null){
+      var auths = this.currentUser.authorities;
+      for(var auth of auths)
+        if(auth.authority === "ROLE_PACIENT")
+          return true;
+      return false;
+    }
+  }
+  amINurce(){
+    if(this.currentUser != null){
+      var auths = this.currentUser.authorities;
+      for(var auth of auths)
+        if(auth.authority === "ROLE_NURCE")
+          return true;
+      return false;
+    }
+  }
 
   getMyInfo() {
     return this.apiService.get(this.config.whoami_url)

@@ -23,24 +23,20 @@ public class CodebookController {
 	@Autowired
 	private CodebookService codebookService;
 	
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/codes/diagnoses")
+	@GetMapping("/codes/diagnoses/all")
 	public List<Diagnose> getCodesForDiagnoses() {
 		return codebookService.getCodesForDiagnoses();
 	}
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/codes/therapies")
 	public List<Therapy> getCodesForTherpaies() {
 		return codebookService.getCodesForTherapies();
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/codes/rooms")
 	public List<OperationRoom> getCodesForRooms() {
 		return codebookService.getCodesForOperationRooms();
 	}
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/codes/medication")
+	@GetMapping("/codes/medications/all")
 	public List<Medicine> getCodesForMeds() {
 		return codebookService.getCodesForMedication();
 	}

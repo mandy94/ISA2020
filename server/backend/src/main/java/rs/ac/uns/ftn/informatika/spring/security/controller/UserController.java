@@ -24,14 +24,29 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	// Za pristup ovoj metodi neophodno je da ulogovani korisnik ima ADMIN ulogu
-	// Ukoliko nema, server ce vratiti gresku 403 Forbidden
-	// Korisnik jeste autentifikovan, ali nije autorizovan da pristupi resursu
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public User loadById(@PathVariable Long userId) {
 		return this.userService.findById(userId);
 	}
+
+	@GetMapping("/user/pacient/jmbg")
+	@PreAuthorize("hasRole('DOCTOR')")
+	public List<Long> getPatientsJMBGs() {
+		return this.userService.getJMBGs("PACIENT");
+	}
+
+	@GetMapping("/user/pacients")
+	@PreAuthorize("hasRole('DOCTOR')")
+	public List<User> getPatients() {
+		return this.userService.getPacients();
+	}
+	@GetMapping("/user/pacient/{jmbg}")
+	@PreAuthorize("hasRole('DOCTOR')")
+	public User loadByJMBG(@PathVariable Long jmbg) {
+		return this.userService.findByJMBG(jmbg);
+	}
+
 
 	@GetMapping("/user/all")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -40,7 +55,6 @@ public class UserController {
 	}
 
 	@GetMapping("/whoami")
-	//@PreAuthorize("hasRole('USER')")
 	public User user(Principal user) {
 		return this.userService.findByUsername(user.getName());
 	}

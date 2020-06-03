@@ -26,6 +26,15 @@ export class HomeComponent implements OnInit {
   isSignedAsAdmin(){
     return this.userService.amIAdmin();
   }
+  isSignedAsNurse(){
+    return this.userService.amINurce();
+  }
+  isSignedAsDoctor(){
+    return this.userService.amIDoctor();
+  }
+  isSignedAsPacient(){
+    return this.userService.amIPacient();
+  }
   isSignedIn(){
     if(this.userService.currentUser != null)
     return true;

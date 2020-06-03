@@ -20,9 +20,10 @@ export enum RequestMethod {
 export class ApiService {
 
   headers = new HttpHeaders({
-'Authorization':'Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImFkbWluIiwiYXVkIjoid2ViIiwiaWF0IjoxNTkwNDIwNTQ4LCJleHAiOjE1OTA3MjA1NDh9.1-pgevNM1S-KR3isjEtUeqdhUZiBemDekulBbZiQhLrO0jp1Y3zDc2Jc-q8_K-yvyQgXAPA6cW2DWgMhhQhDAw',
-'Accept': 'application/json',
-'Content-Type': 'application/json'
+  //'Authorization': 'Bearer ' +  localStorage.getItem('token'),
+  'Accept': 'application/json',
+  'Access-Control-Allow-Origin' : '*',
+  'Content-Type': 'application/json'
   });
 
   constructor(private http: HttpClient) {

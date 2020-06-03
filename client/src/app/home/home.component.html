@@ -6,9 +6,9 @@
     password="pacient"
     fxFlex
     imgUrl="assets/image/user.png"
-    title='Pacijent'
-  >
+    title='Pacijent'>
   </app-api-card>
+
 
   <app-api-card
     (apiClick)="makeRequest($event)"    
@@ -16,13 +16,11 @@
     password="medsis"
     fxFlex
     imgUrl="assets/image/medical_sister.png"
-    title='Medicinska sestra'
-  >
+    title='Medicinska sestra'>
   </app-api-card>
 
   <app-api-card
     (apiClick)="makeRequest($event)"        
-    
     username="dokt"
     password="dokt"
     fxFlex
@@ -43,4 +41,6 @@
 </app-api-card>
 </div>
 <app-admin *ngIf="isSignedAsAdmin()"></app-admin>
+<app-nurse *ngIf="isSignedAsNurse()"></app-nurse>
+<app-doctor *ngIf="isSignedAsDoctor()"></app-doctor>
 </div>

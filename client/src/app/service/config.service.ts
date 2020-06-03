@@ -9,8 +9,10 @@ export class ConfigService {
   private _auth_url = 'http://localhost:8080/auth';
   private _user_url = this._api_url + '/user';
 
+  get api_url():String{
+    return this._api_url;
+  }
   private _refresh_token_url = this._api_url + '/refresh';
-
   get refresh_token_url(): string {
     return this._refresh_token_url;
   }
@@ -50,4 +52,5 @@ export class ConfigService {
   get signup_url(): string {
     return this._signup_url;
   }
+  
 }

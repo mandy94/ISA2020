@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -46,8 +47,14 @@ public class User implements UserDetails {
 
     @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "email")
+    
+    @Column(name = "jmbg")
+    private Long jmbg;
+    
+    @Column(name ="role")
+    private String role;
+    
+	@Column(name = "email")
     private String email;
 
     @Column(name = "enabled")
@@ -61,14 +68,33 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
+    
+    @OneToMany(mappedBy = "user_id")
+    private List<ExaminationReport> reports;
 
-    public Long getId() {
+    public List<ExaminationReport> getReports() {
+		return reports;
+	}
+
+	public void setReports(List<ExaminationReport> reports) {
+		this.reports = reports;
+	}
+
+	public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
     public String getUsername() {
         return username;
@@ -77,6 +103,14 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
+
+	public Long getJmbg() {
+		return jmbg;
+	}
+
+	public void setJmbg(Long jmbg) {
+		this.jmbg = jmbg;
+	}
 
     public String getPassword() {
         return password;

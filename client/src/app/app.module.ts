@@ -24,6 +24,13 @@ import {MatIconRegistry} from '@angular/material';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { CodebookComponent } from './codebook/codebook.component';
+import { NurseComponent } from './nurse/nurse.component';
+import { PacientsComponent } from './component/nurce-page/pacients/pacients.component';
+import { CalendarComponent } from './component/nurce-page/calendar/calendar.component';
+import { RecepieComponent } from './component/nurce-page/recepie/recepie.component';
+import { NurceProfileComponent } from './component/nurce-page/nurce-profile/nurce-profile.component';
+import { DoctorComponent , ExaminationReportComponent} from './component/doctor-page';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +46,13 @@ import { CodebookComponent } from './codebook/codebook.component';
     AdminComponent,
     SignupComponent,
     CodebookComponent,
+    NurseComponent,
+    PacientsComponent,
+    CalendarComponent,
+    RecepieComponent,
+    NurceProfileComponent,
+    DoctorComponent,
+    ExaminationReportComponent,
     
   ],
   imports: [

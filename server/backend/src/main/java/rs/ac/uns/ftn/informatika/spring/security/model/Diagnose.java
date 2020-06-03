@@ -1,13 +1,14 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
@@ -27,7 +28,7 @@ public class Diagnose  {
     @Column(name="code")
     String code;
     
-    
+   
     
     public String getCode() {
 		return code;
@@ -46,7 +47,6 @@ public class Diagnose  {
         return name;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }

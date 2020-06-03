@@ -8,13 +8,37 @@ import {NotFoundComponent} from './not-found';
 import {ChangePasswordComponent} from './change-password';
 import {ForbiddenComponent} from './forbidden';
 import {SignupComponent} from './signup';
-
-
+import {PacientsComponent,  CalendarComponent, RecepieComponent, NurceProfileComponent} from './component/index';
+import {DoctorComponent, ExaminationReportComponent} from './component/doctor-page';
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'doctor',
+    component: DoctorComponent
+  },
+    {
+    path: 'examination',
+    component: ExaminationReportComponent
+  },
+  {
+    path: 'pacients',
+    component: PacientsComponent
+  },
+  {
+    path: 'calendar',
+    component: CalendarComponent
+  },
+  {
+    path: 'recepie',
+    component: RecepieComponent
+  },
+  {
+    path: 'nurce-profile',
+    component: NurceProfileComponent
   },
   {
     path: 'signup',
