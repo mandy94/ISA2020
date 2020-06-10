@@ -1,17 +1,17 @@
 	-- Lozinke su hesovane pomocu BCrypt algoritma https://www.dailycred.com/article/bcrypt-calculator
 -- Lozinka za oba user-a je 123
 
-INSERT INTO DIAGNOSES (id, code, name) VALUES (1, 'PP8690', 'Decije boginje');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (2, 'PG8795', 'Gnojna angina');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (3, 'GM2290', 'Upala uha');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (4, 'GM2291', 'Upala grla');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (5, 'GP1690', 'Sezonska alergija');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (6, 'RB7890', 'Asma');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (7, 'RB1120', 'Bronhitis');
-INSERT INTO DIAGNOSES (id, code, name) VALUES (8, 'ZQ9601', 'Dijabetes');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (910, 'PP8690', 'Decije boginje');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (912, 'PG8795', 'Gnojna angina');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (913, 'GM2290', 'Upala uha');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (914, 'GM2291', 'Upala grla');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (915, 'GP1690', 'Sezonska alergija');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (916, 'RB7890', 'Asma');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (917, 'RB1120', 'Bronhitis');
+INSERT INTO DIAGNOSES (id, code, name) VALUES (918, 'ZQ9601', 'Dijabetes');
 
-INSERT INTO THERAPIES (id, name) VALUES (1 ,'Fiziklana terapija');
-INSERT INTO THERAPIES (id, name) VALUES (2 ,'Inhalacija');
+INSERT INTO THERAPIES (id, name) VALUES (101 ,'Fiziklana terapija');
+INSERT INTO THERAPIES (id, name) VALUES (102 ,'Inhalacija');
 
 
 INSERT INTO MEDICATIONS (id, name) VALUES (1, 'Penicilin');
@@ -19,10 +19,10 @@ INSERT INTO MEDICATIONS (id, name) VALUES (2, 'Nixar');
 INSERT INTO MEDICATIONS (id, name) VALUES (3, 'Insulin');
 INSERT INTO MEDICATIONS (id, name) VALUES (4, 'Ventolin');
 
-INSERT INTO OPERATIONROOMS (id, name, code) VALUES (1, 'Operaciona sala 1', 'T1');
-INSERT INTO OPERATIONROOMS (id, name, code) VALUES (2, 'Operaciona sala 2', 'T2');
+INSERT INTO OPERATIONROOMS (id, name, code) VALUES (101, 'Operaciona sala 1', 'T1');
+INSERT INTO OPERATIONROOMS (id, name, code) VALUES (102, 'Operaciona sala 2', 'T2');
 
---INSERT INTO APPOINTMENTS (id, begining, ending, pacientid, room) VALUES (1, '10:30', '12:00', 4, 1);
+--INSERT INTO APPOINTMENTS (id, begining, ending, pacientid, room) VALUES (1, '10:30', '12:00', 4, 102);
 
 INSERT INTO USERS (jmbg, role ,username, password, first_name, last_name, email, enabled, last_password_reset_date,birthdate) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'user@example.com', true, '2017-10-01 21:58:58.508-07', '10.1.1980');
 INSERT INTO USERS (jmbg, role,  username, password, first_name, last_name, email, enabled, last_password_reset_date,birthdate) VALUES (1005906506325, 'NURCE', 'medsis', '$2a$04$iSAH8.efg/0KXf8cwW8YQeyLCyLAyV7C7FRTeJCKa6e1bPXuxeute', 'Jelisaveta', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58.508-07','27.5.2005');

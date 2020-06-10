@@ -10,6 +10,7 @@ public class ExaminationReportDTO {
 	private Long pacientid;
 	private Long doctorid;
 	private List<Long> medication = new ArrayList<Long>();
+	private List<Long> therapies = new ArrayList<Long>();
 	public Long getId() {
 		return id;
 	}
@@ -44,6 +45,12 @@ public class ExaminationReportDTO {
 	}
 	public void setMedication(List<Long> medication) {
 		this.medication = medication;
+	}
+	public List<Long> getTherapies() {
+		return therapies;
+	}
+	public void setTherapies(List<Long> therapies) {
+		this.therapies = therapies;
 	}
 
 	

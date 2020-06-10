@@ -5,14 +5,14 @@
     <mat-card-content>
       <mat-list-item *ngFor="let item of diagnoses"> {{item.id}}. {{item.name}} </mat-list-item>
     </mat-card-content>
-    <mat-card-action> <input><button> Dodaj</button></mat-card-action>
+    <mat-card-action> <input type="text" [formControl]= "newDiagnose"><button (click)="postDiagnose()"> Dodaj</button></mat-card-action>
     
   </mat-card> <mat-card>
     <mat-card-title> Sifrafnik terpaija </mat-card-title>
     <mat-card-content>
       <mat-list-item *ngFor="let item of therapies"> {{item.id}}. {{item.name}} </mat-list-item>
     </mat-card-content>
-    <mat-card-action> <input><button> Dodaj</button></mat-card-action>
+    <mat-card-action> <input type="text" [formControl] = "newTherapy"><button (click)="postTherapy()"> Dodaj</button></mat-card-action>
     
   </mat-card> <mat-card>
     <mat-card-title> Sifrafnik soba </mat-card-title>

@@ -40,6 +40,7 @@ export class UserService {
     }
   }
   amIDoctor(){
+    
     if(this.currentUser != null){
       var auths = this.currentUser.authorities;
       for(var auth of auths)

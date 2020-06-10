@@ -14,4 +14,12 @@ public interface CodebookService {
 	 List<ExaminationReport> getCodesForExaminationReports();
 	 List<OperationRoom> getCodesForOperationRooms();
 	 List<Therapy> getCodesForTherapies();
+	 
+	 List<Diagnose> saveDiagnose(Diagnose d);
+	 List<Medicine> saveMedicine(Medicine m);
+	 List<OperationRoom> saveOperationRoom(OperationRoom o);
+	 List<Therapy> saveTherapy (Therapy t);
+	 
+	 Therapy getTherapyById(Long id);
+	 Medicine getMedicineById(Long id);
 }

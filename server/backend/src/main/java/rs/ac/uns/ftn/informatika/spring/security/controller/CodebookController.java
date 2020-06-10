@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,10 +24,37 @@ public class CodebookController {
 	@Autowired
 	private CodebookService codebookService;
 	
-	@GetMapping("/codes/diagnoses/all")
+	@GetMapping(value = "/codes/diagnoses/all")
 	public List<Diagnose> getCodesForDiagnoses() {
 		return codebookService.getCodesForDiagnoses();
 	}
+	@PostMapping(value= "/codes/diagnose",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Diagnose> addDiagnose(@RequestBody Diagnose diag){
+		Diagnose ndiag = new Diagnose();
+		ndiag.setCode(diag.getCode());
+		ndiag.setName(diag.getName());
+		
+		return codebookService.saveDiagnose(ndiag);
+	}
+	
+	@PostMapping(value = "/codes/therapy",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Therapy> addTherapy(@RequestBody Therapy t){
+		
+		Therapy nt= new Therapy();
+		nt.setName(t.getName());
+		return codebookService.saveTherapy(nt);
+	}
+	@PostMapping(value = "/codes/room",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<OperationRoom> addRoom(@RequestBody OperationRoom o){
+		OperationRoom or = new OperationRoom();
+		or.setCode(o.getCode());
+		or.setName(o.getName());
+	
+		return codebookService.saveOperationRoom(or);
+		}
+	
+	
+	
 	@GetMapping("/codes/therapies")
 	public List<Therapy> getCodesForTherpaies() {
 		return codebookService.getCodesForTherapies();

@@ -20,7 +20,6 @@ public users:any;
   ngOnInit() {
     this.getUsers();
   }
-
   
   public getUsers():void{
     this.userService.getAll().toPromise()
@@ -28,6 +27,7 @@ public users:any;
 
     );
   }
+ 
 }
 
 

@@ -9,7 +9,6 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
 
 public interface OperationRoomRepository extends JpaRepository<OperationRoom, Long> {
-	//OperationRoom findByName(String name);
 	
 	List<OperationRoom> findAll();
 

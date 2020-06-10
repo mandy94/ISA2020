@@ -12,22 +12,12 @@ import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
 import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 
-public interface CodebookRepository extends JpaRepository<User, Long> {
+public interface DiagnoseRepository extends JpaRepository<Diagnose, Long> {
 
 	@Query("Select d FROM Diagnose d")
 	List<Diagnose> getDiagnoses();
 	
-	@Query("Select m FROM Medicine m")
-	List<Medicine> getMeds();
 
-	@Query("Select r FROM ExaminationReport r")
-	List<ExaminationReport> getReports();
-
-	@Query("Select t FROM Therapy t")
-	List<Therapy> getTherapies();
-
-	@Query("Select o FROM OperationRoom o")
-	List<OperationRoom> getRooms();
-    
+	
 }
 

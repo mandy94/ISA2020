@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, ConfigService, UserService } from 'app/service';
 
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import {formatDate} from '@angular/common';
+import { formatDate } from '@angular/common';
 import { Report, Room, Appointment } from './report';
 
 
@@ -12,117 +12,129 @@ import { Report, Room, Appointment } from './report';
   selector: 'app-examination-report',
   templateUrl: './examination-report.component.html',
   styleUrls: ['./examination-report.component.css'],
-  
-  
+
+
 })
 export class ExaminationReportComponent implements OnInit {
 
-  constructor( private apiService: ApiService,
-              private config: ConfigService,
-              private userService: UserService
-              ) { }
-    patiens:any;
-    filteredOptions : Observable<any>;
-    myControl = new FormControl();
-    pacient_jmbg: String;
-    currentPacient: any;
-    allVisits: any;
-    today: any;
+  constructor(private apiService: ApiService,
+    private config: ConfigService,
+    private userService: UserService
+  ) { }
+  patiens: any;
+  filteredOptions: Observable<any>;
+  myControl = new FormControl();
+  pacient_jmbg: String;
+  currentPacient: any;
+  allVisits: any;
+  today: any;
 
   private _filter(value: string): string[] {
     const filterValue = value;
 
-      return this.patiens.filter(option => option.toString().indexOf(filterValue) === 0);
+    return this.patiens.filter(option => option.toString().indexOf(filterValue) === 0);
   }
-  getPacientByJMBG(){
+  getPacientByJMBG() {
     this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacient_jmbg)
-    .subscribe((data) => {
-      this.currentPacient = data;
-    });
+      .subscribe((data) => {
+        this.currentPacient = data;
+      });
 
   }
-  getPacientExaminationReports(){
+  getPacientExaminationReports() {
     this.apiService.get(this.config.api_url + '/examination-report/pacient/' + this.pacient_jmbg)
-    .subscribe((data) => {
-      this.allVisits = data;
-    });
+      .subscribe((data) => {
+        this.allVisits = data;
+      });
   }
-  getCodebooks(){ 
-     this.apiService.get(this.config.api_url+'/codes/diagnoses/all')
-  .subscribe((data) => {
-    this.diagnoseList = data;
-  });
-  this.apiService.get(this.config.api_url+'/codes/medications/all')
-  .subscribe((data) => {
-    this.medList = data;
-  });      
-}
-getOperationRooms(){
-  this.apiService.get(this.config.api_url + '/operation-rooms/all')
-  .subscribe(data => {
-    this.operationRoomList = data;
-  });
-}
-  onSearchClicked(){  
+  getCodebooks() {
+    this.apiService.get(this.config.api_url + '/codes/diagnoses/all')
+      .subscribe((data) => {
+        this.diagnoseList = data;
+      });
+    this.apiService.get(this.config.api_url + '/codes/medications/all')
+      .subscribe((data) => {
+        this.medList = data;
+      });
+      this.apiService.get(this.config.api_url + '/codes/therapies')
+      .subscribe((data)=>{
+        this.therapyList = data        
+      })
+  }
+  getOperationRooms() {
+    this.apiService.get(this.config.api_url + '/operation-rooms/all')
+      .subscribe(data => {
+        this.operationRoomList = data;
+      });
+  }
+  onSearchClicked() {
     this.getPacientByJMBG();
     this.getPacientExaminationReports();
-   this.getCodebooks();
-    this.getOperationRooms();            
+    this.getCodebooks();
+    this.getOperationRooms();
   }
-  diagnoseList : any;
-  medList : any;
-  firstVisit(){
-    if(this.allVisits!=null)
-    return this.allVisits.length == 0 ?  true : false; 
+  diagnoseList: any;
+  medList: any;
+  firstVisit() {
+    if (this.allVisits != null)
+      return this.allVisits.length == 0 ? true : false;
   }
-
-  addAnotherRecepie(){
+  addAnotherTherapy(){
+    this.new_report.therapies.push(this.selected_therapy); 
+    console.log(this.new_report.therapies);
+    
+  }
+  addAnotherRecepie() {
     this.new_report.medication.push(this.selected_med.id);
-    this.selected_meds.push(this.selected_med);
+    // this.selected_meds.push(this.selected_med);
   }
 
   ngOnInit() {
-      this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
-          .subscribe((data) => {
-            this.patiens = data;
-            this.userService.getMyInfo().subscribe(data => this.new_report.doctorid = data.id); 
-            this.filteredOptions = this.myControl.valueChanges.pipe(
-              startWith(''),
-              map(value => this._filter(value))
-            );
-          });
-           this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+    this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
+      .subscribe((data) => {
+        this.patiens = data;
+        this.userService.getMyInfo().subscribe(data => this.new_report.doctorid = data.id);
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
+      });
+    this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
   }
   selected_med: any;
   selected_room: Room;
   appointnent: Appointment;
-  selected_meds= new Array<any>(); // FOR VIEW ONLY
+  selected_meds = new Array<any>(); // FOR VIEW ONLY
+  
   selected_diagnose: any;
+  selected_therapy: any;
   description: string;
   new_report = new Report();
 
-  saveReport(){
-    
+  saveReport() {
+
     this.new_report.details = this.description;
     this.new_report.pacientid = this.currentPacient.id;
     // this.new_report.medication = this.selected_med;
-    
+    // this.new_report.therapies = this.selected_therapy;
+
     this.apiService.post(this.config.api_url + '/examination-report/add', this.new_report)
-                  .subscribe(() => this.getPacientExaminationReports());
+      .subscribe(() => this.getPacientExaminationReports());
   }
-  operationRoomList :any;
-  calendar : any;
+  operationRoomList: any;
+  therapyList: any;
+  calendar: any;
 
-  test(){
-   this.appointnent = new Appointment();
-   this.appointnent.pacientId = this.currentPacient.id;
-   this.appointnent.room = this.selected_room.id;
+  test() {
+    this.appointnent = new Appointment();
+    this.appointnent.pacientId = this.currentPacient.id;
+    this.appointnent.room = this.selected_room.id;
 
-   this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(()=> this.checkAvailablilty);
+    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => this.checkAvailablilty);
   }
-  checkAvailablilty(){
-    
+  checkAvailablilty() {
+
     this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
-    .subscribe(data => {this.calendar = data});
+      .subscribe(data => { this.calendar = data });
   }
 }

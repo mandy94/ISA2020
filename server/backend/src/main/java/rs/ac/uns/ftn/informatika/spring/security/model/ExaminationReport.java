@@ -1,3 +1,4 @@
+
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.ExaminationReportDTO;
 @Table(name="EXAMINATIONREPORTS")
 public class ExaminationReport {
 
-	private static final long serialVersionUID = 1L;
 
 	@Id
     @Column(name="id",columnDefinition = "serial")
@@ -40,6 +40,13 @@ public class ExaminationReport {
             inverseJoinColumns = {  @JoinColumn(name = "medication_id", referencedColumnName = "id")})
 	private List<Medicine> medication = new ArrayList<Medicine>();
 
+	
+	@Column(name="therapy")
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "examine_therpay",
+            joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
+            inverseJoinColumns = {  @JoinColumn(name = "therapy_id", referencedColumnName = "id")})	
+	private List<Therapy> therapies = new ArrayList<Therapy>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="is_examined")
@@ -105,6 +112,14 @@ public class ExaminationReport {
 	public String toString() {
 		return "ExaminationReport [id=" + id + ", details=" + details + ", pacient=" + pacient + ", doctor=" + doctor
 				+ "]";
+	}
+
+	public List<Therapy> getTherapies() {
+		return therapies;
+	}
+
+	public void setTherapies(List<Therapy> therapies) {
+		this.therapies = therapies;
 	}
 	
 	

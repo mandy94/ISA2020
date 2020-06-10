@@ -27,11 +27,15 @@
           Datum rodjenja: {{currentPacient.birthdate}}
         </mat-card-subtitle>
         <div *ngIf="!firstVisit()">
+          
           <div *ngFor="let visit of allVisits">
-            <mat-list>-Dijagnoza: {{visit.details}}. </mat-list>
-            <mat-list>-Pripisani lekovi:</mat-list>
+            <mat-list>Dijagnoza: {{visit.details}}. Pripisani lekovi:</mat-list>
             <div *ngFor="let med of visit.medication">
               {{med.name}} {{med.dosage}}
+            </div>  
+            Pripisane terpaije: 
+            <div *ngFor="let item of visit.therapies">
+              {{item.name}}
             </div>
           </div>
         </div>
@@ -67,6 +71,15 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <mat-form-field>
+              <mat-label>Prepisi terapiju</mat-label>
+              <mat-select [(ngModel)]="selected_therapy" name="selected_therapy">
+                <mat-option *ngFor="let therapy of therapyList" [value]="therapy.id">
+                   {{therapy.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button (click)="addAnotherTherapy()">+</button>
 
             <mat-form-field>
               <mat-label>Pripisani lekovi:</mat-label>

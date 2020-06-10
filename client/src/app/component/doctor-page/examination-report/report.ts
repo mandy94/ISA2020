@@ -1,13 +1,14 @@
+import { Therapy } from 'app/codebook';
+
 export class Report{
     constructor(){
         this.medication= new Array<number>();
+        this.therapies = new Array<number>();
     }
-    // got_meds_report:Array<Medication>;
-    // diagnose_id: number;
-    // user_jmbg: number;
-    medication:any;
     pacientid: number;
     doctorid:number;
+    therapies: Array<number>;
+    medication:any;
     details: string;
 
 }

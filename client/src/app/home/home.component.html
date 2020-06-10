@@ -41,6 +41,6 @@
 </app-api-card>
 </div>
 <app-admin *ngIf="isSignedAsAdmin()"></app-admin>
-<app-nurse *ngIf="isSignedAsNurse()"></app-nurse>
-<app-doctor *ngIf="isSignedAsDoctor()"></app-doctor>
+<app-nurse *ngIf="isSignedAsNurse() && !isSignedAsAdmin()" ></app-nurse>
+<app-doctor *ngIf="isSignedAsDoctor() && !isSignedAsAdmin()"></app-doctor>
 </div>

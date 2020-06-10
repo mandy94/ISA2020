@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.spring.security.dto.ExaminationReportDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.ExaminationReport;
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
+import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.security.TokenUtils;
+import rs.ac.uns.ftn.informatika.spring.security.service.CodebookService;
 import rs.ac.uns.ftn.informatika.spring.security.service.MedicineService;
 import rs.ac.uns.ftn.informatika.spring.security.service.PrescriptionService;
 import rs.ac.uns.ftn.informatika.spring.security.service.ReportsService;
@@ -33,8 +35,9 @@ public class ExaminationReportController {
 	@Autowired
 	private UserService userservice;
 	
+	
 	@Autowired
-	private MedicineService mdservice;
+	private CodebookService cdservice;
 	@Autowired
 	private PrescriptionService presservice;
 	
@@ -58,14 +61,20 @@ public class ExaminationReportController {
 			ExaminationReport report = new ExaminationReport();
 			User pacient = userservice.findById(reportdto.getPacientid());
 			User doctor = userservice.findById(reportdto.getDoctorid());
-			
+
 			report.copyFromDTO(reportdto);
 			for(Long med_id: reportdto.getMedication())
 			{
-				Medicine med = mdservice.findById(med_id);
+				Medicine med = cdservice.getMedicineById(med_id);
 				if(med != null) {				
 					report.getMedication().add(med);
 					presservice.addPrescription(med);
+				}
+			}
+			for(Long t_id : reportdto.getTherapies()) {
+				Therapy t = cdservice.getTherapyById(t_id);
+				if(t!= null) {
+					report.getTherapies().add(t);
 				}
 			}
 			if(pacient!= null)report.setPacient(pacient);
