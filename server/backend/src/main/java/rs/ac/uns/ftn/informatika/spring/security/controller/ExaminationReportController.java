@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,7 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.ExaminationReportDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.ExaminationReport;
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
+import rs.ac.uns.ftn.informatika.spring.security.security.TokenUtils;
 import rs.ac.uns.ftn.informatika.spring.security.service.MedicineService;
 import rs.ac.uns.ftn.informatika.spring.security.service.ReportsService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
@@ -33,16 +35,21 @@ public class ExaminationReportController {
 	@Autowired
 	private MedicineService mdservice;
 	
+	@Autowired
+	private TokenUtils tokenUtils;
 	
 	@GetMapping("/pacient/{jmbg}")
 	public List<ExaminationReport> get(@PathVariable Long jmbg) {
+		
+				
 		return  rpservice.getReportsForUser(jmbg);
 	}
 	
 	@PostMapping(value = "/add",
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-		//	produces = MediaType.APPLICATION_JSON_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReportDTO reportdto)  throws AccessDeniedException{
+		System.out.println(reportdto);
 		
 			ExaminationReport report = new ExaminationReport();
 			User pacient = userservice.findById(reportdto.getPacientid());

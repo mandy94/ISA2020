@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @Column(name="birthdate")
+    private String birthdate;
+    
     @JsonIgnore
     @Column(name = "password")
     private String password;
@@ -194,6 +197,14 @@ public class User implements UserDetails {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", jmbg=" + jmbg + ", role=" + role + "]";
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
 	}
 
 }

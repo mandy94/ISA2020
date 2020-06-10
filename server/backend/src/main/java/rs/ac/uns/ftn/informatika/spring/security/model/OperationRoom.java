@@ -1,24 +1,39 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
 @Table(name="OPERATIONROOMS")
 public class OperationRoom {
 
-	private static final long serialVersionUID = 1L;
-
 	@Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
+    
+	@Column(name="name")
     String name;
+    
+    @Column(name="code")
+    String code;
+    
+    @OneToMany(mappedBy="room")
+    @Column(name="scheduler")
+    @JsonIgnore
+    List<Appointment> scheduler = new ArrayList<Appointment>();
 
     
     public void setName(String name) {
@@ -28,7 +43,7 @@ public class OperationRoom {
         return name;
     }
 
-    @JsonIgnore
+    
     public Long getId() {
         return id;
     }
@@ -36,5 +51,17 @@ public class OperationRoom {
     public void setId(Long id) {
         this.id = id;
     }
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public List getScheduler() {
+		return scheduler;
+	}
+	public void setScheduler(List scheduler) {
+		this.scheduler = scheduler;
+	}
 
 }

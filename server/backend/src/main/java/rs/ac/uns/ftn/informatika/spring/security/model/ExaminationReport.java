@@ -27,7 +27,7 @@ public class ExaminationReport {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column( 		name="id",columnDefinition = "serial")
+    @Column(name="id",columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 	

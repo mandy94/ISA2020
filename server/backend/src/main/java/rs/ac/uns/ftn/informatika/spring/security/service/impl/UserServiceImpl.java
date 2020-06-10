@@ -78,4 +78,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUsersFromRole("PACIENT");
 	}
 
+	@Override
+	public User getByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, ConfigService, UserService } from 'app/service';
-import { DataRowOutlet } from '@angular/cdk/table';
+
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import {formatDate} from '@angular/common';
-import { Report, Medication } from './report';
+import { Report, Room, Appointment } from './report';
+
 
 @Component({
   selector: 'app-examination-report',
@@ -56,11 +57,17 @@ export class ExaminationReportComponent implements OnInit {
     this.medList = data;
   });      
 }
+getOperationRooms(){
+  this.apiService.get(this.config.api_url + '/operation-rooms/all')
+  .subscribe(data => {
+    this.operationRoomList = data;
+  });
+}
   onSearchClicked(){  
     this.getPacientByJMBG();
     this.getPacientExaminationReports();
    this.getCodebooks();
-          
+    this.getOperationRooms();            
   }
   diagnoseList : any;
   medList : any;
@@ -68,10 +75,17 @@ export class ExaminationReportComponent implements OnInit {
     if(this.allVisits!=null)
     return this.allVisits.length == 0 ?  true : false; 
   }
+
+  addAnotherRecepie(){
+    this.new_report.medication.push(this.selected_med.id);
+    this.selected_meds.push(this.selected_med);
+  }
+
   ngOnInit() {
       this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
           .subscribe((data) => {
             this.patiens = data;
+            this.userService.getMyInfo().subscribe(data => this.new_report.doctorid = data.id); 
             this.filteredOptions = this.myControl.valueChanges.pipe(
               startWith(''),
               map(value => this._filter(value))
@@ -79,8 +93,10 @@ export class ExaminationReportComponent implements OnInit {
           });
            this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
   }
-  
-  selected_med = new Array<Number>();
+  selected_med: any;
+  selected_room: Room;
+  appointnent: Appointment;
+  selected_meds= new Array<any>(); // FOR VIEW ONLY
   selected_diagnose: any;
   description: string;
   new_report = new Report();
@@ -89,12 +105,24 @@ export class ExaminationReportComponent implements OnInit {
     
     this.new_report.details = this.description;
     this.new_report.pacientid = this.currentPacient.id;
-    this.new_report.medication.push(this.selected_med);
-    this.new_report.doctorid = this.userService.currentUser.id;
-
-    console.log(this.new_report)  ;
+    // this.new_report.medication = this.selected_med;
+    
     this.apiService.post(this.config.api_url + '/examination-report/add', this.new_report)
                   .subscribe(() => this.getPacientExaminationReports());
   }
+  operationRoomList :any;
+  calendar : any;
 
+  test(){
+   this.appointnent = new Appointment();
+   this.appointnent.pacientId = this.currentPacient.id;
+   this.appointnent.room = this.selected_room.id;
+
+   this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(()=> this.checkAvailablilty);
+  }
+  checkAvailablilty(){
+    
+    this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
+    .subscribe(data => {this.calendar = data});
+  }
 }

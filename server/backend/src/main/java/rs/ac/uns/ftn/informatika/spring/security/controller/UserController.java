@@ -47,7 +47,6 @@ public class UserController {
 		return this.userService.findByJMBG(jmbg);
 	}
 
-
 	@GetMapping("/user/all")
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> loadAll() {
