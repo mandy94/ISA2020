@@ -35,6 +35,7 @@ INSERT INTO USERS (jmbg, role,  username, password, first_name, last_name, email
 
 INSERT INTO USERS (jmbg, role ,username, password, first_name, last_name, email, enabled, last_password_reset_date) VALUES (0504691385551,'ADMIN',  'admin', '$2a$04$vERIUR9ievJ3IV0jfg6VTOMvmPMe3Nep9ZrZ9VEGoE/dAlO1gBzt.', 'Nikola', 'Nikolic', 'admin@example.com', true, '2017-10-01 18:57:58.508-07');
 
+INSERT INTO PRESCRIPTION (id, bar_code, clinic_details, doctor_id, dosage, medicine_name, nurse_id, pacient, signed) values (55, 181057, 'Bul. Jovana Ducica 51', 1, '2 puta dnevno', 'Nixar', '2','5', false);
 
 INSERT INTO AUTHORITY (name) VALUES ('ROLE_DOCTOR');
 INSERT INTO AUTHORITY (name) VALUES ('ROLE_NURCE');

@@ -28,7 +28,7 @@ public class Clinic  {
         this.name = name;
     }
 
-    @JsonIgnore
+    
     public String getName() {
         return name;
     }

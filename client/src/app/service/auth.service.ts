@@ -22,6 +22,7 @@ export class AuthService {
 
   login(user) {
     const loginHeaders = new HttpHeaders({
+      'Access-Control-Allow-Origin' : '*',
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });

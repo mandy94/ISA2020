@@ -19,6 +19,7 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.security.TokenUtils;
 import rs.ac.uns.ftn.informatika.spring.security.service.MedicineService;
+import rs.ac.uns.ftn.informatika.spring.security.service.PrescriptionService;
 import rs.ac.uns.ftn.informatika.spring.security.service.ReportsService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 
@@ -34,6 +35,8 @@ public class ExaminationReportController {
 	
 	@Autowired
 	private MedicineService mdservice;
+	@Autowired
+	private PrescriptionService presservice;
 	
 	@Autowired
 	private TokenUtils tokenUtils;
@@ -49,6 +52,7 @@ public class ExaminationReportController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReportDTO reportdto)  throws AccessDeniedException{
+		
 		System.out.println(reportdto);
 		
 			ExaminationReport report = new ExaminationReport();
@@ -56,12 +60,13 @@ public class ExaminationReportController {
 			User doctor = userservice.findById(reportdto.getDoctorid());
 			
 			report.copyFromDTO(reportdto);
-			System.out.println(reportdto.getMedication());
 			for(Long med_id: reportdto.getMedication())
 			{
 				Medicine med = mdservice.findById(med_id);
-				if(med != null)				
+				if(med != null) {				
 					report.getMedication().add(med);
+					presservice.addPrescription(med);
+				}
 			}
 			if(pacient!= null)report.setPacient(pacient);
 			if(doctor!= null)report.setDoctor(doctor);
