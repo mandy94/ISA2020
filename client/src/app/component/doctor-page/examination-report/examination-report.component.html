@@ -1,3 +1,5 @@
+<div id="calendar"></div>
+
 <div fxLayoutAlign="space-around center">
   <form class="example-form">
     <mat-form-field class="example-full-width">
@@ -14,7 +16,7 @@
 <!-- End of search pacient input-->
 <!-- About pacient -->
 <br>
-<div fxLayout="column" fxLayoutAlign=" space-around none">
+<div fxLayout="column" fxLayoutAlign="space-around stretch">
 
   <div *ngIf="currentPacient">
     <mat-card>
@@ -27,13 +29,12 @@
           Datum rodjenja: {{currentPacient.birthdate}}
         </mat-card-subtitle>
         <div *ngIf="!firstVisit()">
-          
           <div *ngFor="let visit of allVisits">
             <mat-list>Dijagnoza: {{visit.details}}. Pripisani lekovi:</mat-list>
             <div *ngFor="let med of visit.medication">
               {{med.name}} {{med.dosage}}
-            </div>  
-            Pripisane terpaije: 
+            </div>
+            Pripisane terpaije:
             <div *ngFor="let item of visit.therapies">
               {{item.name}}
             </div>
@@ -48,90 +49,117 @@
 </div>
 <!-- End of pacinet history-->
 <!-- Begining of new pacient data-->
-<div fxLayout="column" fxLayoutAlign="space-around none" *ngIf="currentPacient">
+<div fxLayout="column" fxLayoutAlign="space-around stretch" *ngIf="currentPacient">
   <mat-card>
     <mat-accordian>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           Unos novog pregleda
         </mat-expansion-panel-header>
+        <div fxLayout="row" fxLayoutAlign="center none">
 
-        <form class="example-form">
-          <section>
-            <mat-form-field class="example-full-width">
-              <mat-label>Sta muci pacijenta?</mat-label>
-              <textarea matInput [(ngModel)]="description" name="description"></textarea>
-            </mat-form-field>
+          <mat-card>
+            <form class="example-form">
+              <section>
+                <mat-form-field class="example-full-width">
+                  <mat-label>Sta muci pacijenta?</mat-label>
+                  <textarea matInput [(ngModel)]="description" name="description"></textarea>
+                </mat-form-field>
 
-            <mat-form-field>
-              <mat-label>Dijagnoza</mat-label>
-              <mat-select [(ngModel)]="selected_diagnose" name="selected_diagnose">
-                <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose.id">
-                  {{diagnose.code}} - {{diagnose.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Prepisi terapiju</mat-label>
-              <mat-select [(ngModel)]="selected_therapy" name="selected_therapy">
-                <mat-option *ngFor="let therapy of therapyList" [value]="therapy.id">
-                   {{therapy.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button (click)="addAnotherTherapy()">+</button>
+                <mat-form-field>
+                  <mat-label>Dijagnoza</mat-label>
+                  <mat-select [(ngModel)]="selected_diagnose" name="selected_diagnose">
+                    <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose">
+                      {{diagnose.code}} - {{diagnose.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Prepisi terapiju</mat-label>
+                  <mat-select [(ngModel)]="selected_therapy" name="selected_therapy">
+                    <mat-option *ngFor="let therapy of therapyList" [value]="therapy">
+                      {{therapy.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button (click)="addAnotherTherapy()">+</button>
 
-            <mat-form-field>
-              <mat-label>Pripisani lekovi:</mat-label>
-              <mat-select [(ngModel)]="selected_med" name="selected_med">
-                <mat-option *ngFor="let med of medList" [value]="med">
-                  {{med.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Odaberi lek:</mat-label>
+                  <mat-select [(ngModel)]="selected_med" name="selected_med">
+                    <mat-option *ngFor="let med of medList" [value]="med">
+                      {{med.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button (click)="addAnotherRecepie()">+</button>
+                <mat-form-field>
+                  <mat-label>Medicinska sestra zaduzena za overu:</mat-label>
+                  <mat-select [(ngModel)]="selected_nurse" name="selected_nurse">
+                    <mat-option *ngFor="let nurse of nurseList" [value]="nurse">
+                      {{nurse | json}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
 
-            <button (click)="addAnotherRecepie()">+</button>
-            <div *ngFor="let med of selected_meds">
-              <mat-list>{{med.name}} {{med.dosage}} </mat-list>
+              </section>
+            </form>
+          </mat-card> 
+          <!-- Analiza unetor pregleda-->
+          <mat-card>
+            <div *ngIf="inputHaveChanged()">
+              <mat-card-subtitle>Brzi pregled:</mat-card-subtitle>
+            PRIPISANI LEKOVI:
+            <div *ngFor="let med of new_report.medication">
+              <mat-list>{{med.name}}</mat-list>
             </div>
-          </section>
-        </form>
-      </mat-expansion-panel>
-    </mat-accordian>
-  </mat-card>
+            PRIPISANE TERAPIJE
+            <div *ngFor="let ther of new_report.therapies">
+              <mat-list>{{ther.name}}  </mat-list>
+            </div>
+          
+            
+          </div>
+          </mat-card>
+        </div>
 
-  <mat-card>
-    <mat-accordian>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Zakazi salu za operaciju </mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-form-field>
-          <mat-label>Operacione sale:</mat-label>
-          <mat-select  [(ngModel)]="selected_room" name="room">
-            <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        
-        <button (click)="checkAvailablilty()"> ? </button>
-        {{calendar | json}}
 
-        <button (click)="test()" *ngIf="selected_room">zakazi nesto</button>
-      </mat-expansion-panel>
-    </mat-accordian>
-  </mat-card>
+</mat-expansion-panel>
+</mat-accordian>
+</mat-card>
 
-  <mat-card>
-    <mat-accordian>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          Zakazi sledeci pregled
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-    </mat-accordian>
-  </mat-card>
+<mat-card>
+  <mat-accordian>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Zakazi salu za operaciju </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field>
+        <mat-label>Operacione sale:</mat-label>
+        <mat-select [(ngModel)]="selected_room" name="room">
+          <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <!-- End of form-->
-  <button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
+      <button (click)="checkAvailablilty()"> ? </button>
+      {{calendar | json}}
+      
+      
+    </mat-expansion-panel>
+  </mat-accordian>
+</mat-card>
+
+<mat-card>
+  <mat-accordian>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Zakazi sledeci pregled
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordian>
+</mat-card>
+
+<!-- End of form-->
+<button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
 </div>
 <!-- End about pacient-->

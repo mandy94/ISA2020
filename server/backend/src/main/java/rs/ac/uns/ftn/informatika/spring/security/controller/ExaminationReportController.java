@@ -63,16 +63,16 @@ public class ExaminationReportController {
 			User doctor = userservice.findById(reportdto.getDoctorid());
 
 			report.copyFromDTO(reportdto);
-			for(Long med_id: reportdto.getMedication())
+			for(Medicine med_id: reportdto.getMedication())
 			{
-				Medicine med = cdservice.getMedicineById(med_id);
+				Medicine med = cdservice.getMedicineById(med_id.getId());
 				if(med != null) {				
 					report.getMedication().add(med);
 					presservice.addPrescription(med);
 				}
 			}
-			for(Long t_id : reportdto.getTherapies()) {
-				Therapy t = cdservice.getTherapyById(t_id);
+			for(Therapy t_id : reportdto.getTherapies()) {
+				Therapy t = cdservice.getTherapyById(t_id.getId());
 				if(t!= null) {
 					report.getTherapies().add(t);
 				}

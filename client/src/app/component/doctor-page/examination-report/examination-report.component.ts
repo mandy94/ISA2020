@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { Report, Room, Appointment } from './report';
+import { Report, Room, Appointment, Medicine } from './report';
 
 
 @Component({
@@ -80,15 +80,20 @@ export class ExaminationReportComponent implements OnInit {
       return this.allVisits.length == 0 ? true : false;
   }
   addAnotherTherapy(){
+    this.changedInput = true;
     this.new_report.therapies.push(this.selected_therapy); 
-    console.log(this.new_report.therapies);
     
   }
   addAnotherRecepie() {
-    this.new_report.medication.push(this.selected_med.id);
-    // this.selected_meds.push(this.selected_med);
+    this.changedInput = true;
+    this.new_report.medication.push(this.selected_med);
+    
+    
   }
-
+  changedInput: boolean;
+  inputHaveChanged(){
+    return this.changedInput;
+  }
   ngOnInit() {
     this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
       .subscribe((data) => {
@@ -101,11 +106,10 @@ export class ExaminationReportComponent implements OnInit {
       });
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
   }
-  selected_med: any;
-  selected_room: Room;
   appointnent: Appointment;
   selected_meds = new Array<any>(); // FOR VIEW ONLY
-  
+  selected_med: Medicine;
+  selected_room: Room;
   selected_diagnose: any;
   selected_therapy: any;
   description: string;
@@ -115,8 +119,6 @@ export class ExaminationReportComponent implements OnInit {
 
     this.new_report.details = this.description;
     this.new_report.pacientid = this.currentPacient.id;
-    // this.new_report.medication = this.selected_med;
-    // this.new_report.therapies = this.selected_therapy;
 
     this.apiService.post(this.config.api_url + '/examination-report/add', this.new_report)
       .subscribe(() => this.getPacientExaminationReports());
@@ -135,6 +137,10 @@ export class ExaminationReportComponent implements OnInit {
   checkAvailablilty() {
 
     this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
-      .subscribe(data => { this.calendar = data });
+      .subscribe(data => { 
+        if(data && data.lenght >0)
+        this.calendar = data;
+        else
+        this.calendar = "SVi termini su slobodni"; });
   }
 }

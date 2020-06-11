@@ -30,7 +30,7 @@ import { CalendarComponent } from './component/nurce-page/calendar/calendar.comp
 import { RecepieComponent } from './component/nurce-page/recepie/recepie.component';
 import { NurceProfileComponent } from './component/nurce-page/nurce-profile/nurce-profile.component';
 import { DoctorComponent , ExaminationReportComponent} from './component/doctor-page';
-
+// import {FullCalendarModule} from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -59,6 +59,7 @@ import { DoctorComponent , ExaminationReportComponent} from './component/doctor-
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

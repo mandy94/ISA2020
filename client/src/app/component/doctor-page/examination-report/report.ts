@@ -2,17 +2,24 @@ import { Therapy } from 'app/codebook';
 
 export class Report{
     constructor(){
-        this.medication= new Array<number>();
+        this.medication= new Array<Medicine>();
         this.therapies = new Array<number>();
+        
     }
     pacientid: number;
     doctorid:number;
+    diagnose: Diagnose;
     therapies: Array<number>;
-    medication:any;
+    medication: Array<Medicine>;
     details: string;
 
 }
-export class Medication{
+export class Diagnose{
+    id:number;
+    code:string;
+    name:string;
+}
+export class Medicine{
     med_id: number;
     dosage: string;
     name: string;

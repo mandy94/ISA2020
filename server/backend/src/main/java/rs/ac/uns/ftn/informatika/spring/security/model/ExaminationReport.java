@@ -46,7 +46,8 @@ public class ExaminationReport {
     @JoinTable(name = "examine_therpay",
             joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
             inverseJoinColumns = {  @JoinColumn(name = "therapy_id", referencedColumnName = "id")})	
-	private List<Therapy> therapies = new ArrayList<Therapy>();
+	private List<Therapy> therapies = new ArrayList<Therapy>()
+	;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="is_examined")
