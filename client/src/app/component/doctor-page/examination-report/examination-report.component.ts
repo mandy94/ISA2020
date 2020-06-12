@@ -6,6 +6,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Report, Room, Appointment, Medicine } from './report';
+import { EventEmitterService } from 'app/service/event-emitter.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class ExaminationReportComponent implements OnInit {
 
   constructor(private apiService: ApiService,
     private config: ConfigService,
-    private userService: UserService
+    private userService: UserService,
+    private eventEmitterService: EventEmitterService 
   ) { }
   patiens: any;
   filteredOptions: Observable<any>;
@@ -127,15 +129,41 @@ export class ExaminationReportComponent implements OnInit {
   therapyList: any;
   calendar: any;
 
-  test() {
+  createAppointent() {
     this.appointnent = new Appointment();
     this.appointnent.pacientId = this.currentPacient.id;
     this.appointnent.room = this.selected_room.id;
 
     this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => this.checkAvailablilty);
   }
-  checkAvailablilty() {
+  pickedDate(){
+    
+    return this.selected_room ? true : false;
+  }
+  availableTimeList: any;
+  getRoomTime(){
+    if(this.selected_room!=null)
+    this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
+      .subscribe(data => { this.availableTimeList = data;this.refreshCalendar(this.selected_room.id.toString());});
+    
+  }
+  onRoomChange(){
+    this.getRoomTime();
+    this.refreshCalendar(this.selected_room.id.toString());
+  }
+  createAppointment(){
+  
+      let data = new Appointment();
+      data.room = this.selected_room.id;
+      this.eventEmitterService.createAppointment(this.selected_room.id.toString());
+  }
+  
+refreshCalendar(new_url: string){
+this.eventEmitterService.calendarRefresher(new_url);
+}
 
+  checkAvailablilty() {
+    this.getRoomTime();
     this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
       .subscribe(data => { 
         if(data && data.lenght >0)

@@ -136,12 +136,19 @@
       </mat-expansion-panel-header>
       <mat-form-field>
         <mat-label>Operacione sale:</mat-label>
-        <mat-select [(ngModel)]="selected_room" name="room">
+        <mat-select [(ngModel)]="selected_room"  (selectionChange)="onRoomChange()" name="room">
           <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
         </mat-select>
       </mat-form-field>
+    
+      <mat-form-field *ngIf="pickedDate()"> 
+      <mat-label>Vreme operacije:</mat-label>
+      <mat-select [(ngModel)]="selected_time" name="time">
+        <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}</mat-option>
+      </mat-select> 
+    </mat-form-field>
 
-      <button (click)="checkAvailablilty()"> ? </button>
+      <button (click)="createAppointment()"> Upisi u kalendar </button>
       <div *ngIf="selected_room">
         <app-calendar data_url="{{selected_room.id}}"></app-calendar>
       </div>

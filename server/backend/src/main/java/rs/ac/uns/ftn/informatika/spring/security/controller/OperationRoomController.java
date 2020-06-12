@@ -33,20 +33,7 @@ public class OperationRoomController {
 		return orservice.getRooms();	
 	}
 	
-	
-	@PostMapping("/operation-room/new-appointment")
-	public void createAppointment( @RequestBody AppointmentDTO appoint) {
-		System.out.println(appoint);
-		OperationRoom room = orservice.getRoomById(appoint.getRoom());
-		if(room!= null)
-		{
-			Appointment  app = new Appointment(appoint);
-			app.setRoom(room);
-			
-			apservice.save(app);
-		}
-		
-	}
+
 	
 	@GetMapping("/operation-rooms/availability/{id}")
 	public List<Appointment> getAvailability(@PathVariable Long id){

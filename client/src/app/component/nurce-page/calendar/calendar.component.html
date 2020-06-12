@@ -4,6 +4,9 @@
         [plugins]="calendarPlugins" 
         defaultView="dayGridMonth"
         [deepChangeDetection]="true"
+        (dateClick) = "dateClick($event)"
+        
+        [selectable]="true"
         contentHeight="auto"
         [events]= "eventList">
     </full-calendar>

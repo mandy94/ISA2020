@@ -13,7 +13,6 @@ INSERT INTO DIAGNOSES (id, code, name) VALUES (918, 'ZQ9601', 'Dijabetes');
 INSERT INTO THERAPIES (id, name) VALUES (101 ,'Fiziklana terapija');
 INSERT INTO THERAPIES (id, name) VALUES (102 ,'Inhalacija');
 
-
 INSERT INTO MEDICATIONS (id, name) VALUES (1, 'Penicilin');
 INSERT INTO MEDICATIONS (id, name) VALUES (2, 'Nixar');
 INSERT INTO MEDICATIONS (id, name) VALUES (3, 'Insulin');
@@ -21,6 +20,15 @@ INSERT INTO MEDICATIONS (id, name) VALUES (4, 'Ventolin');
 
 INSERT INTO OPERATIONROOMS (id, name, code) VALUES (101, 'Operaciona sala 1', 'T1');
 INSERT INTO OPERATIONROOMS (id, name, code) VALUES (102, 'Operaciona sala 2', 'T2');
+
+
+INSERT INTO SCHEDULERTIMES ( id, room, start , ending) VALUES (2,101 , '08:00', '10:30');
+INSERT INTO SCHEDULERTIMES (id, room, start , ending) VALUES (6,101 , '10:30', '12:30');
+INSERT INTO SCHEDULERTIMES (id, room, start , ending) VALUES (9,101 , '13:00', '14:30');
+INSERT INTO SCHEDULERTIMES ( id,room, start , ending) VALUES (10,101 , '14:30', '16:00');
+INSERT INTO SCHEDULERTIMES ( id,room, start , ending) VALUES (23,102 , '08:15', '10:45');
+INSERT INTO SCHEDULERTIMES ( id,room, start , ending) VALUES (24, 102 , '10:15', '12:45');
+
 
 INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (101, '2020-06-02T13:00', '2020-06-02T16:00', 4, 102);
 INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (102, '2020-06-03T10:00', '2020-06-03T10:00', 4, 102);

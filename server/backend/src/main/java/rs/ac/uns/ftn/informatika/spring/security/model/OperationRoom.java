@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-// POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
 @Table(name="OPERATIONROOMS")
 public class OperationRoom {
@@ -31,11 +30,16 @@ public class OperationRoom {
     String code;
     
     @OneToMany(mappedBy="room")
+    @Column(name="time")
+//    @JsonIgnore
+    List<SchedulerTime> workingTime = new ArrayList<SchedulerTime>();
+    
+    @OneToMany(mappedBy="room")
     @Column(name="scheduler")
     @JsonIgnore
     List<Appointment> scheduler = new ArrayList<Appointment>();
 
-    
+    public OperationRoom() {}
     public void setName(String name) {
         this.name = name;
     }

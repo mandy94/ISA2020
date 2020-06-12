@@ -6,26 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
+import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.repository.AppointmentRepository;
+import rs.ac.uns.ftn.informatika.spring.security.repository.TimeRepository;
 import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
+import rs.ac.uns.ftn.informatika.spring.security.service.SchedulerTimeService;
 
 @Service
-public class AppointmentServiceImpl implements AppointmentService {
+public class SchedulerTimeServiceImpl implements SchedulerTimeService {
 
 
 	@Autowired
-	private AppointmentRepository repo;
+	private TimeRepository repo;
 
 	@Override
-	public List<Appointment> getAppointmentsForRoom(Long id) {
-		return repo.getAppointmentsForRoom(id);
+	public List<SchedulerTime> getTimesForOperationRoom(Long id) {
+		return repo.findTimeByRoomId(id);
 	}
 
 	@Override
-	public void addAppointment(Appointment data) {
+	public void addTime(SchedulerTime data) {
 		repo.save(data);
-	}
-
+		}
 
 
 	

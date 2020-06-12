@@ -30,12 +30,16 @@ export class Room{
     name: string;
     code:string;
 }
+export class DateTime{
+date:string
+time:string
+}
 export class Appointment{
     constructor(){
-      //  this.pacientId = 1;
-        this.begining = "00:00";
-        this.ending= "24:00";
-      //  this.room= 1;
+    //    this.pacientId = 4;
+    //     this.begining = "2020-06-09T00:00";
+    //     this.ending= "2020-06-09T24:00";
+    //    this.room= 101;
     }
     room:number;
     pacientId: number;
