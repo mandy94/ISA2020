@@ -9,8 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 
 @Entity
@@ -18,8 +16,10 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 public class Appointment {
 	Long pacientid;
 	//List<User> mandatoryDoctors = new ArrayList<User>();
-	
-	String begining, ending;
+	@Column(name="start")
+	String start;
+	@Column(name="ending")
+	String end;
 	
 	@Id
 	@Column(name="id")
@@ -28,14 +28,13 @@ public class Appointment {
 	
 	@ManyToOne
 	@JoinColumn(name="room")
-//	@JsonIgnore
 	OperationRoom room;
 
 	public Appointment() {}
 	public Appointment(AppointmentDTO appoint) {
-	pacientid = appoint.getPacientId();
-	begining =  appoint.getBegining();
-	ending = appoint.getEnding();
+		pacientid = appoint.getPacientId();
+		start =  appoint.getBegining();
+		end = appoint.getEnding();
 	}
 
 	public Long getPacientid() {
@@ -57,21 +56,6 @@ public class Appointment {
 
 
 
-	public String getBegining() {
-		return begining;
-	}
-
-	public void setBegining(String begining) {
-		this.begining = begining;
-	}
-
-	public String getEnding() {
-		return ending;
-	}
-
-	public void setEnding(String ending) {
-		this.ending = ending;
-	}
 
 	public OperationRoom getRoom() {
 		return room;
@@ -81,10 +65,18 @@ public class Appointment {
 		this.room = room;
 	}
 
-	@Override
-	public String toString() {
-		return "Appointment [pacientid=" + pacientid + ", begining=" + begining + ", ending=" + ending + ", id=" + id
-				+ ", room=" + room + "]";
+	
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 

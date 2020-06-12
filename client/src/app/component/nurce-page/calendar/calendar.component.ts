@@ -1,9 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import momentPlugin from '@fullcalendar/moment';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
 
 import 'fullcalendar';
+import { ApiService, ConfigService } from 'app/service';
 
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
+
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -11,21 +16,25 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 })
 
 export class CalendarComponent implements OnInit {
+  eventList = []
+  calendarPlugins = [ timeGridPlugin ,dayGridPlugin,momentPlugin ]; // important!
 
+  @Input() data_url :string;
+  @ViewChild('calendar') calendarComponent: any;
   
-  
-  constructor() {
+  constructor(private apiService: ApiService,
+    private config: ConfigService) {
     
   }
-  ngOnInit() {
-    var calendarEl = document.getElementById('full-calendar');
-  
-    var calendar = new Calendar(calendarEl, {
-      plugins: [ dayGridPlugin ]
+  ngOnInit() {  
+    console.log(this.data_url)
+      this.apiService.get(this.config.api_url + "/appointment/room/" +this.data_url )
+      .subscribe(data => {
+        this.eventList = data;
+        let c = this.calendarComponent.getApi();
+        c.render();
+        
     });
-  
-    calendar.render(); 
+         
   }
-
-
 }

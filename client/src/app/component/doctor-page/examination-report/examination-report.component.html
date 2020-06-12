@@ -142,8 +142,9 @@
       </mat-form-field>
 
       <button (click)="checkAvailablilty()"> ? </button>
-      {{calendar | json}}
-      
+      <div *ngIf="selected_room">
+        <app-calendar data_url="{{selected_room.id}}"></app-calendar>
+      </div>
       
     </mat-expansion-panel>
   </mat-accordian>

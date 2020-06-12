@@ -22,7 +22,13 @@ INSERT INTO MEDICATIONS (id, name) VALUES (4, 'Ventolin');
 INSERT INTO OPERATIONROOMS (id, name, code) VALUES (101, 'Operaciona sala 1', 'T1');
 INSERT INTO OPERATIONROOMS (id, name, code) VALUES (102, 'Operaciona sala 2', 'T2');
 
---INSERT INTO APPOINTMENTS (id, begining, ending, pacientid, room) VALUES (1, '10:30', '12:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (101, '2020-06-02T13:00', '2020-06-02T16:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (102, '2020-06-03T10:00', '2020-06-03T10:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (103, '2020-06-04T09:00', '2020-06-04T09:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (104, '2020-06-010T08:00', '2020-06-10T08:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (105, '2020-06-12T13:00', '2020-06-12T16:00', 4, 102);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (106, '2020-06-12T16:00', '2020-06-12T18:00', 4, 101);
+INSERT INTO APPOINTMENTS (id, start, ending, pacientid, room) VALUES (107, '2020-06-02T13:00', '2020-06-02T16:00', 4, 101);
 
 INSERT INTO USERS (jmbg, role ,username, password, first_name, last_name, email, enabled, last_password_reset_date,birthdate) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'user@example.com', true, '2017-10-01 21:58:58.508-07', '10.1.1980');
 INSERT INTO USERS (jmbg, role,  username, password, first_name, last_name, email, enabled, last_password_reset_date,birthdate) VALUES (1005906506325, 'NURCE', 'medsis', '$2a$04$iSAH8.efg/0KXf8cwW8YQeyLCyLAyV7C7FRTeJCKa6e1bPXuxeute', 'Jelisaveta', 'Markovic', 'user@example.com', true, '2017-10-01 21:58:58.508-07','27.5.2005');

@@ -1,1 +1,11 @@
-<div id="full-calendar"></div>
+<div >
+    <full-calendar  #calendar
+        
+        [plugins]="calendarPlugins" 
+        defaultView="dayGridMonth"
+        [deepChangeDetection]="true"
+        contentHeight="auto"
+        [events]= "eventList">
+    </full-calendar>
+    
+</div>
