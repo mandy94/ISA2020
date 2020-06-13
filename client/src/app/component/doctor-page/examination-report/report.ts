@@ -25,14 +25,26 @@ export class Medicine{
     name: string;
     
 }
+export class MailMessage{
+    constructor(r,t,c){
+        // this.sender = s;
+        this.receiver = r;
+        this.title = t;
+        this.content = c;
+    }
+    // sender: number;
+    receiver:number;
+    content:string;
+    title:string;
+}
 export class Room{
     id:number;
     name: string;
     code:string;
 }
 export class DateTime{
-date:string
-time:string
+ start: string;
+ ending: string;
 }
 export class Appointment{
     constructor(){
@@ -41,8 +53,11 @@ export class Appointment{
     //     this.ending= "2020-06-09T24:00";
     //    this.room= 101;
     }
+    // odabrani termin
+    term : DateTime;
     room:number;
     pacientId: number;
     begining:string;
     ending:string;
+    doctorid:string;
 }

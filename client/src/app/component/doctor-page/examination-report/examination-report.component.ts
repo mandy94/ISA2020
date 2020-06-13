@@ -96,12 +96,15 @@ export class ExaminationReportComponent implements OnInit {
   inputHaveChanged(){
     return this.changedInput;
   }
+  loggedDoctor:any;
   ngOnInit() {
     this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
       .subscribe((data) => {
         this.patiens = data;
-        this.userService.getMyInfo().subscribe(data => this.new_report.doctorid = data.id);
-        this.filteredOptions = this.myControl.valueChanges.pipe(
+        this.userService.getMyInfo().subscribe(data =>{
+            this.loggedDoctor = data;    
+           this.new_report.doctorid = data.id});
+           this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filter(value))
         );
@@ -141,6 +144,7 @@ export class ExaminationReportComponent implements OnInit {
     return this.selected_room ? true : false;
   }
   availableTimeList: any;
+  selected_time: any;
   getRoomTime(){
     if(this.selected_room!=null)
     this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
@@ -154,8 +158,16 @@ export class ExaminationReportComponent implements OnInit {
   createAppointment(){
   
       let data = new Appointment();
+    if(this.selected_room === null || this.selected_room === undefined)
+    { 
+      alert("Morate odabrati sobu prvi");
+      return;
+    }
       data.room = this.selected_room.id;
-      this.eventEmitterService.createAppointment(this.selected_room.id.toString());
+      data.term = this.selected_time;
+      data.pacientId = this.currentPacient.id;
+      data.doctorid = this.loggedDoctor.id;
+      this.eventEmitterService.createAppointment(data);
   }
   
 refreshCalendar(new_url: string){

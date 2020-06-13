@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.informatika.spring.security.dto;
 
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
-
 public class AppointmentDTO {
 
 	Long id;
