@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.repository.AppointmentRepository;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
 
@@ -34,10 +32,15 @@ public class OperationRoomController {
 	}
 	
 
-	
 	@GetMapping("/operation-rooms/availability/{id}")
 	public List<Appointment> getAvailability(@PathVariable Long id){
 		return apservice.getAppointmentsForRoom(id);
 		}
+	@GetMapping("/operation-room/{id}/mandatory-doctors")
+	public List<User> getMandatoryDoctors(@PathVariable Long id){
+		return orservice.getRoomById(id).getMandatoryDoctors();
+		
+	
+	}
 
 }

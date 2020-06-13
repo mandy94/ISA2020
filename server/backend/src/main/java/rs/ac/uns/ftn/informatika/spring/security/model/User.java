@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -65,7 +66,11 @@ public class User implements UserDetails {
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
-
+    
+    @ManyToMany(mappedBy="mandatoryDoctors", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<OperationRoom> dedicatedRoom = new ArrayList<OperationRoom>();
+    
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -205,6 +210,14 @@ public class User implements UserDetails {
 
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
+	}
+
+	public List<OperationRoom> getDedicatedRoom() {
+		return dedicatedRoom;
+	}
+
+	public void setDedicatedRoom(List<OperationRoom> dedicatedRoom) {
+		this.dedicatedRoom = dedicatedRoom;
 	}
 
 }

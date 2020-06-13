@@ -3,11 +3,16 @@ package rs.ac.uns.ftn.informatika.spring.security.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,6 +44,13 @@ public class OperationRoom {
     @JsonIgnore
     List<Appointment> scheduler = new ArrayList<Appointment>();
 
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "mandatory_doctors",
+            joinColumns = {  @JoinColumn(name = "room_id", referencedColumnName = "id")},
+            inverseJoinColumns = {  @JoinColumn(name = "user_id", referencedColumnName = "id")})
+    List<User> mandatoryDoctors = new ArrayList<User>();
+	
     public OperationRoom() {}
     public void setName(String name) {
         this.name = name;
@@ -61,11 +73,26 @@ public class OperationRoom {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public List getScheduler() {
+	
+	
+	public List<SchedulerTime> getWorkingTime() {
+		return workingTime;
+	}
+	public void setWorkingTime(List<SchedulerTime> workingTime) {
+		this.workingTime = workingTime;
+	}
+	public List<User> getMandatoryDoctors() {
+		return mandatoryDoctors;
+	}
+	public void setMandatoryDoctors(List<User> mandatoryDoctors) {
+		this.mandatoryDoctors = mandatoryDoctors;
+	}
+	public List<Appointment> getScheduler() {
 		return scheduler;
 	}
-	public void setScheduler(List scheduler) {
+	public void setScheduler(List<Appointment> scheduler) {
 		this.scheduler = scheduler;
 	}
+	
 
 }
