@@ -12,6 +12,8 @@ public class UserRequest {
 	private String firstname;
 
 	private String lastname;
+	private String email;
+	
 
 	public String getUsername() {
 		return username;
@@ -27,6 +29,15 @@ public class UserRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+public UserRequest() {}
+	public UserRequest( String username, String password, String firstname, String lastname) {
+		super();
+		
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
 	}
 
 	public String getFirstname() {
@@ -51,6 +62,14 @@ public class UserRequest {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

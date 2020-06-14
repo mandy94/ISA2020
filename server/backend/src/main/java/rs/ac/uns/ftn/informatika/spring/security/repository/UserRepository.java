@@ -11,6 +11,8 @@ import rs.ac.uns.ftn.informatika.spring.security.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername( String username );
     
+    @Query("Select u from User u WHERE u.status = 'ACTIVE'")
+   List<User> findAll();
     @Query(" SELECT u FROM User u WHERE u.jmbg = :jmbg")
     User getByJMBG( Long jmbg);
     
@@ -19,6 +21,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     @Query("SELECT u FROM User u WHERE u.role = :role ")
     List<User> getUsersFromRole(String role);
+
+    @Query("select u from User u Where u.status = 'PENDING'")
+	List<User> findPending();
+    
+    @Query("select u from User u where u.status = 'DENIED'")
+    List<User>getDeniedUsers();
 }
 
 

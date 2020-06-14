@@ -1,13 +1,13 @@
 package rs.ac.uns.ftn.informatika.spring.security.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import rs.ac.uns.ftn.informatika.spring.security.dto.MessageDTO;
 import rs.ac.uns.ftn.informatika.spring.security.exception.ResourceConflictException;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserRequest;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserTokenState;
 import rs.ac.uns.ftn.informatika.spring.security.security.TokenUtils;
 import rs.ac.uns.ftn.informatika.spring.security.security.auth.JwtAuthenticationRequest;
+import rs.ac.uns.ftn.informatika.spring.security.service.EmailService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 import rs.ac.uns.ftn.informatika.spring.security.service.impl.CustomUserDetailsService;
 
@@ -45,6 +49,9 @@ public class AuthenticationController {
 
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
+	
+	@Autowired
+	private EmailService eservice;
 	
 	@Autowired
 	private UserService userService;
@@ -72,21 +79,54 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 	}
 
+	private String ADMIN_MAIL_ADRESS = "enkoder94@gmail.com";
+	private String linkForAllowingRegistration = "http://localhost:4200/";
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/signup")
-	public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<User> registerUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
 
 		User existUser = this.userService.findByUsername(userRequest.getUsername());
 		if (existUser != null) {
 			throw new ResourceConflictException(userRequest.getId(), "Username already exists");
 		}
-
+		
+		
 		User user = this.userService.save(userRequest);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+		eservice.sendEmail(user.getEmail(), 
+				ADMIN_MAIL_ADRESS,
+				new MessageDTO("Zahtev za registraciju" , 
+				"Novi korisnik " + user.getEmail() + " zahteva da se registruje. Ako zelite da ga prihvatite kliknite na sledeci link: "
+						 + linkForAllowingRegistration  +" ako zelite da odbijte, kliknite na ovaj <a href=''> link </a>"));
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
 		return new ResponseEntity<>(user, HttpStatus.CREATED);
+ 
 	}
-
+	@GetMapping(value="/allow/{username}", consumes = "application/json")
+	public List<User> allowRegistration(@PathVariable String username) {
+		User usr = userService.findByUsername(username);
+		usr.setStatus("REGISTERED");
+		usr.setEnabled(true);
+		
+		userService.saveUser(usr); 
+		return userService.getPendingUsers();
+	}
+	
+	@GetMapping(value="/deny/{username}", consumes = "application/json")
+	public List<User> denyRegistration(@PathVariable String username) {
+		User usr = userService.findByUsername(username);
+		usr.setStatus("DENIED");
+		
+		userService.saveUser(usr); 
+		return userService.getPendingUsers();
+	}
+	
+	
+	
+	
+	
+	
+	
 	// U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
 	@PostMapping(value = "/refresh")
 	public ResponseEntity<UserTokenState> refreshAuthenticationToken(HttpServletRequest request) {

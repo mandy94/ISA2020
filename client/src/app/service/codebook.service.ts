@@ -17,4 +17,6 @@ export class CodebookService {
   
   postDiagnose(diagnose){ return this.apiService.post(this._api_url + "codes/diagnose", diagnose);}
   postTherapy(therapy){return this.apiService.post(this._api_url + "codes/therapy" , therapy);}
+  postRoom(room){return this.apiService.post(this._api_url + "codes/room", room);}
+  postMeds(med){return this.apiService.post(this._api_url + "codes/med", med);}
 }

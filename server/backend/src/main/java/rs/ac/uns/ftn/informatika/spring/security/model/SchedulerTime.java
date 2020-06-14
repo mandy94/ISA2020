@@ -54,4 +54,9 @@ public class SchedulerTime {
 		this.room = room;
 	}
 
+	@Override
+	public String toString() {
+		return "SchedulerTime [start=" + start + ", ending=" + ending + ", room=" + room + "]";
+	}
+
 }

@@ -1,0 +1,24 @@
+<h1> Korisnicki zahtevi za registraciju</h1>
+{{status_message}}
+<div *ngIf="!pendingUsers()">
+ <h3> Nema korisnika koji cekaju na registraciju.</h3>
+</div>
+
+  <div *ngFor="let user of pendingUserList">
+    {{ user | json }}
+    <button (click)="allow(user.username)" > odobri</button>
+    <button (click)="deny(user.username)"> odjebi</button>
+  </div>
+
+<h1> Registrovani i aktivni korisntici</h1>
+<div *ngFor="let user of activeUserList">
+  <mat-list>{{ user.username }}</mat-list>
+  
+</div>
+
+<h1> Neregistrovani i odbijani korisnici</h1>
+<div *ngFor="let user of deniedUserList">
+  <mat-list>{{user.id}} {{user.username}}</mat-list>
+</div>
+
+<h1> Registrovani i blokirani korisnici</h1>

@@ -48,10 +48,13 @@ public class UserServiceImpl implements UserService {
 		User u = new User();
 		u.setUsername(userRequest.getUsername());
 		// pre nego sto postavimo lozinku u atribut hesiramo je
-		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+//		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+		u.setPassword(userRequest.getPassword());
 		u.setFirstName(userRequest.getFirstname());
 		u.setLastName(userRequest.getLastname());
-		u.setEnabled(true);
+		u.setEmail(userRequest.getEmail());
+		u.setEnabled(false);
+		u.setStatus("PENDING");
 		
 		List<Authority> auth = authService.findByname("ROLE_USER");
 		// u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
@@ -81,6 +84,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public List<User> getPendingUsers() {
+	return userRepository.findPending();
+	}
+
+	@Override
+	public User saveUser(User user) {
+		
+		return userRepository.save(user);
+	}
+
+	@Override
+	public List<User> getDeniedUsers() {
+		return userRepository.getDeniedUsers();
 	}
 
 }

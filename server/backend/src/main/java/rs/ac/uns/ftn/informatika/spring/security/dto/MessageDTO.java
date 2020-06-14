@@ -6,6 +6,10 @@ public class MessageDTO {
 	String content;
 	String title;
 	
+	public MessageDTO(String t, String c) {
+		title = t;
+		content = c;
+	}
 	public String getContent() {
 		return content;
 	}

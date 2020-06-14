@@ -21,6 +21,9 @@ public class Appointment {
 	@Column(name="ending")
 	String end;
 	
+	@Column(name="date")
+	String date;
+	
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +80,18 @@ public class Appointment {
 	}
 	public void setEnd(String end) {
 		this.end = end;
+	}
+	public String getDateStart() {
+		return date+"T"+start;
+	}
+	public String getDateEnd() {
+		return date + "T" +end;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 

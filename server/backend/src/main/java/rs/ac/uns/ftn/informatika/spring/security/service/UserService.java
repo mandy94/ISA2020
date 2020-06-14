@@ -13,7 +13,10 @@ public interface UserService {
     User findByUsername(String username);
     List<User> findAll ();
 	User save(UserRequest userRequest);
+	User saveUser(User user);
 	List<User> getPacients();
 	//List<User> getDoctors();
 	//List<User> getNurces();
+	List<User> getPendingUsers();
+	List<User> getDeniedUsers();
 }

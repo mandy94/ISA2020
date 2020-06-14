@@ -147,7 +147,7 @@
         <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}</mat-option>
       </mat-select> 
     </mat-form-field>
-
+    <button (click)="testAvaialbility()"> Proveri validnost </button>
       <button (click)="createAppointment()"> Upisi u kalendar </button>
       <div *ngIf="selected_room">
         <app-calendar data_url="{{selected_room.id}}"></app-calendar>

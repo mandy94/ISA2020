@@ -39,10 +39,11 @@ public class CodebookController {
 	
 	@PostMapping(value = "/codes/therapy",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Therapy> addTherapy(@RequestBody Therapy t){
-		
+//		
 		Therapy nt= new Therapy();
 		nt.setName(t.getName());
 		return codebookService.saveTherapy(nt);
+
 	}
 	@PostMapping(value = "/codes/room",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<OperationRoom> addRoom(@RequestBody OperationRoom o){
@@ -51,6 +52,13 @@ public class CodebookController {
 		or.setName(o.getName());
 	
 		return codebookService.saveOperationRoom(or);
+		}
+	
+	@PostMapping(value = "/codes/med",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public List<Medicine> addmed(@RequestBody Medicine m){
+		Medicine mm = new Medicine();
+		mm.setName(m.getName());
+		return codebookService.saveMedicine(mm);
 		}
 	
 	

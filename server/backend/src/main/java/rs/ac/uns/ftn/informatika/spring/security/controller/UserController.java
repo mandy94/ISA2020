@@ -1,9 +1,7 @@
 package rs.ac.uns.ftn.informatika.spring.security.controller;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,7 +44,14 @@ public class UserController {
 	public User loadByJMBG(@PathVariable Long jmbg) {
 		return this.userService.findByJMBG(jmbg);
 	}
-
+	@GetMapping("/users/pending")
+	public List<User> getPendingUsers(){
+		return this.userService.getPendingUsers();
+	}
+	@GetMapping("/users/deny")
+	public List<User> getDeniedUsers(){
+		return this.userService.getDeniedUsers();
+	}
 	@GetMapping("/user/all")
 	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> loadAll() {

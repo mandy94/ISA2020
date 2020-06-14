@@ -36,7 +36,7 @@ public class AppointmentController {
 		List<CalendarAppointment> calendar = new ArrayList<CalendarAppointment>();
 		for(Appointment temp: appService.getAppointmentsForRoom(id)) {
 			if(temp.getRoom().getId() == id)
-			calendar.add(new CalendarAppointment(temp.getStart(), temp.getEnd(),"Operacija u "+ temp.getRoom().getName()));
+			calendar.add(new CalendarAppointment(temp.getDateStart(), temp.getDateEnd(),"Operacija u "+ temp.getRoom().getName()));
 		}
 		return calendar;
 	}

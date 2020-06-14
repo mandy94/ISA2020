@@ -8,9 +8,21 @@ export class ConfigService {
   private _api_url = 'http://localhost:8080/api';
   private _auth_url = 'http://localhost:8080/auth';
   private _user_url = this._api_url + '/user';
-
+ 
+get auth_url(): string{
+  return this._auth_url;}
   get api_url():String{
     return this._api_url;
+  }
+  private _pending_users_url = this.api_url + '/users/pending';
+  get pending_users_url():string{
+    return this._pending_users_url;
+  }
+   
+  private _denied_users_url = this.api_url + '/users/deny'
+
+  get denied_users_url():string{
+    return this._denied_users_url;
   }
   private _refresh_token_url = this._api_url + '/refresh';
   get refresh_token_url(): string {

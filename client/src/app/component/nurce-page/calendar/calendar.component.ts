@@ -9,8 +9,6 @@ import 'fullcalendar';
 import { ApiService, ConfigService } from 'app/service';
 import { EventEmitterService } from 'app/service/event-emitter.service';
 import { Appointment, MailMessage } from 'app/component/doctor-page/examination-report/report';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-
 
 
 @Component({
@@ -34,14 +32,12 @@ export class CalendarComponent implements OnInit {
   c: any;
   ngOnInit() {
 
-
-    if (this.eventEmitterService.subsVar == undefined) {
-      this.eventEmitterService.subsVar = this.eventEmitterService.
+     this.eventEmitterService.
         invoker.subscribe((name: string) => {
           this.refreshCalendar(this.eventEmitterService.data);
-
         });
-    }
+        
+    
 
     this.eventEmitterService.
       invoker.subscribe((name: string) => { this.createAppointment(this.eventEmitterService.room); })
@@ -65,7 +61,8 @@ export class CalendarComponent implements OnInit {
         let msgbody = new MailMessage(data.pacientId, "Zakazivanje operacije", content);
         this.apiService.post(this.config.api_url + '/email/send', msgbody)
         .subscribe(()=>{
-          this.refreshCalendar(data.room.toString())
+          this.refreshCalendar(data.room.toString());
+          data = null;
         });
         
       });
@@ -85,6 +82,7 @@ export class CalendarComponent implements OnInit {
   dateClick($event) {
     this.clickedDate = $event.dateStr;
     console.log('Clicked on: ' + $event.dateStr);
+    this.eventEmitterService.testAvailability($event.dateStr);
   }
 
 }

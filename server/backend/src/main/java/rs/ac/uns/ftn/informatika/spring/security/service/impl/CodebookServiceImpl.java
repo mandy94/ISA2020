@@ -36,39 +36,26 @@ public class CodebookServiceImpl implements CodebookService {
 	private OperationRoomRepository orepo;
 
 
-	
+	// DIAGNOSES
 	@Override
 	public List<Diagnose> getCodesForDiagnoses() {
 		return drepo.findAll();
 	}
 
-	@Override
-	public List<Medicine> getCodesForMedication() {
-		return mrepo.findAll();
-	}
 
 	
-
-	@Override
-	public List<OperationRoom> getCodesForOperationRooms() {
-		return orepo.findAll();
-	}
-	@Override
-	public List<Therapy> getCodesForTherapies() {
-		return trepo.findAll();
-	}
-
 	@Override
 	public List<Diagnose> saveDiagnose(Diagnose d) {
 		drepo.save(d);
 		return drepo.findAll();
 	}
-
+	
+	// ROOOOMS
 	@Override
-	public List<Medicine> saveMedicine(Medicine m) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OperationRoom> getCodesForOperationRooms() {
+		return orepo.findAll();
 	}
+	
 
 	@Override
 	public List<OperationRoom> saveOperationRoom(OperationRoom o) {
@@ -76,25 +63,45 @@ public class CodebookServiceImpl implements CodebookService {
 		return orepo.findAll();
 	}
 
+	// THERPAIESS
+	@Override
+	public List<Therapy> getCodesForTherapies() {
+		return trepo.findAll();
+	}
 	@Override
 	public List<Therapy> saveTherapy(Therapy t) {
 		trepo.save(t);
 		return trepo.findAll();
 	}
-
-	@Override
-	public List<ExaminationReport> getCodesForExaminationReports() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Therapy getTherapyById(Long id) {
 		return trepo.findById(id).orElse(null);
 	}
 
+
+	// MEDICATIONSS
+	@Override
+	public List<Medicine> saveMedicine(Medicine m) {
+		 mrepo.save(m);
+		 return mrepo.findAll();
+	}
+	
+	@Override
+	public List<Medicine> getCodesForMedication() {
+		return mrepo.findAll();
+	}
+
+
 	@Override
 	public Medicine getMedicineById(Long id) {
 		return mrepo.findById(id).orElse(null);
 	}
+
+	// othersss
+	@Override
+	public List<ExaminationReport> getCodesForExaminationReports() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

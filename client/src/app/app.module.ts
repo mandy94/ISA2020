@@ -31,6 +31,7 @@ import { RecepieComponent } from './component/nurce-page/recepie/recepie.compone
 import { NurceProfileComponent } from './component/nurce-page/nurce-profile/nurce-profile.component';
 import { DoctorComponent , ExaminationReportComponent} from './component/doctor-page';
 import {FullCalendarModule} from '@fullcalendar/angular';
+import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {FullCalendarModule} from '@fullcalendar/angular';
     NurceProfileComponent,
     DoctorComponent,
     ExaminationReportComponent,
+    RegistrationRequestComponent,
     
   ],
   imports: [

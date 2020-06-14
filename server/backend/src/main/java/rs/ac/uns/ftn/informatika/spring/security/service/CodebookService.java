@@ -11,9 +11,9 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 public interface CodebookService {
 	 List<Diagnose> getCodesForDiagnoses();
 	 List<Medicine> getCodesForMedication();
-	 List<ExaminationReport> getCodesForExaminationReports();
 	 List<OperationRoom> getCodesForOperationRooms();
 	 List<Therapy> getCodesForTherapies();
+	 List<ExaminationReport> getCodesForExaminationReports();
 	 
 	 List<Diagnose> saveDiagnose(Diagnose d);
 	 List<Medicine> saveMedicine(Medicine m);

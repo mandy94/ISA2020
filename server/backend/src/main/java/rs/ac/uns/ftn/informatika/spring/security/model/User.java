@@ -63,7 +63,9 @@ public class User implements UserDetails {
 
     @Column(name = "enabled")
     private boolean enabled;
-
+    
+    @Column(name="status")
+    private String status;
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
     
@@ -218,6 +220,14 @@ public class User implements UserDetails {
 
 	public void setDedicatedRoom(List<OperationRoom> dedicatedRoom) {
 		this.dedicatedRoom = dedicatedRoom;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

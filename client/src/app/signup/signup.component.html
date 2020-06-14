@@ -5,33 +5,33 @@
         <h2>{{ title }}</h2>
       </mat-card-title>
       <mat-card-subtitle>
-        <h2>Angular Spring Starter</h2>
+        <h2>Registraciona forma</h2>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <p *ngIf="notification" [class]="notification.msgType">{{notification.msgBody}}</p>
       <form (ngSubmit)="onSubmit()" *ngIf="!submitted" [formGroup]="form">
         <mat-form-field>
-          <label>Username: </label>
+          <label>Korisnicko ime: </label>
           <input formControlName="username" matInput required>
         </mat-form-field>
         <mat-form-field>
-          <label>Password: </label>
+          <label>Sifra: </label>
           <input formControlName="password" matInput required type="password">
         </mat-form-field>
         <mat-form-field>
-          <label>First Name: </label>
+          <label>Ime: </label>
           <input formControlName="firstname" matInput>
         </mat-form-field>
         <mat-form-field>
-          <label>Last Name: </label>
+          <label>Prezime: </label>
           <input formControlName="lastname" matInput>
         </mat-form-field>
         <mat-form-field>
-          <label>Email: </label>
+          <label>Email adresa: </label>
           <input formControlName="email" matInput>
         </mat-form-field>
-        <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Sign up</button>
+        <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">registruj se</button>
       </form>
       <br>
       <mat-spinner *ngIf="submitted" mode="indeterminate"></mat-spinner>

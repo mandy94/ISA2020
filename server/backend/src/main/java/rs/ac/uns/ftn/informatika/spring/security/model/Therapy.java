@@ -23,7 +23,7 @@ public class Therapy  {
 
 	@Id
 	@Column(name="id",columnDefinition = "serial")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name="name")

@@ -11,6 +11,7 @@ export class EventEmitterService {
     
   room: any;
   data:any;
+  public pickedDate:any;
     
   constructor() { }    
     
@@ -21,6 +22,11 @@ export class EventEmitterService {
 
   createAppointment(room){
     this.room = room;
+    this.invoker.emit();
+  }
+
+  testAvailability(date:string){
+    this.pickedDate = date;
     this.invoker.emit();
   }
 }

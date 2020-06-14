@@ -10,6 +10,7 @@ import {ForbiddenComponent} from './forbidden';
 import {SignupComponent} from './signup';
 import {PacientsComponent,  CalendarComponent, RecepieComponent, NurceProfileComponent} from './component/index';
 import {DoctorComponent, ExaminationReportComponent} from './component/doctor-page';
+import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
 export const routes: Routes = [
   {
     path: '',
@@ -50,6 +51,9 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [GuestGuard]
+  },{
+    path: 'registration-request',
+    component: RegistrationRequestComponent
   },
   {
     path: 'change-password',

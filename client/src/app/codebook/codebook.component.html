@@ -19,14 +19,14 @@
     <mat-card-content>
       <mat-list-item *ngFor="let item of rooms"> {{item.id}}. {{item.name}} </mat-list-item>
     </mat-card-content>
-    <mat-card-action> <input><button> Dodaj</button></mat-card-action>
+    <mat-card-action> <input type="text" [formControl] = "newRoom"><button (click) = "postRoom()"> Dodaj</button></mat-card-action>
     
   </mat-card> <mat-card>
     <mat-card-title> Sifrafnik lekova </mat-card-title>
     <mat-card-content>
       <mat-list-item *ngFor="let item of meds"> {{item.id}}. {{item.name}} </mat-list-item>
     </mat-card-content>
-    <mat-card-action> <input><button> Dodaj</button></mat-card-action>
+    <mat-card-action> <input type="text" [formControl] = "newMed"><button (click) ="postMed()"> Dodaj</button></mat-card-action>
   </mat-card>
 
   

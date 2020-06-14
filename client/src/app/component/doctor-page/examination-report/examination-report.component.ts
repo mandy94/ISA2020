@@ -110,6 +110,12 @@ export class ExaminationReportComponent implements OnInit {
         );
       });
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+   
+    this.eventEmitterService.
+    invoker.subscribe((name: string) => {
+      this.testAvaialbility();
+    });
+    
   }
   appointnent: Appointment;
   selected_meds = new Array<any>(); // FOR VIEW ONLY
@@ -155,25 +161,26 @@ export class ExaminationReportComponent implements OnInit {
     this.getRoomTime();
     this.refreshCalendar(this.selected_room.id.toString());
   }
+  
   createAppointment(){
   
-      let data = new Appointment();
     if(this.selected_room === null || this.selected_room === undefined)
     { 
       alert("Morate odabrati sobu prvi");
       return;
-    }
-      data.room = this.selected_room.id;
-      data.term = this.selected_time;
-      data.pacientId = this.currentPacient.id;
-      data.doctorid = this.loggedDoctor.id;
+    } 
+    let data = new Appointment();
+    data.room = this.selected_room.id;
+    data.term = this.selected_time;
+    data.pacientId = this.currentPacient.id;
+    data.doctorid = this.loggedDoctor.id;
+    
+   
       this.eventEmitterService.createAppointment(data);
   }
   
-refreshCalendar(new_url: string){
-this.eventEmitterService.calendarRefresher(new_url);
-}
 
+ // ne koristi se nigde xd
   checkAvailablilty() {
     this.getRoomTime();
     this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
@@ -182,5 +189,20 @@ this.eventEmitterService.calendarRefresher(new_url);
         this.calendar = data;
         else
         this.calendar = "SVi termini su slobodni"; });
+  }
+
+  testAvaialbility(){
+     if( this.eventEmitterService.pickedDate!= null){
+    this.apiService.get(this.config.api_url +
+        '/operation-room/'+ this.selected_room.id+
+        '/availability/' + this.eventEmitterService.pickedDate)
+    .subscribe((data) => {
+         this.availableTimeList = data;
+    });
+  }
+  }
+  
+refreshCalendar(new_url: string){
+  this.eventEmitterService.calendarRefresher(new_url);
   }
 }
