@@ -51,14 +51,22 @@ export class CalendarComponent implements OnInit {
       alert("Morate prvo odabrati datum");
       return;
     }
-    console.log(this.clickedDate);
-    data.begining = this.clickedDate + "T" + data.term.start;
-    data.ending = this.clickedDate+ "T" + data.term.ending;
+
+    data.begining =  data.start;
+    data.ending =  data.ending;
+    data.date = this.clickedDate;
     this.apiService.post(this.config.api_url + '/appointment/room/new', data)
       .subscribe(() => {
         
-        let content = "Postovani, obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od "+ data.term.start + " do" +data.term.ending + ". Ocekujemo vas. Pozdrav.";
+        let content = "Postovani, obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od "+ data.start + " do" +data.ending + ". Ocekujemo vas. Pozdrav.";
         let msgbody = new MailMessage(data.pacientId, "Zakazivanje operacije", content);
+        for(let md of data.mdoctors)
+          {
+            console.log(md);
+            let content = "Postovani/na "+ md.name + ", obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od "+ data.start + " do" +data.ending + ". Ocekujemo vas. Pozdrav.";
+            let msgbody = new MailMessage(md.id, "Zakazivanje operacije", content);
+             this.apiService.post(this.config.api_url + '/email/send', msgbody).subscribe();
+          }
         this.apiService.post(this.config.api_url + '/email/send', msgbody)
         .subscribe(()=>{
           this.refreshCalendar(data.room.toString());
@@ -68,12 +76,19 @@ export class CalendarComponent implements OnInit {
       });
   }
   refreshCalendar(new_url) {
-    this.apiService.get(this.config.api_url + "/appointment/room/" + new_url)
+    
+    if(new_url == null || new_url == "")
+    {
+      this.c = this.calendarComponent.getApi();
+      this.c.render();
+    }else
+    this.apiService.get(new_url)
       .subscribe(data => {
+        
         this.eventList = data;
         this.c = this.calendarComponent.getApi();
         this.c.render();
-        console.log("Calendar refreshed from url: /appointment/room/" + new_url);
+        console.log("Calendar refreshed from url: " + new_url);
 
       });
   }

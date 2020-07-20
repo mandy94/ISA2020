@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.Authority;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserRequest;
 import rs.ac.uns.ftn.informatika.spring.security.repository.UserRepository;
+import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.AuthorityService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private AuthorityService authService;
+	
+	@Autowired
+	private AppointmentService appservice;
 
 	@Override
 	public User findByUsername(String username) throws UsernameNotFoundException {
@@ -100,6 +105,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getDeniedUsers() {
 		return userRepository.getDeniedUsers();
+	}
+
+	@Override
+	public List<Appointment> getDoctorsSchedule(Long id) {
+		return  appservice.getDoctorsVisit(id);
 	}
 
 }

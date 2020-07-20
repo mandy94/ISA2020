@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
+import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 
@@ -61,6 +63,18 @@ public class UserController {
 	@GetMapping("/whoami")
 	public User user(Principal user) {
 		return this.userService.findByUsername(user.getName());
+	}
+	
+	@GetMapping(value="/doctor/scheduler/{id}")
+	public List<Appointment> getDoctorsShcedulerTime(@PathVariable Long id)
+	{
+		List<Appointment> tt = userService.getDoctorsSchedule(id);
+		for(Appointment t : tt)
+		{
+			t.setEnd(t.getDateEnd());
+			t.setStart(t.getDateStart());
+		}
+		return tt;
 	}
 	
 }

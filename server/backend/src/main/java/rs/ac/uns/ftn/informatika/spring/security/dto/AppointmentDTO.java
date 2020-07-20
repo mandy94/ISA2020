@@ -5,6 +5,7 @@ public class AppointmentDTO {
 	Long id;
 	Long room;
 	Long pacientId;
+	String date;
 	String begining, ending;
 	// docss
 	public Long getId() {
@@ -41,5 +42,11 @@ public class AppointmentDTO {
 	public String toString() {
 		return "AppointmentDTO [id=" + id + ", room=" + room + ", pacientId=" + pacientId + ", begining=" + begining
 				+ ", ending=" + ending + "]";
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 }

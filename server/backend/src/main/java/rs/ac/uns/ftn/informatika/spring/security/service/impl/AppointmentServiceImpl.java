@@ -26,6 +26,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 		repo.save(data);
 	}
 
+	@Override
+	public List<Appointment> getDoctorsVisit(Long id) {
+		return repo.getDoctorsVisit(id);
+	}
+
 
 
 	

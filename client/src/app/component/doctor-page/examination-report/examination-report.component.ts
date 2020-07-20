@@ -30,6 +30,7 @@ export class ExaminationReportComponent implements OnInit {
   currentPacient: any;
   allVisits: any;
   today: any;
+  mandatoryDoctorList; any;
 
   private _filter(value: string): string[] {
     const filterValue = value;
@@ -77,6 +78,7 @@ export class ExaminationReportComponent implements OnInit {
   }
   diagnoseList: any;
   medList: any;
+  
   firstVisit() {
     if (this.allVisits != null)
       return this.allVisits.length == 0 ? true : false;
@@ -103,6 +105,7 @@ export class ExaminationReportComponent implements OnInit {
         this.patiens = data;
         this.userService.getMyInfo().subscribe(data =>{
             this.loggedDoctor = data;    
+            this.refreshCalendar("");
            this.new_report.doctorid = data.id});
            this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
@@ -143,7 +146,7 @@ export class ExaminationReportComponent implements OnInit {
     this.appointnent.pacientId = this.currentPacient.id;
     this.appointnent.room = this.selected_room.id;
 
-    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => this.checkAvailablilty);
+    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => { this.appointnent = null;});
   }
   pickedDate(){
     
@@ -154,12 +157,17 @@ export class ExaminationReportComponent implements OnInit {
   getRoomTime(){
     if(this.selected_room!=null)
     this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
-      .subscribe(data => { this.availableTimeList = data;this.refreshCalendar(this.selected_room.id.toString());});
+      .subscribe(data => { this.availableTimeList = data; this.refreshCalendar(this.selected_room.id.toString());});
     
+  }
+  getMandatoryDoctors(){
+    this.apiService.get(this.config.api_url + '/operation-room/' + this.selected_room.id + '/mandatory-doctors')
+    .subscribe(data => this.mandatoryDoctorList = data);
   }
   onRoomChange(){
     this.getRoomTime();
-    this.refreshCalendar(this.selected_room.id.toString());
+    this.getMandatoryDoctors();
+    this.refreshCalendar(this.config.api_url + "/appointment/room/" + this.selected_room.id.toString());
   }
   
   createAppointment(){
@@ -171,16 +179,17 @@ export class ExaminationReportComponent implements OnInit {
     } 
     let data = new Appointment();
     data.room = this.selected_room.id;
-    data.term = this.selected_time;
+    data.start = this.selected_time.start;
+    data.ending = this.selected_time.ending;
     data.pacientId = this.currentPacient.id;
     data.doctorid = this.loggedDoctor.id;
-    
+    data.mdoctors = this.mandatoryDoctorList;
    
       this.eventEmitterService.createAppointment(data);
   }
   
 
- // ne koristi se nigde xd
+//  // ne koristi se nigde xd
   checkAvailablilty() {
     this.getRoomTime();
     this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
@@ -191,7 +200,7 @@ export class ExaminationReportComponent implements OnInit {
         this.calendar = "SVi termini su slobodni"; });
   }
 
-  testAvaialbility(){
+   testAvaialbility(){
      if( this.eventEmitterService.pickedDate!= null){
     this.apiService.get(this.config.api_url +
         '/operation-room/'+ this.selected_room.id+
@@ -202,6 +211,13 @@ export class ExaminationReportComponent implements OnInit {
   }
   }
   
+  nextVisit(){
+    this.refreshCalendar(this.config.api_url + "/doctor/scheduler/" + this.loggedDoctor.id);
+
+  }
+  showRoomSchedule(){
+    this.refreshCalendar(this.config.api_url + "/appointment/room/"+ this.selected_room.id);
+  }
 refreshCalendar(new_url: string){
   this.eventEmitterService.calendarRefresher(new_url);
   }

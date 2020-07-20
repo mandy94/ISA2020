@@ -42,10 +42,7 @@ export class Room{
     name: string;
     code:string;
 }
-export class DateTime{
- start: string;
- ending: string;
-}
+
 export class Appointment{
     constructor(){
     //    this.pacientId = 4;
@@ -54,10 +51,14 @@ export class Appointment{
     //    this.room= 101;
     }
     // odabrani termin
-    term : DateTime;
+    
     room:number;
     pacientId: number;
+    date:string;
     begining:string;
     ending:string;
-    doctorid:string;
+    doctorid:string
+    mdoctors:any;
+    start: string;
+    
 }

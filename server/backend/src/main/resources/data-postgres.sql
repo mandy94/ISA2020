@@ -21,25 +21,38 @@ INSERT INTO MEDICATIONS ( name) VALUES ( 'Ventolin');
 INSERT INTO OPERATIONROOMS ( name, code) VALUES ( 'Operaciona sala 1', 'T1');
 INSERT INTO OPERATIONROOMS ( name, code) VALUES ( 'Operaciona sala 2', 'T2');
 
-
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '08:00', '10:30');
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '10:30', '12:30');
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '13:00', '14:30');
-INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (1 , '14:30', '16:00');
+-- TIME FOR AVAILABLE OPERATION ROOM
+INSERT INTO SCHEDULERTIMES ( room, start , ending, type) VALUES (1 , '08:00', '10:30', 'OPERATION');
+INSERT INTO SCHEDULERTIMES ( room, start , ending, type) VALUES (1 , '10:30', '12:30','OPERATION');
+INSERT INTO SCHEDULERTIMES ( room, start , ending, type) VALUES (1 , '13:00', '14:30','OPERATION');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '14:30', '16:00','OPERATION');
 
 INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '08:15', '10:45');
 INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '10:15', '12:45');
 INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '14:15', '16:45');
 
+-- TIME FOR VISITING DOCTOR
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '08:00', '08:30','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '08:30', '09:00','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '09:00', '09:30','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '09:30', '10:00','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '11:00', '11:30','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '12:00', '12:30','VISIT');
+INSERT INTO SCHEDULERTIMES (room, start , ending, type) VALUES (1 , '12:30', '13:00','VISIT');
 
+-- APPOINTMENTS AS VISIT - room is null
+INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, doctorid ) VALUES ( '2020-06-14','10:30', '12:30', 4, 1);
+INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  doctorid ) VALUES ( '2020-06-13','08:00', '10:30', 3, 1);
+
+-- APPOINTMETS AS OOPERATIONS - doctor id is null
 INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, room) VALUES ( '2020-06-02','10:30', '12:30', 4, 1);
 INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, room) VALUES ( '2020-06-03','08:00', '10:30', 3, 1);
 
 
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'user@example.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1980');
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1005906506325, 'NURCE', 'medsis', '$2a$04$iSAH8.efg/0KXf8cwW8YQeyLCyLAyV7C7FRTeJCKa6e1bPXuxeute', 'Jelisaveta', 'Markovic', 'user@example.com', true, 'ACTIVE', '2017-10-01 21:58:58.508-07','27.5.2005');
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1102026842654, 'PACIENT', 'pacient1', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Ivo', 'Loncar', 'iloncarr@example.com', true, 'ACTIVE','2017-10-01 21:58:58.508-07', '30.11.2007');
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (2304966758967, 'PACIENT', 'pacient2', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Milana', 'Jorgic', 'milanaj@example.com', true,'PENDING' ,'2017-10-01 21:58:58.508-07', '25.12.2005');
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'timadust@gmail.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1980');
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1005906506325, 'NURCE', 'medsis', '$2a$04$iSAH8.efg/0KXf8cwW8YQeyLCyLAyV7C7FRTeJCKa6e1bPXuxeute', 'Jelisaveta', 'Markovic', 'skolarajak.programerska@gmail.com', true, 'ACTIVE', '2017-10-01 21:58:58.508-07','27.5.2005');
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1102026842654, 'PACIENT', 'pacient1', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Ivo', 'Loncar', 'majasavic@gmail.com', true, 'ACTIVE','2017-10-01 21:58:58.508-07', '30.11.2007');
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (2304966758967, 'PACIENT', 'pacient2', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Milana', 'Jorgic', 'nesto@example.com', true,'PENDING' ,'2017-10-01 21:58:58.508-07', '25.12.2005');
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1510994683002, 'PACIENT', 'pacient3', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Sara', 'Kostic', 'kostic12@example.com', true, 'PENDING', '2017-10-01 21:58:58.508-07', '10.12.2001');
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1210982356651, 'PACIENT', 'pacient4', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Igor', 'Trbic', 'mackaborbena@example.com', true, 'ACTIVE', '2017-10-01 21:58:58.508-07', '8.7.2003');
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1907970482220, 'PACIENT', 'pacient5', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Sasa', 'Milivojevic', 'majasavic199@gmail.com',true,'ACTIVE' , '2017-10-01 21:58:58.508-07', '11.3.2002');

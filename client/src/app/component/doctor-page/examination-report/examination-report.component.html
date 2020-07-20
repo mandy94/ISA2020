@@ -104,70 +104,74 @@
 
               </section>
             </form>
-          </mat-card> 
+          </mat-card>
           <!-- Analiza unetor pregleda-->
           <mat-card>
             <div *ngIf="inputHaveChanged()">
               <mat-card-subtitle>Brzi pregled:</mat-card-subtitle>
-            PRIPISANI LEKOVI:
-            <div *ngFor="let med of new_report.medication">
-              <mat-list>{{med.name}}</mat-list>
+              PRIPISANI LEKOVI:
+              <div *ngFor="let med of new_report.medication">
+                <mat-list>{{med.name}}</mat-list>
+              </div>
+              PRIPISANE TERAPIJE
+              <div *ngFor="let ther of new_report.therapies">
+                <mat-list>{{ther.name}} </mat-list>
+              </div>
+
+
             </div>
-            PRIPISANE TERAPIJE
-            <div *ngFor="let ther of new_report.therapies">
-              <mat-list>{{ther.name}}  </mat-list>
-            </div>
-          
-            
-          </div>
           </mat-card>
         </div>
 
 
-</mat-expansion-panel>
-</mat-accordian>
-</mat-card>
-
+      </mat-expansion-panel>
+    </mat-accordian>
+  </mat-card>
 <mat-card>
-  <mat-accordian>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title> Zakazi salu za operaciju </mat-panel-title>
-      </mat-expansion-panel-header>
-      <mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="center stretch" >
+    <div fxLayout="row" fxLayoutAlign="start center" > 
+    <button (click)="nextVisit()">Proveri doktorov kalendar</button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" > 
+    <mat-form-field>          
+      <mat-list>
         <mat-label>Operacione sale:</mat-label>
-        <mat-select [(ngModel)]="selected_room"  (selectionChange)="onRoomChange()" name="room">
+        <mat-select [(ngModel)]="selected_room" (selectionChange)="onRoomChange()" name="room">
           <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
         </mat-select>
-      </mat-form-field>
-    
-      <mat-form-field *ngIf="pickedDate()"> 
-      <mat-label>Vreme operacije:</mat-label>
-      <mat-select [(ngModel)]="selected_time" name="time">
-        <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}</mat-option>
-      </mat-select> 
+      </mat-list>
     </mat-form-field>
-    <button (click)="testAvaialbility()"> Proveri validnost </button>
-      <button (click)="createAppointment()"> Upisi u kalendar </button>
-      <div *ngIf="selected_room">
-        <app-calendar data_url="{{selected_room.id}}"></app-calendar>
-      </div>
+    
+    <mat-form-field *ngIf="pickedDate()">
+      <mat-list>
+        <mat-label>Vreme operacije:</mat-label>
+        <mat-select [(ngModel)]="selected_time" name="time">
+          <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}
+          </mat-option>
+        </mat-select>
+      </mat-list>
+    </mat-form-field>
+    <button (click)="showRoomSchedule()">Proveri kalendar operacionih sala</button>
+  </div>
+  </div>
+        
       
-    </mat-expansion-panel>
-  </mat-accordian>
-</mat-card>
+      
 
-<mat-card>
-  <mat-accordian>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Zakazi sledeci pregled
-      </mat-expansion-panel-header>
-    </mat-expansion-panel>
-  </mat-accordian>
-</mat-card>
-
-<!-- End of form-->
-<button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
+       <div *ngIf="pickedDate()"> Obavezni doktori:
+          <div *ngFor="let mdoc of mandatoryDoctorList"> {{mdoc.firstName}} {{mdoc.lastName}} </div>
+        </div>
+         <mat-list>
+          <button (click)="createAppointment()"> Upisi u kalendar </button>
+          <div *ngIf="selected_room">
+            <app-calendar data_url="{{selected_room.id}}"></app-calendar>
+          </div>
+        </mat-list>
+        <mat-card-footer>
+  <!-- End of form-->
+  <button mat-button color="primary" (click)="saveReport()">Zavrsi pregled</button>
+</mat-card-footer>
+  </mat-card>
 </div>
+
 <!-- End about pacient-->

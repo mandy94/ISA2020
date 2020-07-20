@@ -25,6 +25,8 @@ public class SchedulerTime {
 	@Column(name="ending")
 	String ending;
 	
+	@Column(name="type")
+	String type;
 	@ManyToOne
 	@JoinColumn(name="room")
 	@JsonIgnore
@@ -57,6 +59,14 @@ public class SchedulerTime {
 	@Override
 	public String toString() {
 		return "SchedulerTime [start=" + start + ", ending=" + ending + ", room=" + room + "]";
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }
