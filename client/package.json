@@ -1,6 +1,6 @@
 {
   "name": "angular-spring-starter-ui",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
@@ -26,6 +26,7 @@
     "@fullcalendar/angular": "^4.4.2",
     "@fullcalendar/core": "^4.4.2",
     "@fullcalendar/daygrid": "^4.4.2",
+    "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/list": "^4.4.2",
     "@fullcalendar/moment": "^4.4.2",
     "@fullcalendar/timegrid": "^4.4.2",
