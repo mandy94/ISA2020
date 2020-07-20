@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service;
 
 import java.util.List;
 
+import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
+import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserRequest;
 
@@ -19,4 +21,5 @@ public interface UserService {
 	//List<User> getNurces();
 	List<User> getPendingUsers();
 	List<User> getDeniedUsers();
+	List<Appointment> getDoctorsSchedule(Long id);
 }

@@ -32,12 +32,16 @@ public class Appointment {
 	@ManyToOne
 	@JoinColumn(name="room")
 	OperationRoom room;
+	
+	@Column(name="doctorid")
+	Long doctorid;
 
 	public Appointment() {}
 	public Appointment(AppointmentDTO appoint) {
 		pacientid = appoint.getPacientId();
 		start =  appoint.getBegining();
 		end = appoint.getEnding();
+		date = appoint.getDate();
 	}
 
 	public Long getPacientid() {
@@ -92,6 +96,12 @@ public class Appointment {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public Long getDoctorid() {
+		return doctorid;
+	}
+	public void setDoctorid(Long doctorid) {
+		this.doctorid = doctorid;
 	}
 
 

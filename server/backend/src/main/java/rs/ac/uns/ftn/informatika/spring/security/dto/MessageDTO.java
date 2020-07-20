@@ -5,6 +5,7 @@ public class MessageDTO {
 	Long receiver; // id
 	String content;
 	String title;
+	public MessageDTO() {}
 	
 	public MessageDTO(String t, String c) {
 		title = t;

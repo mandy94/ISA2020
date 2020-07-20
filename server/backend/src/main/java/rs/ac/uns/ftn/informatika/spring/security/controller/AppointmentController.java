@@ -35,6 +35,7 @@ public class AppointmentController {
 	public List<CalendarAppointment> getAppointmentfForOperationRoom(@PathVariable Long id){
 		List<CalendarAppointment> calendar = new ArrayList<CalendarAppointment>();
 		for(Appointment temp: appService.getAppointmentsForRoom(id)) {
+			if(temp.getRoom()!=null)
 			if(temp.getRoom().getId() == id)
 			calendar.add(new CalendarAppointment(temp.getDateStart(), temp.getDateEnd(),"Operacija u "+ temp.getRoom().getName()));
 		}
