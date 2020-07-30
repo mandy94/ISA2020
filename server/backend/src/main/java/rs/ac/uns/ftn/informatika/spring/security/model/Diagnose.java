@@ -1,11 +1,17 @@
 package rs.ac.uns.ftn.informatika.spring.security.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // POJO koji implementira Spring Security GrantedAuthority kojim se mogu definisati role u aplikaciji
 @Entity
@@ -24,7 +30,9 @@ public class Diagnose  {
     @Column(name="code")
     String code;
     
-   
+    @OneToMany(mappedBy = "diagnose")
+    @JsonIgnore
+   private List<ExaminationReport> report = new ArrayList<>();
     
     public String getCode() {
 		return code;
@@ -54,6 +62,14 @@ public class Diagnose  {
 	@Override
 	public String toString() {
 		return "Diagnose [id=" + id + ", name=" + name + ", code=" + code + "]";
+	}
+
+	public List<ExaminationReport> getReport() {
+		return report;
+	}
+
+	public void setReport(List<ExaminationReport> report) {
+		this.report = report;
 	}
 
 }

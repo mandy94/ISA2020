@@ -80,7 +80,13 @@ public class User implements UserDetails {
     private List<Authority> authorities;
     
     @OneToMany(mappedBy = "pacient")
-    private List<ExaminationReport> reports;
+    @JsonIgnore
+    private List<ExaminationReport> reports = new ArrayList<ExaminationReport>();
+    
+    @OneToMany(mappedBy = "doctor")
+    @JsonIgnore
+    private List<ExaminationReport> visits=new ArrayList<ExaminationReport>(); // same as report but from doctor side of view
+
 
     public List<ExaminationReport> getReports() {
 		return reports;
@@ -228,6 +234,18 @@ public class User implements UserDetails {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<ExaminationReport> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<ExaminationReport> visits) {
+		this.visits = visits;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

@@ -58,7 +58,7 @@ public class OperationRoomController {
 	@GetMapping("/operation-room/{id}/mandatory-doctors")
 	public List<User> getMandatoryDoctors(@PathVariable Long id){
 		return orservice.getRoomById(id).getMandatoryDoctors();
-		
+//	return null;	
 	
 	}
 

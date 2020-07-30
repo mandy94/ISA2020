@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.informatika.spring.security.controller;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +20,6 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.security.TokenUtils;
 import rs.ac.uns.ftn.informatika.spring.security.service.CodebookService;
-import rs.ac.uns.ftn.informatika.spring.security.service.MedicineService;
 import rs.ac.uns.ftn.informatika.spring.security.service.PrescriptionService;
 import rs.ac.uns.ftn.informatika.spring.security.service.ReportsService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
@@ -41,14 +40,16 @@ public class ExaminationReportController {
 	@Autowired
 	private PrescriptionService presservice;
 	
-	@Autowired
-	private TokenUtils tokenUtils;
 	
 	@GetMapping("/pacient/{jmbg}")
-	public List<ExaminationReport> get(@PathVariable Long jmbg) {
-		
-				
-		return  rpservice.getReportsForUser(jmbg);
+	public List<ExaminationReportDTO> get(@PathVariable Long jmbg) {
+		List<ExaminationReport> rep =rpservice.getReportsForUser(jmbg);
+		List<ExaminationReportDTO> res = new ArrayList<ExaminationReportDTO>();
+		for(ExaminationReport report : rep) {
+			ExaminationReportDTO temp = new ExaminationReportDTO(report);
+			res.add(temp);
+		}
+		return res;
 	}
 	
 	@PostMapping(value = "/add",
@@ -56,7 +57,6 @@ public class ExaminationReportController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReportDTO reportdto)  throws AccessDeniedException{
 		
-		System.out.println(reportdto);
 		
 			ExaminationReport report = new ExaminationReport();
 			User pacient = userservice.findById(reportdto.getPacientid());

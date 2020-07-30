@@ -31,7 +31,14 @@ export class ExaminationReportComponent implements OnInit {
   allVisits: any;
   today: any;
   mandatoryDoctorList; any;
+  searchMessage:string;
 
+  displayedColumns = ['date', 'diagnose', 'details', 'meds','doctor'];
+  isJMBGselected(){
+    if(this.pacient_jmbg === undefined)
+    return false;
+    return true;
+  }
   private _filter(value: string): string[] {
     const filterValue = value;
 
@@ -40,7 +47,12 @@ export class ExaminationReportComponent implements OnInit {
   getPacientByJMBG() {
     this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacient_jmbg)
       .subscribe((data) => {
+        if(data === null)
+        this.searchMessage="Ne postoji pacijent sa trazenim JMBG-om. Probajte ponovo";
+        else{
+          this.searchMessage = null;
         this.currentPacient = data;
+        }
       });
 
   }

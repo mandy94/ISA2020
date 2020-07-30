@@ -30,11 +30,21 @@ public class ExaminationReport {
     @Column(name="id",columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+	@Column(name="date")
+	private String visitDate;
+	@Column(name="time")
+	private String visitTime;
 	
 	@Column(name="details")
 	private String details;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="diagnose")
+	@JsonIgnore
+	private Diagnose diagnose;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "examine_medication",
             joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
             inverseJoinColumns = {  @JoinColumn(name = "medication_id", referencedColumnName = "id")})
@@ -42,12 +52,11 @@ public class ExaminationReport {
 
 	
 	@Column(name="therapy")
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "examine_therpay",
             joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
             inverseJoinColumns = {  @JoinColumn(name = "therapy_id", referencedColumnName = "id")})	
-	private List<Therapy> therapies = new ArrayList<Therapy>()
-	;
+	private List<Therapy> therapies = new ArrayList<Therapy>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="is_examined")
@@ -121,6 +130,30 @@ public class ExaminationReport {
 
 	public void setTherapies(List<Therapy> therapies) {
 		this.therapies = therapies;
+	}
+
+	public String getVisitDate() {
+		return visitDate;
+	}
+
+	public void setVisitDate(String visitDate) {
+		this.visitDate = visitDate;
+	}
+
+	public String getVisitTime() {
+		return visitTime;
+	}
+
+	public void setVisitTime(String visitTime) {
+		this.visitTime = visitTime;
+	}
+
+	public Diagnose getDiagnose() {
+		return diagnose;
+	}
+
+	public void setDiagnose(Diagnose diagnose) {
+		this.diagnose = diagnose;
 	}
 	
 	

@@ -8,3 +8,12 @@
   .example-full-width {
     width: 100%;
   }
+  button {
+    margin-left: 20px;
+    width: 200px;
+  }
+
+  mat-table{
+    width: 100%;
+  }
+ 
