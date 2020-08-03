@@ -16,9 +16,8 @@ export class NewExaminationDialogComponent {
     private apiService: ApiService,
     private config: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.getCodebooks();            
-        this.today = moment().format('D MMM YYYY');
-
+      this.today = moment().format('D MMM YYYY');
+      this.getData();                  
     }
 
   hasOperation = false;
@@ -28,15 +27,22 @@ export class NewExaminationDialogComponent {
   }
   today;
   diagnoseList;
-  selected_diagnose
+  selected_diagnose;
   medList;
-  selected_med;
+  selected_med = [];
   therapyList;
-  selected_therapy;
+  selected_therapy = [];
   new_report;
   description;
+  nurceList=[];
+  selected_nurce;
 
-  getCodebooks() {
+  getData() {
+    this.apiService.get(this.config.api_url + '/user/nurces')
+      .subscribe((data) => {
+        this.nurceList = data;
+        console.log(data);
+      });
     this.apiService.get(this.config.api_url + '/codes/diagnoses/all')
       .subscribe((data) => {
         this.diagnoseList = data;
@@ -48,8 +54,10 @@ export class NewExaminationDialogComponent {
     this.apiService.get(this.config.api_url + '/codes/therapies')
       .subscribe((data) => {
         this.therapyList = data
-      })
+      });
+      
   }
+ 
 finished(){
   return this.description != undefined ? true: false;  
 }
@@ -60,14 +68,15 @@ finished(){
     this.new_report.diagnose  = this.selected_diagnose;
     this.new_report.therapies = this.selected_therapy;
     this.new_report.medication = this.selected_med;
-    this.new_report.pecient = this.data.pacient;
-    this.new_report.doctor = this.data.doctor;
+    this.new_report.pacient = this.data.pacient;
+    this.new_report.doctor = this.data.doctor;  
+    this.new_report.nurce= this.selected_nurce;  
     
     this.new_report.visitDate = moment().format('DD.MM.YYYY');
     this.new_report.visitTime = moment().format('HH.mm') ;
 
   console.log(this.new_report);
     this.apiService.post(this.config.api_url + '/examination-report/add', this.new_report)
-      .subscribe();
+      .subscribe(()=> this.dialogRef.close());
   }
 }

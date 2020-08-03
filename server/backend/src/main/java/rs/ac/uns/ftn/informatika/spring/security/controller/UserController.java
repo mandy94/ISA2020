@@ -39,7 +39,11 @@ public class UserController {
 	public List<Long> getPatientsJMBGs() {
 		return this.userService.getJMBGs("PACIENT");
 	}
-
+	@GetMapping("/user/nurces")
+	@PreAuthorize("hasRole('DOCTOR')")
+	public List<User> getNurces(){
+		return this.userService.getNurces();
+	}
 	@GetMapping("/user/pacients")
 	@PreAuthorize("hasRole('DOCTOR')")
 	public List<User> getPatients() {

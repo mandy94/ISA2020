@@ -2,10 +2,10 @@ export class ReportDTO{
     details;
     doctor;
     pacient;
+    nurce;
     diagnose;
     therapies
-    medication;
-    nurce;
+    medication;    
     visitDate;
     visitTime;
   

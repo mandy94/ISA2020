@@ -76,11 +76,11 @@ export class ExaminationReportComponent implements OnInit {
     this.newExamination.doctor = this.loggedDoctor;
     const dialogRef = this.dialog.open(NewExaminationDialogComponent, {
       width: '600px',
-      data: this.newExamination
+      data: { pacient :  this.currentPacient , doctor: this.loggedDoctor}
     });
 
     dialogRef.afterClosed().subscribe(result => {      
-      
+      this.getPacientExaminationReports();
     });
   }
 

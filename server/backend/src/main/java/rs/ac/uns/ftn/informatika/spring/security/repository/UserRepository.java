@@ -27,6 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     @Query("select u from User u where u.status = 'DENIED'")
     List<User>getDeniedUsers();
+
 }
 
 

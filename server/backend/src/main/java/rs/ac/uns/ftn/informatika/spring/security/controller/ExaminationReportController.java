@@ -55,31 +55,17 @@ public class ExaminationReportController {
 	@PostMapping(value = "/add",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addReport(@RequestBody ExaminationReport reportdto)  throws AccessDeniedException{
-		System.out.println(reportdto);
-		
-//			ExaminationReport report = new ExaminationReport();
-//			User pacient = userservice.findById(reportdto.getPacientid());
-//			User doctor = userservice.findById(reportdto.getDoctorid());
-//
-//			report.copyFromDTO(reportdto);
-//			for(Medicine med_id: reportdto.getMedication())
-//			{
-//				Medicine med = cdservice.getMedicineById(med_id.getId());
-//				if(med != null) {				
-//					report.getMedication().add(med);
-//					presservice.addPrescription(med);
-//				}
-//			}
-//			for(Therapy t_id : reportdto.getTherapies()) {
-//				Therapy t = cdservice.getTherapyById(t_id.getId());
-//				if(t!= null) {
-//					report.getTherapies().add(t);
-//				}
-//			}
-//			if(pacient!= null)report.setPacient(pacient);
-//			if(doctor!= null)report.setDoctor(doctor);
-//			report = rpservice.addReport(report);
+	public void addReport(@RequestBody ExaminationReport report)  throws AccessDeniedException{
+		System.out.println(report);
+			for(Medicine med: report.getMedication())
+			{			
+				if(med != null) { 	
+					
+					presservice.addPrescription(med, report.getNurce());
+				}
+			
+			}
+			rpservice.addReport(report);
 	}
 	
 }

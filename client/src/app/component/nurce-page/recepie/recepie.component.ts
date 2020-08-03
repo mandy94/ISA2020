@@ -10,7 +10,7 @@ import { isNgTemplate } from '@angular/compiler';
 export class RecepieComponent implements OnInit {
 
   constructor(private pservice: PrescriptionService,
-    private userService: UserService) { }
+    private userService: UserService) {  this.userService.getMyInfo();}
 
     prescription_drug: any;
     getPrescrptions(){this.pservice.getPrescriptionByNurseId(this.userService.currentUser.id)
@@ -22,7 +22,7 @@ export class RecepieComponent implements OnInit {
       console.log(item)
     }
   ngOnInit() {
-    this.userService.getMyInfo();
+   
     this.getPrescrptions();
   }
 

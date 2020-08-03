@@ -58,16 +58,25 @@ public class ExaminationReport {
 	private List<Therapy> therapies = new ArrayList<Therapy>();
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="is_examined")
-	@JsonIgnore
+	@JoinColumn(name="is_examined")	
 	private User pacient;
 	
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="is_doctor")
-	@JsonIgnore
+	@JoinColumn(name="is_doctor")	
 	private User doctor;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="nurce")	
+	private User nurce;
+	public User getNurce() {
+		return nurce;
+	}
+
+	public void setNurce(User nurce) {
+		this.nurce = nurce;
+	}
+
 	public Long getIds() {
 		return id;
 	}

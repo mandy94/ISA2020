@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
 import rs.ac.uns.ftn.informatika.spring.security.model.Prescription;
+import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.repository.PrescriptionRepository;
 import rs.ac.uns.ftn.informatika.spring.security.service.PrescriptionService;
 
@@ -18,10 +19,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 	private PrescriptionRepository prescrepo;
 
 	@Override
-	public void addPrescription(Medicine med) {
+	public void addPrescription(Medicine med, User nurce) {
 		
 		Prescription prescription = new Prescription(med);
-		prescription.setNurseId((long) 1);
+		prescription.setNurseId(nurce.getId());
 		prescrepo.save(prescription);
 		
 	}

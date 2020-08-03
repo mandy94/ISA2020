@@ -23,8 +23,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private AuthorityService authService;
@@ -85,6 +83,10 @@ public class UserServiceImpl implements UserService {
 	public List<User> getPacients() {
 		return userRepository.getUsersFromRole("PACIENT");
 	}
+	@Override
+	public List<User> getNurces() {
+		return userRepository.getUsersFromRole("NURCE");
+	}
 
 	@Override
 	public User getByUsername(String username) {
@@ -111,5 +113,7 @@ public class UserServiceImpl implements UserService {
 	public List<Appointment> getDoctorsSchedule(Long id) {
 		return  appservice.getDoctorsVisit(id);
 	}
+
+	
 
 }

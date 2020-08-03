@@ -18,8 +18,8 @@ public interface UserService {
 	User saveUser(User user);
 	List<User> getPacients();
 	//List<User> getDoctors();
-	//List<User> getNurces();
 	List<User> getPendingUsers();
 	List<User> getDeniedUsers();
 	List<Appointment> getDoctorsSchedule(Long id);
+	List<User> getNurces();
 }

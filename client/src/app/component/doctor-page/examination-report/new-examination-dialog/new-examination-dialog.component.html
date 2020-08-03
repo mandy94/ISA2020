@@ -40,9 +40,9 @@
         <!-- <button (click)="addAnotherRecepie()">+</button> -->
         <mat-form-field>
           <mat-label>Medicinska sestra zaduzena za overu:</mat-label>
-          <mat-select [(ngModel)]="selected_nurse" name="selected_nurse">
-            <mat-option *ngFor="let nurse of nurseList" [value]="nurse">
-              {{nurse | json}}
+          <mat-select [(ngModel)]="selected_nurce" name="selected_nurce">
+            <mat-option *ngFor="let nurce of nurceList" [value]="nurce">
+              {{nurce.firstName}}  {{nurce.lastName}}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -29,7 +29,12 @@ public class Therapy  {
     @Column(name="name")
     String name;
     
-    @ManyToMany(mappedBy="therapies", fetch = FetchType.LAZY)
+    @Override
+	public String toString() {
+		return "Therapy [id=" + id + ", name=" + name + "]";
+	}
+
+	@ManyToMany(mappedBy="therapies", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<ExaminationReport> reports = new ArrayList<ExaminationReport>();
 
