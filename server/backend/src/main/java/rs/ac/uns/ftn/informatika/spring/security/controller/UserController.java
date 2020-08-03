@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
+import rs.ac.uns.ftn.informatika.spring.security.service.PacientDataService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
@@ -23,6 +24,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PacientDataService pacientDataService;
 
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -44,7 +48,11 @@ public class UserController {
 	@GetMapping("/user/pacient/{jmbg}")
 	@PreAuthorize("hasRole('DOCTOR')")
 	public User loadByJMBG(@PathVariable Long jmbg) {
-		return this.userService.findByJMBG(jmbg);
+		User ret =  this.userService.findByJMBG(jmbg);
+		if(ret.getData() != null)
+		System.out.println(ret.getData());
+//		ret.setData( this.pacientDataService.findPacinetData(ret.getData().getId()));
+		return ret;
 	}
 	@GetMapping("/users/pending")
 	public List<User> getPendingUsers(){

@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -69,7 +70,19 @@ public class User implements UserDetails {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
     
-    @ManyToMany(mappedBy="mandatoryDoctors", fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name="pacient_data")
+    private PacientData data;
+    
+    public PacientData getData() {
+		return data;
+	}
+
+	public void setData(PacientData data) {
+		this.data = data;
+	}
+
+	@ManyToMany(mappedBy="mandatoryDoctors", fetch = FetchType.LAZY)
     @JsonIgnore
     List<OperationRoom> dedicatedRoom = new ArrayList<OperationRoom>();
     
@@ -206,12 +219,7 @@ public class User implements UserDetails {
         return true;
     }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", jmbg=" + jmbg + ", role=" + role + "]";
-	}
-
+	
 	public String getBirthdate() {
 		return birthdate;
 	}

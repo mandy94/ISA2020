@@ -1,0 +1,95 @@
+
+  <mat-card-title>Unos novog pregleda</mat-card-title>
+<div fxLayout="column" fxLayoutAlign="center start" >
+  <mat-card>
+  <mat-card-content>
+
+    <form class="example-form" fxLayout="column" >
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Sta muci pacijenta?</mat-label>
+        <textarea matInput [(ngModel)]="description" name="description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Dijagnoza</mat-label>
+        <mat-select [(ngModel)]="selected_diagnose" name="selected_diagnose">
+          <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose">
+            {{diagnose.code}} - {{diagnose.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Prepisi terapiju</mat-label>
+        <mat-select [(ngModel)]="selected_therapy" name="selected_therapy">
+          <mat-option *ngFor="let therapy of therapyList" [value]="therapy">
+            {{therapy.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button (click)="addAnotherTherapy()">+</button>
+
+      <mat-form-field>
+        <mat-label>Odaberi lek:</mat-label>
+        <mat-select [(ngModel)]="selected_med" name="selected_med">
+          <mat-option *ngFor="let med of medList" [value]="med">
+            {{med.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button (click)="addAnotherRecepie()">+</button>
+      <mat-form-field>
+        <mat-label>Medicinska sestra zaduzena za overu:</mat-label>
+        <mat-select [(ngModel)]="selected_nurse" name="selected_nurse">
+          <mat-option *ngFor="let nurse of nurseList" [value]="nurse">
+            {{nurse | json}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+    </form>
+    <button (click)="setOperation()"> zakazi operaciju</button>
+  </mat-card-content>
+
+</mat-card>
+<mat-card *ngIf="hasOperation">
+
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button (click)="nextVisit()">Proveri doktorov kalendar</button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-form-field>
+      <mat-list>
+        <mat-label>Operacione sale:</mat-label>
+        <mat-select [(ngModel)]="selected_room" (selectionChange)="onRoomChange()" name="room">
+          <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
+        </mat-select>
+      </mat-list>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="pickedDate()">
+      <mat-list>
+        <mat-label>Vreme operacije:</mat-label>
+        <mat-select [(ngModel)]="selected_time" name="time">
+          <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}
+          </mat-option>
+        </mat-select>
+      </mat-list>
+    </mat-form-field>
+    <button (click)="showRoomSchedule()">Proveri kalendar operacionih sala</button>
+  </div>
+
+  <div *ngIf="pickedDate()"> Obavezni doktori:
+    <div *ngFor="let mdoc of mandatoryDoctorList"> {{mdoc.firstName}} {{mdoc.lastName}} </div>
+  </div>
+  <mat-list>
+    <button (click)="createAppointment()"> Upisi u kalendar </button>
+    <div *ngIf="selected_room">
+      <app-calendar data_url="{{selected_room.id}}"></app-calendar>
+    </div>
+  </mat-list>
+
+</mat-card>
+</div>

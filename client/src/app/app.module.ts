@@ -32,6 +32,7 @@ import { NurceProfileComponent } from './component/nurce-page/nurce-profile/nurc
 import { DoctorComponent , ExaminationReportComponent} from './component/doctor-page';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
+import { NewExaminationDialogComponent } from './component/doctor-page/examination-report/new-examination-dialog/new-examination-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { RegistrationRequestComponent } from './component/registration-request/r
     DoctorComponent,
     ExaminationReportComponent,
     RegistrationRequestComponent,
+    NewExaminationDialogComponent,
     
   ],
   imports: [
@@ -86,6 +88,7 @@ import { RegistrationRequestComponent } from './component/registration-request/r
     MatIconRegistry,
   ],
   bootstrap: [AppComponent],
+  entryComponents:[NewExaminationDialogComponent]
 })
 export class AppModule {
 }

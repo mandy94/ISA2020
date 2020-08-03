@@ -17,3 +17,18 @@
     width: 100%;
   }
  
+  .add{
+    float: right;
+    margin-right: 35px;
+    margin-top: 35px;
+    width: fit-content;
+  }
+  .change{
+    width: min-content;
+        
+  }
+  mat-icon{
+    margin-left: 10px;
+    color: gray;
+    padding-bottom: 6px;
+}

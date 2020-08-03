@@ -7,7 +7,8 @@ import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Report, Room, Appointment, Medicine } from './report';
 import { EventEmitterService } from 'app/service/event-emitter.service';
-
+import { NewExaminationDialogComponent } from './new-examination-dialog/new-examination-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-examination-report',
@@ -17,12 +18,26 @@ import { EventEmitterService } from 'app/service/event-emitter.service';
 
 })
 export class ExaminationReportComponent implements OnInit {
-
+  hasOperation = false;
   constructor(private apiService: ApiService,
     private config: ConfigService,
     private userService: UserService,
-    private eventEmitterService: EventEmitterService 
+    private eventEmitterService: EventEmitterService,
+    public dialog: MatDialog
   ) { }
+  
+  newExamination = {};
+ 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(NewExaminationDialogComponent, {
+      width: '700px',
+      data: this.newExamination
+    });
+
+    dialogRef.afterClosed().subscribe(result => {      
+      
+    });
+  }
   patiens: any;
   filteredOptions: Observable<any>;
   myControl = new FormControl();
@@ -43,6 +58,10 @@ export class ExaminationReportComponent implements OnInit {
     const filterValue = value;
 
     return this.patiens.filter(option => option.toString().indexOf(filterValue) === 0);
+  }
+  hasPermission(){
+    // ako je izabrani doktor
+    return true;
   }
   getPacientByJMBG() {
     this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacient_jmbg)
