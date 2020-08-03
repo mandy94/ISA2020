@@ -1,0 +1,38 @@
+<mat-card *ngIf="hasOperation">
+
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <button (click)="nextVisit()">Proveri doktorov kalendar</button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-form-field>
+      <mat-list>
+        <mat-label>Operacione sale:</mat-label>
+        <mat-select [(ngModel)]="selected_room" (selectionChange)="onRoomChange()" name="room">
+          <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
+        </mat-select>
+      </mat-list>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="pickedDate()">
+      <mat-list>
+        <mat-label>Vreme operacije:</mat-label>
+        <mat-select [(ngModel)]="selected_time" name="time">
+          <mat-option *ngFor="let time of availableTimeList" [value]="time">{{time.start}} - {{time.ending}}
+          </mat-option>
+        </mat-select>
+      </mat-list>
+    </mat-form-field>
+    <button (click)="showRoomSchedule()">Proveri kalendar operacionih sala</button>
+  </div>
+
+  <div *ngIf="pickedDate()"> Obavezni doktori:
+    <div *ngFor="let mdoc of mandatoryDoctorList"> {{mdoc.firstName}} {{mdoc.lastName}} </div>
+  </div>
+  <mat-list>
+    <button (click)="createAppointment()"> Upisi u kalendar </button>
+    <div *ngIf="selected_room">
+      <app-calendar data_url="{{selected_room.id}}"></app-calendar>
+    </div>
+  </mat-list>
+
+</mat-card>

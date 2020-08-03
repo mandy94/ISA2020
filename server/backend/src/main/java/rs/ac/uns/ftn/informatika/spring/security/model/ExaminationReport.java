@@ -40,8 +40,7 @@ public class ExaminationReport {
 	private String details;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="diagnose")
-	@JsonIgnore
+	@JoinColumn(name="diagnose")	
 	private Diagnose diagnose;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -118,10 +117,13 @@ public class ExaminationReport {
 		
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "ExaminationReport [id=" + id + ", details=" + details + ", pacient=" + pacient + ", doctor=" + doctor
-				+ "]";
+		return "ExaminationReport [id=" + id + ", visitDate=" + visitDate + ", visitTime=" + visitTime + ", details="
+				+ details + ", diagnose=" + diagnose + ", medication=" + medication + ", therapies=" + therapies
+				+ ", pacient=" + pacient + ", doctor=" + doctor + "]";
 	}
 
 	public List<Therapy> getTherapies() {

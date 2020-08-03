@@ -33,6 +33,8 @@ import { DoctorComponent , ExaminationReportComponent} from './component/doctor-
 import {FullCalendarModule} from '@fullcalendar/angular';
 import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
 import { NewExaminationDialogComponent } from './component/doctor-page/examination-report/new-examination-dialog/new-examination-dialog.component';
+import { NewOperationroomDialogComponent } from './component/doctor-page/examination-report/new-operationroom-dialog/new-operationroom-dialog.component';
+import { NextVisitDialogComponent } from './component/doctor-page/examination-report/next-visit-dialog/next-visit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { NewExaminationDialogComponent } from './component/doctor-page/examinati
     ExaminationReportComponent,
     RegistrationRequestComponent,
     NewExaminationDialogComponent,
+    NewOperationroomDialogComponent,
+    NextVisitDialogComponent,
     
   ],
   imports: [
@@ -88,7 +92,7 @@ import { NewExaminationDialogComponent } from './component/doctor-page/examinati
     MatIconRegistry,
   ],
   bootstrap: [AppComponent],
-  entryComponents:[NewExaminationDialogComponent]
+  entryComponents:[NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
 })
 export class AppModule {
 }

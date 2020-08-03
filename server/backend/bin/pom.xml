@@ -23,11 +23,24 @@
 	</properties>
 
 	<dependencies>
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-context-support</artifactId>
+	<version>5.2.7.RELEASE</version>
+</dependency>
+<!-- Thanks for using https://jar-download.com -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <version>{version}</version>
+		    <scope>test</scope>
+		</dependency>
 		<!-- ukljucena podrska za Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

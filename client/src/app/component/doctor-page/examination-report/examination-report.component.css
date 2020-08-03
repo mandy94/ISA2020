@@ -18,12 +18,14 @@
   }
  
   .add{
-    float: right;
-    margin-right: 35px;
+    /* float: right; */
+    margin-right: 15px;
     margin-top: 35px;
-    width: fit-content;
+    width: 100% ;
   }
   .change{
+    margin-right: 15px;
+    margin-top: 35px;
     width: min-content;
         
   }

@@ -9,23 +9,19 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 
 public class ExaminationReportDTO {
 
+	@Override
+	public String toString() {
+		return "ExaminationReportDTO [id=" + id + ", details=" + details + ", diagnose=" + diagnose + ", pacient="
+				+ pacient + ", pacientid=" + pacientid + ", doctor=" + doctor + ", doctorid=" + doctorid
+				+ ", visitDate=" + visitDate + ", visitTime=" + visitTime + ", medication=" + medication
+				+ ", therapies=" + therapies + "]";
+	}
 	private Long id;
 	private String details;
 	private String diagnose;
 	private String pacient;
 	private Long pacientid;
-	public Long getPacientid() {
-		return pacientid;
-	}
-	public void setPacientid(Long pacientid) {
-		this.pacientid = pacientid;
-	}
-	public Long getDoctorid() {
-		return doctorid;
-	}
-	public void setDoctorid(Long doctorid) {
-		this.doctorid = doctorid;
-	}
+	
 	private String doctor;
 	private Long doctorid;
 	private String visitDate;
@@ -45,6 +41,18 @@ public class ExaminationReportDTO {
 			this.visitDate = report.getVisitDate();
 			this.visitTime = report.getVisitTime();
 					
+	}
+	public Long getPacientid() {
+		return pacientid;
+	}
+	public void setPacientid(Long pacientid) {
+		this.pacientid = pacientid;
+	}
+	public Long getDoctorid() {
+		return doctorid;
+	}
+	public void setDoctorid(Long doctorid) {
+		this.doctorid = doctorid;
 	}
 	public Long getId() {
 		return id;

@@ -55,13 +55,16 @@ INSERT INTO DIAGNOSES ( code, name) VALUES ( 'ZQ9601', 'Dijabetes');
 INSERT INTO THERAPIES ( name) VALUES ('Fiziklana terapija');
 INSERT INTO THERAPIES ( name) VALUES ('Inhalacija');
 
-INSERT INTO MEDICATIONS ( name) VALUES ( 'Penicilin');
-INSERT INTO MEDICATIONS ( name) VALUES ( 'Nixar');
-INSERT INTO MEDICATIONS ( name) VALUES ( 'Insulin');
-INSERT INTO MEDICATIONS ( name) VALUES ( 'Ventolin');
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Brufen'   , 'tableta 400mg'    );
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Brufen'   , 'tableta 600mg'    );
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Brufen'   , 'tableta 800mg'    );
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Nixar'    , 'tableta 20mg'     );
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Insulin'  , 'suspenzija 100mL' );
+INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Ventolin' , 'suspenzija100 ug' );
 
 INSERT INTO OPERATIONROOMS ( name, code) VALUES ( 'Operaciona sala 1', 'T1');
 INSERT INTO OPERATIONROOMS ( name, code) VALUES ( 'Operaciona sala 2', 'T2');
+
 ---- EXAMINATION REPORTS DATA ----
 INSERT INTO EXAMINATIONREPORTS (date,time, is_doctor, is_examined, details, diagnose) VALUES ('24.06.2020', '08:00', 1 , 6, 'Pacijent se zali na jak bol u grlu', 2);
 INSERT INTO EXAMINATIONREPORTS (date,time, is_doctor, is_examined, details,diagnose) VALUES ('03.07.2020', '08:00', 1 , 6, 'Pacijent se zali na sekret, nesanicu i povremeno visoku temperaturu.', 5);

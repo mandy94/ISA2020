@@ -31,10 +31,12 @@
       <mat-card-content>
         <mat-tab-group>
           <mat-tab label="Licna anamneza">
-            <mat-card-subtitle>
-              <mat-list>
-              <mat-list-item>JMBG: {{currentPacient.jmbg}} 
-               <button mat-button class="change" *ngIf="hasPermission()"> <mat-icon class="change">edit</mat-icon></button>
+            <!-- <mat-card-subtitle> -->
+              <div fxLayout="row" fxLayoutAlign="start" >
+                <button mat-stroked-button class="change" *ngIf="hasPermission()">Izmeni pacijentove podatke</button>
+              </div> 
+              <mat-list>               
+                <mat-list-item>JMBG: {{currentPacient.jmbg}}                
                </mat-list-item>
               <mat-list-item>Datum rodjenja: {{currentPacient.birthdate}} </mat-list-item>
               <mat-list-item>Krvna grupa: {{currentPacient.data.bloodType.type}}</mat-list-item>
@@ -42,12 +44,15 @@
               <mat-list-item>Tezina: {{currentPacient.data.weight}}cm</mat-list-item>
 
             </mat-list>
-            </mat-card-subtitle>
+            <!-- </mat-card-subtitle> -->
           </mat-tab>
 
           <mat-tab label="Pregledi">
-            
-            <button mat-raised-button class="add" (click)="openDialog()">Unesi novi pregled <mat-icon>create</mat-icon></button>
+            <div fxLayout="row" fxLayoutAlign="space-evenly center" >
+            <button mat-stroked-button class="add" (click)="newExaminationDialog()">Unesi novi pregled <mat-icon>create</mat-icon></button>
+            <button mat-stroked-button class="add" (click)="nextVisitDialog()">Zakazi sledeci pregled <mat-icon>create</mat-icon></button>
+            <button mat-stroked-button class="add" (click)="newOperationDialog()">Zakazi operaciju <mat-icon>create</mat-icon></button>
+          </div>
             <table mat-table [dataSource]="allVisits" class="mat-elevation-z8" *ngIf="!firstVisit()"
               class="example-full-width">
 
