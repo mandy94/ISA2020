@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.CalendarAppointment;
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
 
@@ -44,7 +44,7 @@ public class AppointmentController {
 	@PostMapping(value = "/room/new")
 	public List<Appointment> createAppointment( @RequestBody AppointmentDTO appoint) {
 		System.out.println(appoint);
-		OperationRoom room = orservice.getRoomById(appoint.getRoom());
+		Room room = orservice.getRoomById(appoint.getRoom());
 		if(room!= null)
 		{
 			Appointment  app = new Appointment(appoint);

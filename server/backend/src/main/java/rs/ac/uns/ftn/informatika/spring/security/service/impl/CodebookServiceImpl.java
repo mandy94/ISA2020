@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.informatika.spring.security.model.Diagnose;
 import rs.ac.uns.ftn.informatika.spring.security.model.ExaminationReport;
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.repository.DiagnoseRepository;
 import rs.ac.uns.ftn.informatika.spring.security.repository.MedicineRepository;
@@ -52,13 +52,13 @@ public class CodebookServiceImpl implements CodebookService {
 	
 	// ROOOOMS
 	@Override
-	public List<OperationRoom> getCodesForOperationRooms() {
+	public List<Room> getCodesForOperationRooms() {
 		return orepo.findAll();
 	}
 	
 
 	@Override
-	public List<OperationRoom> saveOperationRoom(OperationRoom o) {
+	public List<Room> saveOperationRoom(Room o) {
 		orepo.save(o);
 		return orepo.findAll();
 	}

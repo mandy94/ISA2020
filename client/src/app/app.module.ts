@@ -35,6 +35,7 @@ import { RegistrationRequestComponent } from './component/registration-request/r
 import { NewExaminationDialogComponent } from './component/doctor-page/examination-report/new-examination-dialog/new-examination-dialog.component';
 import { NewOperationroomDialogComponent } from './component/doctor-page/examination-report/new-operationroom-dialog/new-operationroom-dialog.component';
 import { NextVisitDialogComponent } from './component/doctor-page/examination-report/next-visit-dialog/next-visit-dialog.component';
+import { DoctorCalendarComponent } from './component/doctor-page/doctor-calendar/doctor-calendar.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { NextVisitDialogComponent } from './component/doctor-page/examination-re
     NewExaminationDialogComponent,
     NewOperationroomDialogComponent,
     NextVisitDialogComponent,
+    DoctorCalendarComponent,
     
   ],
   imports: [

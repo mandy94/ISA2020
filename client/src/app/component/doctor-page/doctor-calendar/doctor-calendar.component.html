@@ -1,0 +1,16 @@
+<h1> Radni kalendar</h1>
+<button> Dnevni prikaz</button>
+<button> Nedeljni prikaz</button>
+<button> Mesecni prikaz</button>
+<div *ngIf="dedicatedRoom">
+
+  Soba : {{dedicatedRoom.code}}
+  <h2> Dnevni kalendar </h2>
+  <div *ngFor="let term of dedicatedRoom.timeTable">
+    <button mat-stroked-button class="btn">{{term.start}}
+      <span class="hasPacient" *ngIf="term.pacient!=null"> {{term.pacient.firstName}} {{term.pacient.lastName}}</span>
+    </button>
+  </div>
+
+
+  </div>

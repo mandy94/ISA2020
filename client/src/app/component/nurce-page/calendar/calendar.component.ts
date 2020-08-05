@@ -32,12 +32,10 @@ export class CalendarComponent implements OnInit {
   c: any;
   ngOnInit() {
 
-     this.eventEmitterService.
-        invoker.subscribe((name: string) => {
-          this.refreshCalendar(this.eventEmitterService.data);
-        });
-        
-    
+    this.eventEmitterService.
+      invoker.subscribe((name: string) => {
+        this.refreshCalendar(this.eventEmitterService.data);
+      });
 
     this.eventEmitterService.
       invoker.subscribe((name: string) => { this.createAppointment(this.eventEmitterService.room); })
@@ -52,45 +50,43 @@ export class CalendarComponent implements OnInit {
       return;
     }
 
-    data.begining =  data.start;
-    data.ending =  data.ending;
+    data.begining = data.start;
+    data.ending = data.ending;
     data.date = this.clickedDate;
     this.apiService.post(this.config.api_url + '/appointment/room/new', data)
       .subscribe(() => {
-        
-        let content = "Postovani, obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od "+ data.start + " do" +data.ending + ". Ocekujemo vas. Pozdrav.";
+
+        let content = "Postovani, obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od " + data.start + " do" + data.ending + ". Ocekujemo vas. Pozdrav.";
         let msgbody = new MailMessage(data.pacientId, "Zakazivanje operacije", content);
-        for(let md of data.mdoctors)
-          {
-            console.log(md);
-            let content = "Postovani/na "+ md.name + ", obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od "+ data.start + " do" +data.ending + ". Ocekujemo vas. Pozdrav.";
-            let msgbody = new MailMessage(md.id, "Zakazivanje operacije", content);
-             this.apiService.post(this.config.api_url + '/email/send', msgbody).subscribe();
-          }
+        for (let md of data.mdoctors) {
+          console.log(md);
+          let content = "Postovani/na " + md.name + ", obavestavamo Vas da vam je zakazana operacija za datum " + this.clickedDate + " i vremenski termin u periodu od " + data.start + " do" + data.ending + ". Ocekujemo vas. Pozdrav.";
+          let msgbody = new MailMessage(md.id, "Zakazivanje operacije", content);
+          this.apiService.post(this.config.api_url + '/email/send', msgbody).subscribe();
+        }
         this.apiService.post(this.config.api_url + '/email/send', msgbody)
-        .subscribe(()=>{
-          this.refreshCalendar(data.room.toString());
-          data = null;
-        });
-        
+          .subscribe(() => {
+            this.refreshCalendar(data.room.toString());
+            data = null;
+          });
+
       });
   }
   refreshCalendar(new_url) {
-    
-    if(new_url == null || new_url == "")
-    {
+
+    if (new_url == null || new_url == "") {
       this.c = this.calendarComponent.getApi();
       this.c.render();
-    }else
-    this.apiService.get(new_url)
-      .subscribe(data => {
-        
-        this.eventList = data;
-        this.c = this.calendarComponent.getApi();
-        this.c.render();
-        console.log("Calendar refreshed from url: " + new_url);
+    } else
+      this.apiService.get(new_url)
+        .subscribe(data => {
 
-      });
+          this.eventList = data;
+          this.c = this.calendarComponent.getApi();
+          this.c.render();
+          console.log("Calendar refreshed from url: " + new_url);
+
+        });
   }
   clickedDate: string;
 

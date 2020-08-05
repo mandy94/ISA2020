@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 
 public interface OperationRoomService {
 
-	List<OperationRoom> getRooms();
+	List<Room> getRooms();
+	List<Room> getOperationRooms();
+	List<Room> getVisitRooms();
 
 	List<Appointment> getAppointments(Long id);
 
-	OperationRoom getRoomById(Long room);
+	Room getRoomById(Long room);
 
 }

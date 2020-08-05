@@ -2,17 +2,21 @@
 
 <mat-card>
   <mat-card-header>
-    <mat-card-title><b>Unos izvestaja pregleda</b></mat-card-title>
-    <mat-card-subtitle> <br> </mat-card-subtitle>
-  </mat-card-header>
-
-  <form #loginForm="ngForm">
-    <button (click)="onButtonClick()" mat-raised-button>
-      <img src="assets/image/examination.png" mat-card-image>
-      <br>
-
+    <!-- <mat-card-title>Unos izvestaja pregleda</mat-card-title> -->
+    </mat-card-header>
+  <mat-card-content  fxLayout="row" fxLayoutAlign="center center" >
+    <button (click)="gotoDoctorExaminations()" mat-raised-button class="firstBtn">
+      <h4> Rucni unos izvestaja</h4>
+      <img src="assets/image/examination.JPG" mat-card-image>
     </button>
-  </form>
+
+
+      <button (click)="gotoDoctorCalendar()" mat-raised-button>
+        <h4> Radni kalendar</h4>
+        <img src="assets/image/timetable.JPG" mat-card-image>
+
+      </button>
+  </mat-card-content>
 
 
 </mat-card>

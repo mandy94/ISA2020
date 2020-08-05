@@ -84,7 +84,7 @@ public class User implements UserDetails {
 
 	@ManyToMany(mappedBy="mandatoryDoctors", fetch = FetchType.LAZY)
     @JsonIgnore
-    List<OperationRoom> dedicatedRoom = new ArrayList<OperationRoom>();
+    List<Room> dedicatedRoom = new ArrayList<Room>();
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
@@ -228,11 +228,11 @@ public class User implements UserDetails {
 		this.birthdate = birthdate;
 	}
 
-	public List<OperationRoom> getDedicatedRoom() {
+	public List<Room> getDedicatedRoom() {
 		return dedicatedRoom;
 	}
 
-	public void setDedicatedRoom(List<OperationRoom> dedicatedRoom) {
+	public void setDedicatedRoom(List<Room> dedicatedRoom) {
 		this.dedicatedRoom = dedicatedRoom;
 	}
 

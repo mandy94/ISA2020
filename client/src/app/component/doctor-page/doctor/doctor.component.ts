@@ -12,8 +12,11 @@ export class DoctorComponent implements OnInit {
 
   ngOnInit() {
   }
-  onButtonClick(){
+  gotoDoctorExaminations(){
     
     this.router.navigate(['/examination']);
+  }
+  gotoDoctorCalendar(){
+    this.router.navigate(['/doctor-calendar']);
   }
 }

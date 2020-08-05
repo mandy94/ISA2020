@@ -1,19 +1,52 @@
-<mat-card *ngIf="hasOperation">
+<mat-card>
 
-  <div fxLayout="row" fxLayoutAlign="start center">
+  <!-- <div fxLayout="row" fxLayoutAlign="start center">
     <button (click)="nextVisit()">Proveri doktorov kalendar</button>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <mat-form-field>
-      <mat-list>
-        <mat-label>Operacione sale:</mat-label>
-        <mat-select [(ngModel)]="selected_room" (selectionChange)="onRoomChange()" name="room">
-          <mat-option *ngFor="let room of operationRoomList" [value]="room">{{room.code}} {{room.name}}</mat-option>
-        </mat-select>
-      </mat-list>
+  </div> -->
+  <form [formGroup]="groupControl">
+    <mat-form-field class="room">
+      <input type="text" matInput placeholder="Pronadji operacionu salu" aria-label="Number"
+        formControlName="roomControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayRoomAs">
+        <mat-option *ngFor="let option of roomList" [value]="option">
+          {{option.code}} - {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="date">
+      <mat-label>Odaberi datum</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dateControl">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker name="selected_date"></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field *ngIf="pickedDate()">
+    <button mat-raised-button (click)="showRoomSchedule()" [disabled]="!filled()"> Trazi </button>
+  </form>
+  <div *ngIf="termTable" fxLayout="column" fxLayoutAlign="space-around center">
+    <p *ngIf="termTable.notavailable.length != 0"> Slobodni termini su: </p>
+    <p *ngIf="termTable.notavailable.length == 0"> Svi termini su slobodni </p>
+    <div *ngFor="let term of termTable.available">
+      <button mat-stroked-button color="primary" class="terms"> 
+        {{term.start}} - {{term.ending}}
+      </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-around center">
+    <p *ngIf="termTable.notavailable.length != 0"> Zauzeti termini su</p>
+    <div *ngFor="let term of termTable.notavailable"> {{term.start}} - {{term.ending}}</div>
+  
+    </div>
+  </div>
+  
+
+  <div *ngIf="termTable==null" fxLayout="column" fxLayoutAlign="space-around center">
+
+
+    <button mat-button color="warn">
+      <h3> Svi termini su zauzeti za taj dan. </h3> Zatrazi od administratora prvi sledeci termin
+    </button>
+
+  </div>
+  <!-- <mat-form-field *ngIf="pickedDate()">
       <mat-list>
         <mat-label>Vreme operacije:</mat-label>
         <mat-select [(ngModel)]="selected_time" name="time">
@@ -33,6 +66,6 @@
     <div *ngIf="selected_room">
       <app-calendar data_url="{{selected_room.id}}"></app-calendar>
     </div>
-  </mat-list>
+  </mat-list> -->
 
 </mat-card>

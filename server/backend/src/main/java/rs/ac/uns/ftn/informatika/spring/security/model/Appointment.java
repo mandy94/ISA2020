@@ -14,6 +14,11 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 @Entity
 @Table(name="APPOINTMENTS")
 public class Appointment {
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
+	
 	Long pacientid;
 	//List<User> mandatoryDoctors = new ArrayList<User>();
 	@Column(name="start")
@@ -24,14 +29,9 @@ public class Appointment {
 	@Column(name="date")
 	String date;
 	
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
-	
 	@ManyToOne
 	@JoinColumn(name="room")
-	OperationRoom room;
+	Room room;
 	
 	@Column(name="doctorid")
 	Long doctorid;
@@ -64,11 +64,11 @@ public class Appointment {
 
 
 
-	public OperationRoom getRoom() {
+	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoom(OperationRoom room) {
+	public void setRoom(Room room) {
 		this.room = room;
 	}
 

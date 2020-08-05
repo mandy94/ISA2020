@@ -25,12 +25,11 @@ public class SchedulerTime {
 	@Column(name="ending")
 	String ending;
 	
-	@Column(name="type")
-	String type;
+
 	@ManyToOne
 	@JoinColumn(name="room")
 	@JsonIgnore
-	OperationRoom room;
+	Room room;
 
 	public String getStart() {
 		return start;
@@ -48,11 +47,11 @@ public class SchedulerTime {
 		this.ending = ending;
 	}
 
-	public OperationRoom getRoom() {
+	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoom(OperationRoom room) {
+	public void setRoom(Room room) {
 		this.room = room;
 	}
 
@@ -61,12 +60,5 @@ public class SchedulerTime {
 		return "SchedulerTime [start=" + start + ", ending=" + ending + ", room=" + room + "]";
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 }

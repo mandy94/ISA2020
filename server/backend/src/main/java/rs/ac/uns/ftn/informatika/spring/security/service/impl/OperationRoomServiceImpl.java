@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.repository.AppointmentRepository;
 import rs.ac.uns.ftn.informatika.spring.security.repository.OperationRoomRepository;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
@@ -21,7 +21,7 @@ public class OperationRoomServiceImpl implements OperationRoomService {
 	private AppointmentRepository aprepo;
 
 	@Override
-	public List<OperationRoom> getRooms() {
+	public List<Room> getRooms() {
 		return repo.findAll();
 	}
 
@@ -31,10 +31,22 @@ public class OperationRoomServiceImpl implements OperationRoomService {
 	}
 
 	@Override
-	public OperationRoom getRoomById(Long id) {
+	public Room getRoomById(Long id) {
 		return repo.findById(id).orElse(null);
 		
 	}
+
+	@Override
+	public List<Room> getOperationRooms() {
+		return repo.findOperationRooms();
+	}
+
+	@Override
+	public List<Room> getVisitRooms() {
+		return repo.findVisitRoom();
+	}
+
+	
 
 
 }

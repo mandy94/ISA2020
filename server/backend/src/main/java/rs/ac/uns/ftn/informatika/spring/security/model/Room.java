@@ -19,8 +19,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="OPERATIONROOMS")
-public class OperationRoom {
+@Table(name="ROOMS")
+public class Room {
 
 	@Id
     @Column(name="id")
@@ -34,16 +34,17 @@ public class OperationRoom {
     @Column(name="code")
     String code;
     
+    @Column(name="type")
+    String type;
+    
     @OneToMany(mappedBy="room")
     @Column(name="time")
-//    @JsonIgnore
     List<SchedulerTime> workingTime = new ArrayList<SchedulerTime>();
     
     @OneToMany(mappedBy="room")
     @Column(name="scheduler")
     @JsonIgnore
-    List<Appointment> scheduler = new ArrayList<Appointment>();
-
+    List<Appointment> scheduler = new ArrayList<Appointment>(); 
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "mandatory_doctors",
@@ -51,7 +52,7 @@ public class OperationRoom {
             inverseJoinColumns = {  @JoinColumn(name = "user_id", referencedColumnName = "id")})
     List<User> mandatoryDoctors = new ArrayList<User>();
 	
-    public OperationRoom() {}
+    public Room() {}
     public void setName(String name) {
         this.name = name;
     }
@@ -92,6 +93,12 @@ public class OperationRoom {
 	}
 	public void setScheduler(List<Appointment> scheduler) {
 		this.scheduler = scheduler;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 

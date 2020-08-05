@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.Diagnose;
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
-import rs.ac.uns.ftn.informatika.spring.security.model.OperationRoom;
+import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.service.CodebookService;
 
@@ -46,8 +46,8 @@ public class CodebookController {
 
 	}
 	@PostMapping(value = "/codes/room",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public List<OperationRoom> addRoom(@RequestBody OperationRoom o){
-		OperationRoom or = new OperationRoom();
+	public List<Room> addRoom(@RequestBody Room o){
+		Room or = new Room();
 		or.setCode(o.getCode());
 		or.setName(o.getName());
 	
@@ -69,7 +69,7 @@ public class CodebookController {
 	}
 	
 	@GetMapping("/codes/rooms")
-	public List<OperationRoom> getCodesForRooms() {
+	public List<Room> getCodesForRooms() {
 		return codebookService.getCodesForOperationRooms();
 	}
 	@GetMapping("/codes/medications/all")
