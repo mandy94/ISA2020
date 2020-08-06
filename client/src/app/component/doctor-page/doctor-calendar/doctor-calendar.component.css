@@ -1,7 +1,26 @@
 .btn{
-    width: 30%;
+    width: 200px;
     text-align: left;
 
+}
+.title{
+    /* width: 200px; */
+    text-align: center;
+    
+}
+
+.fullBtn{
+    width: 450px;
+    text-align: left;
+}
+.montBtn{
+    height: 100px;
+    width: 130px;
+    text-align: left;
+}
+.month{
+    /* width : 20%; */
+    display: table;
 }
 
 .hasPacient{
@@ -9,3 +28,19 @@
     padding-bottom: 4px;
     
 }
+
+mat-grid-tile{
+    background:lightgrey;
+   
+}
+.header
+{
+    height: 18px;
+}
+.grid-tile {
+    background: whitesmoke;
+    
+  }
+ .down{
+     /* margin-top: 5%; */
+ }

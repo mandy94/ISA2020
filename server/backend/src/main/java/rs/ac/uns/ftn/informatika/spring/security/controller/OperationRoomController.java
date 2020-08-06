@@ -66,77 +66,40 @@ public class OperationRoomController {
 		return null;	
 	}
 	
-	@GetMapping("/room-schedule/day/{doctorid}")
-	public RoomDTO getRoomScheduleByDay(@PathVariable Long doctorid){	
+	@GetMapping("/room-schedule/{doctorid}/{from}/{to}")
+	public RoomDTO getRoomScheduleByWeek(@PathVariable Long doctorid, @PathVariable String from, @PathVariable String to){	
+	
+		String fromDate = covertToDate(from);
+		String toDate = covertToDate(to);
 		User doctor = userService.findById(doctorid);
 		RoomDTO room = new RoomDTO(doctor.getDedicatedRoom().get(0));
 		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
-		// Da se dobije radno vreme doktora
-		AppointmentsPerDay day = new AppointmentsPerDay();
-		for(SchedulerTime time: timeservice.getTimesForOperationRoom(room.getId())) {
-			day.addTerm(time.getStart(), time.getEnding(), null);
-		}
-		room.getTimeTable().add(day);
-		room.getTimeTable().get(0).setDate(getTodayDate());
-		for(Appointment app :appointmets) {
-			if(app.getDate().equals(getTodayDate())) {
-				room.getTimeTable().get(0).compareTimeAndAdd(app.getStart(),
-						app.getEnd(), app.getPacientid());
-			}
-		}
-		return room;
-			
-	}
-	
-	Long getTimeStampFromStringDate(String date){
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		Date parsed;
-		try {
-			parsed = df.parse(date);
-			Timestamp ti = new Timestamp(parsed.getTime());
-			return ti.getDateTime()/1000;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	String getTimeFormTimeStampToString(Long stamp) {
-		return new SimpleDateFormat("dd.MM.yyyy").format(new Date(stamp));
-	}
-	@GetMapping("/room-schedule/week/{doctorid}")
-	public RoomDTO getRoomScheduleByWeek(@PathVariable Long doctorid){	
-		User doctor = userService.findById(doctorid);
-		RoomDTO room = new RoomDTO(doctor.getDedicatedRoom().get(0));
-		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
-
-		Long monday = getLastMondayTimeStamp();
-		Long sunday = monday + 7*24*60*60*1000L;
-		for(int j = 0 ; j < 7 ; j++)
+		String currentDate = fromDate;
+		while(!currentDate.equals(toDate))
 		{
 			AppointmentsPerDay day = new AppointmentsPerDay();
-			day.setDate(getTimeFormTimeStampToString(monday*1000 + 24*60*1000*60*(j+1)));
-			System.out.println(monday + 24*60*60*(j+1));
+			day.setDate(currentDate);
 			
 			for(SchedulerTime time: timeservice.getTimesForOperationRoom(room.getId())) {
 				day.addTerm(time.getStart(), time.getEnding(), null);
 			}	
 			room.getTimeTable().add(day);
+			currentDate = nextDay(currentDate);
 		}
-		int i = 0;
-		for(Appointment app: appointmets) {
-			if(getTimeStampFromStringDate(app.getDate())>=monday && getTimeStampFromStringDate(app.getDate())<=sunday) {
+		
+		for(Appointment app : appointmets) {
+			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
+					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
+				for(AppointmentsPerDay day: room.getTimeTable()) {
+					if(day.getDate().equals(app.getDate()))
+					{
+						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(),userService.findById(app.getPacientid()).getFullName());
+					}
+				}
 				
-//				for(Appointment ap :appointmets) {
-//					if(ap.getDate().equals(getTodayDate())) {
-//						room.getTimeTable().get(i).compareTimeAndAdd(ap.getStart(),
-//								ap.getEnd(), ap.getPacientid());
-//					}
-//				}
-				i++;// next day
-			
-			} // if
+			}
 		}
+		
 		return room;
 		
 			
@@ -187,18 +150,28 @@ public class OperationRoomController {
 		
 		return date.substring(0, 2) + "."+date.substring(2,4)+"."+date.substring(4,8);
 	}
-	private String getTodayDate() {
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		 Date date = new Date();
-		 return formatter.format(date);
+
+	Long getTimeStampFromStringDate(String date){
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date parsed;
+		try {
+			parsed = df.parse(date);
+			return parsed.getTime()/1000*1000;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	private Long getLastMondayTimeStamp() {
-		LocalDate date = LocalDate.now(); 
-		 DayOfWeek day = date.getDayOfWeek();
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");		 
-		 return System.currentTimeMillis()/1000-24*60*60*(day.getValue()-1);
+	String getTimeFromTimeStampToString(Long stamp) {
+		return new SimpleDateFormat("dd.MM.yyyy").format(new Date(stamp));
 	}
 	
+	String nextDay(String date) {
+		Long ts = getTimeStampFromStringDate(date); // IN MILISECONDS
+		return getTimeFromTimeStampToString(ts+24*60*60*1000);
+		
+	}
+
 	Runnable exampleRunnable = new Runnable(){
 	    @Override
 	    public void run() {

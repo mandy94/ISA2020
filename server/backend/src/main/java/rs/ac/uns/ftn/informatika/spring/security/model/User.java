@@ -256,4 +256,8 @@ public class User implements UserDetails {
 		return serialVersionUID;
 	}
 
+	public String getFullName() {
+	return firstName + " " + lastName;
+	}
+
 }

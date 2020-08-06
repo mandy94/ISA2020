@@ -1,16 +1,62 @@
 <h1> Radni kalendar</h1>
-<button> Dnevni prikaz</button>
-<button> Nedeljni prikaz</button>
-<button> Mesecni prikaz</button>
-<div *ngIf="dedicatedRoom">
 
-  Soba : {{dedicatedRoom.code}}
-  <h2> Dnevni kalendar </h2>
-  <div *ngFor="let term of dedicatedRoom.timeTable">
-    <button mat-stroked-button class="btn">{{term.start}}
-      <span class="hasPacient" *ngIf="term.pacient!=null"> {{term.pacient.firstName}} {{term.pacient.lastName}}</span>
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+  <mat-button-toggle (click)="getByDay()"> Dnevni prikaz</mat-button-toggle>
+  <mat-button-toggle (click)="getByWeek()"> Nedeljni prikaz</mat-button-toggle>
+  <mat-button-toggle (click)="getByMonth()"> Mesecni prikaz</mat-button-toggle>
+</mat-button-toggle-group>
+<p ></p>
+<!-- <div *ngIf="dedicatedRoom" ><b>{{dedicatedRoom.name}} {{dedicatedRoom.code}}</b></div> -->
+<div *ngIf="dedicatedRoom && dayView" fxLayout="row" fxLayoutAlign="start start">
+  <div *ngFor="let day of dedicatedRoom.timeTable" fxLayout="column" fxLayoutAlign="start start">
+    <button mat-flat-button class="title">
+      <b> {{day.date}}</b>
     </button>
+    <div *ngFor="let term of day.terms">
+      <button mat-stroked-button class="fullBtn">{{term.start}}
+        <span class="hasPacient" *ngIf="term.pacientId!=null"> {{term.pacientFullName}} </span>
+      </button>
+    </div>
   </div>
-
-
+</div>
+<div *ngIf="dedicatedRoom && weekView" fxLayout="row" fxLayoutAlign="start start">
+  <div *ngFor="let day of dedicatedRoom.timeTable" fxLayout="column" fxLayoutAlign="start start">
+    <button mat-flat-button class="title">
+      <b> {{day.date}}</b>
+    </button>
+    <div *ngFor="let term of day.terms">
+      <button mat-stroked-button class="btn">{{term.start}}
+        <span class="hasPacient" *ngIf="term.pacientId!=null"> {{term.pacientFullName}} </span>
+      </button>
+    </div>
   </div>
+</div>
+
+<div *ngIf="monthView " width="auto" height="100%">
+  <mat-grid-list cols="7" rowHeight="1:1">
+    <div *ngFor="let day of lastMonth.timeTable">
+      <mat-grid-tile>
+        <mat-grid-tile-header style="height: 18px; background:white; color:black">
+          <!-- <button mat-flat-button disabled> -->
+          {{day.date}}
+          <!-- </button>      -->
+        </mat-grid-tile-header>
+
+      </mat-grid-tile>
+    </div>
+    <div *ngFor="let day of dedicatedRoom.timeTable">
+      <mat-grid-tile class="grid-tile"  >
+        <mat-grid-tile-header style="height: 18px; background:white; color:black">
+          <!-- <button mat-flat-button class="title"> -->
+            <b> {{day.date}}</b>
+          <!-- </button> -->
+        </mat-grid-tile-header>
+        <div fxLayout="column" fxLayoutAlign="end" class="down" fxLayoutAlign="start start" >
+          <div *ngFor="let term of day.terms"  >            
+              <p  *ngIf="term.pacientId!=null"> {{term.start}} {{term.pacientFullName}} </p>
+            </div>
+          </div>          
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+</div>

@@ -123,8 +123,8 @@ INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(2, 3);
 INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(3, 1);
 
 -- APPOINTMENTS AS VISIT - room is null
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, doctorid, room ) VALUES ( '05.08.2020','10:30', '12:30', 4, 1, 3);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  doctorid , room) VALUES ('05.08.2020','08:00', '10:30', 3, 1, 3);
+INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, doctorid, room ) VALUES ( '06.08.2020','10:30', '12:30', 4, 1, 3);
+INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  doctorid , room) VALUES ('06.08.2020','08:00', '10:30', 3, 1, 3);
 
 
 -- APPOINTMETS AS OOPERATIONS - doctor id is null
