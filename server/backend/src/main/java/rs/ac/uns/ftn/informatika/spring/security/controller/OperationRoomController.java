@@ -75,7 +75,8 @@ public class OperationRoomController {
 		RoomDTO room = new RoomDTO(doctor.getDedicatedRoom().get(0));
 		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
 		String currentDate = fromDate;
-		while(!currentDate.equals(toDate))
+		int maxLoop = 32;
+		while(!currentDate.equals(toDate) )
 		{
 			AppointmentsPerDay day = new AppointmentsPerDay();
 			day.setDate(currentDate);
@@ -85,21 +86,22 @@ public class OperationRoomController {
 			}	
 			room.getTimeTable().add(day);
 			currentDate = nextDay(currentDate);
-		}
+//		}
 		
-		for(Appointment app : appointmets) {
-			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
-					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
-				for(AppointmentsPerDay day: room.getTimeTable()) {
-					if(day.getDate().equals(app.getDate()))
-					{
-						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(),userService.findById(app.getPacientid()).getFullName());
-					}
-				}
-				
-			}
+//		for(Appointment app : appointmets) {
+//			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
+//					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
+//				for(AppointmentsPerDay day: room.getTimeTable()) {
+//					if(day.getDate().equals(app.getDate()))
+//					{
+//						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(),userService.findById(app.getPacientid()).getFullName());
+//					}
+//				}
+//				
+//			}
+			maxLoop--;
 		}
-		
+		System.out.println("gotovi ");
 		return room;
 		
 			

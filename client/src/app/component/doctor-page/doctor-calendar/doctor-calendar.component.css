@@ -41,6 +41,12 @@ mat-grid-tile{
     background: whitesmoke;
     
   }
- .down{
-     /* margin-top: 5%; */
+  
+
+ .right{
+    float: right;
+ }
+ .right mat-button-toggle {
+    
+     width: 50px;
  }
