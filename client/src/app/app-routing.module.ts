@@ -23,7 +23,11 @@ export const routes: Routes = [
     component: DoctorComponent
   },
     {
-    path: 'examination',
+    path: 'search-pacient',
+    component: ExaminationReportComponent
+  },
+  {
+    path: 'pacient-examination/:jmbg',
     component: ExaminationReportComponent
   },
   {

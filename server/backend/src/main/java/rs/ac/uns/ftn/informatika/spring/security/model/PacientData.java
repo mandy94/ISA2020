@@ -81,6 +81,11 @@ public class PacientData {
 	public void setAlergies(List<Alergens> alergies) {
 		this.alergies = alergies;
 	}
+	@Override
+	public String toString() {
+		return "PacientData [id=" + id + ", user=" + user + ", bloodType=" + bloodType + ", height=" + height
+				+ ", weight=" + weight + ", alergies=" + alergies + "]";
+	}
 
     
 }

@@ -12,6 +12,8 @@ import {MatDialog} from '@angular/material/dialog';
 import { NextVisitDialogComponent } from './next-visit-dialog/next-visit-dialog.component';
 import { NewOperationroomDialogComponent } from './new-operationroom-dialog/new-operationroom-dialog.component';
 import { ReportDTO } from 'app/shared/models/other';
+import { ActivatedRoute } from '@angular/router';
+import { noUndefined } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-examination-report',
@@ -25,6 +27,7 @@ export class ExaminationReportComponent implements OnInit {
   constructor(private apiService: ApiService,
     private config: ConfigService,
     private userService: UserService,
+    private activatedRoute : ActivatedRoute,
     private eventEmitterService: EventEmitterService,
     public dialog: MatDialog
   ) { }
@@ -50,6 +53,7 @@ export class ExaminationReportComponent implements OnInit {
   selected_therapy: any;
   description: string;
   new_report = new Report();
+  searchView = true;
 
   nextVisitDialog(): void {
     const dialogRef = this.dialog.open(NextVisitDialogComponent, {
@@ -101,13 +105,15 @@ export class ExaminationReportComponent implements OnInit {
     return true;
   }
   getPacientByJMBG() {
+    
     this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacient_jmbg)
       .subscribe((data) => {
         if(data === null)
         this.searchMessage="Ne postoji pacijent sa trazenim JMBG-om. Probajte ponovo";
         else{
           this.searchMessage = null;
-        this.currentPacient = data;
+          this.currentPacient = data;
+    
         }
       });
 
@@ -144,23 +150,31 @@ export class ExaminationReportComponent implements OnInit {
   }
   loggedDoctor:any;
   ngOnInit() {
-    this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
-      .subscribe((data) => {
-        this.patiens = data;
-        this.userService.getMyInfo().subscribe(data =>{
-            this.loggedDoctor = data;    
-            this.refreshCalendar("");});
-           this.filteredOptions = this.myControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value))
-        );
-      });
+    this.pacient_jmbg =this.activatedRoute.snapshot.paramMap.get('jmbg');
+    console.log(this.pacient_jmbg)
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+    if(this.pacient_jmbg != undefined){
+      this.onSearchClicked();
+      this.searchView = false;
+      return;
+    }    
+    // this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
+    //   .subscribe((data) => {
+    //     this.patiens = data;
+    //     this.userService.getMyInfo().subscribe(data =>{
+    //         this.loggedDoctor = data;    
+    //         // this.refreshCalendar("");
+    //       });
+    //        this.filteredOptions = this.myControl.valueChanges.pipe(
+    //       startWith(''),
+    //       map(value => this._filter(value))
+    //     );
+    //   });
    
-    this.eventEmitterService.
-    invoker.subscribe((name: string) => {
-      this.testAvaialbility();
-    });
+    // this.eventEmitterService.
+    // invoker.subscribe((name: string) => {
+    //   this.testAvaialbility();
+    // });
     
   }
 
@@ -242,6 +256,10 @@ export class ExaminationReportComponent implements OnInit {
   //   this.refreshCalendar(this.config.api_url + "/doctor/scheduler/" + this.loggedDoctor.id);
 
   // }
+  pacientDataControl = new FormControl('');
+  newPacientData(){
+    this.currentPacient.data = { bloodType : '', height : 0, weight: 0};
+  }
   showRoomSchedule(){
     this.refreshCalendar(this.config.api_url + "/appointment/room/"+ this.selected_room.id);
   }

@@ -14,7 +14,7 @@ export class DoctorComponent implements OnInit {
   }
   gotoDoctorExaminations(){
     
-    this.router.navigate(['/examination']);
+    this.router.navigate(['/search-pacient']);
   }
   gotoDoctorCalendar(){
     this.router.navigate(['/doctor-calendar']);

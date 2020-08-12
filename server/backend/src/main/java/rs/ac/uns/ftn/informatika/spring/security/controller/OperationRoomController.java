@@ -86,19 +86,20 @@ public class OperationRoomController {
 			}	
 			room.getTimeTable().add(day);
 			currentDate = nextDay(currentDate);
-//		}
+		}
 		
-//		for(Appointment app : appointmets) {
-//			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
-//					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
-//				for(AppointmentsPerDay day: room.getTimeTable()) {
-//					if(day.getDate().equals(app.getDate()))
-//					{
-//						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(),userService.findById(app.getPacientid()).getFullName());
-//					}
-//				}
-//				
-//			}
+		for(Appointment app : appointmets) {
+			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
+					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
+				for(AppointmentsPerDay day: room.getTimeTable()) {
+					if(day.getDate().equals(app.getDate()))
+					{
+						User pacient= userService.findById(app.getPacientid());
+						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
+					}
+				}
+				
+			}
 			maxLoop--;
 		}
 		System.out.println("gotovi ");

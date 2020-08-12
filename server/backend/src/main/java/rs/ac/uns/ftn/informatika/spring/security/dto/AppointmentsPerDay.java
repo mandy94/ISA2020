@@ -8,6 +8,7 @@ class AppointmentDetails{
 	public String start;
 	public String ending;
 	public Long pacientId;
+	public Long jmbg;
 	public String pacientFullName;
 }
 public class AppointmentsPerDay {
@@ -35,12 +36,13 @@ public class AppointmentsPerDay {
 		details.pacientId=pacientFullname;
 		terms.add(details);
 	}
-	public void compareTimeAndAdd(String start, String end, Long pacientid, String pacientFullName) {
+	public void compareTimeAndAdd(String start, String end, Long pacientid, Long jmbg, String pacientFullName) {
 		
 		for(AppointmentDetails det: this.terms) {
 			if(det.start.equals(start))
 			{
 				det.pacientId = pacientid;
+				det.jmbg = jmbg;
 				det.pacientFullName=pacientFullName;
 			}
 		}
