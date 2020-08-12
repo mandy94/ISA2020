@@ -34,3 +34,9 @@
     color: gray;
     padding-bottom: 6px;
 }
+.red{
+  color: red;
+}
+mat-list{
+  margin-left: 15px;
+}

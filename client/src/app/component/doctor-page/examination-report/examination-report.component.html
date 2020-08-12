@@ -32,33 +32,57 @@
         <mat-tab-group>
           <mat-tab label="Licna anamneza">
             <!-- <mat-card-subtitle> -->
-            <p *ngIf="!currentPacient.data"> Korisnik nema unetu anamnezu <button mat-stroked-button
-                (click)="newPacientData()"> Dodaj osnovne podatke</button></p>
-            <div fxLayout="row" fxLayoutAlign="start" *ngIf="currentPacient.data">
-              <button mat-stroked-button class="change" *ngIf="hasPermission()">Izmeni pacijentove podatke</button>
+
+            <div fxLayout="row" fxLayoutAlign="start" *ngIf="currentPacient.data && hasPermission()">
+              <button mat-stroked-button class="change" >Izmeni pacijentove podatke</button>
             </div>
-          <mat-list>
-            <mat-list-item>JMBG: {{currentPacient.jmbg}}</mat-list-item>
-            <mat-list-item>Datum rodjenja: {{currentPacient.birthdate}} </mat-list-item>
-            <mat-list-item *ngIf="currentPacient.data">Visina
-              <mat-form-field *ngIf="currentPacient.data" style="margin-left: 25px; width: 40px;">
-                
-                <input matInput type="text" [(value)]="currentPacient.data.height" [formControl]="pacientDataControl"
-                  name="a" /> 
-              </mat-form-field> cm
-            </mat-list-item>
+            <mat-list>
+              <mat-list-item>JMBG: {{currentPacient.jmbg}}</mat-list-item>
+              <mat-list-item>Datum rodjenja: {{currentPacient.birthdate}} </mat-list-item>
+              <!-- First visit-->
+              <div *ngIf="!currentPacient.data">                
+                <mat-list-item *ngIf="!tempNewPacientData">
+                  <p class="red"> Korisnik nema unetu anamnezu </p>
+                  <button mat-stroked-button (click)="newPacientData()" > Popuni osnovne podatke</button>
+                </mat-list-item>            
+              </div>
+              <!-- Not first visit-->
+              <div *ngIf="currentPacient.data">                
+                <mat-list-item>Visina: {{currentPacient.data.height}} cm                  
+                </mat-list-item>
+  
+                <mat-list-item> Tezina: {{currentPacient.data.weight}} kg
+                </mat-list-item>
 
-            <mat-list-item *ngIf="currentPacient.data" > Tezina              
-              <mat-form-field *ngIf="currentPacient.data" style="margin-left: 25px; width: 40px;">
-                
-                <input matInput type="text" [(value)]="currentPacient.data.weight" [formControl]="pacientDataControl"
-                  name="b" />
-              </mat-form-field> kg
-              </mat-list-item>
-            </mat-list>
-            <!-- <mat-list-item>Krvna grupa: {{currentPacient.data.bloodType.type}}</mat-list-item> -->
-
+                <mat-list-item>Krvna grupa: </mat-list-item>
+  
+                <mat-list-item>
+                  <button mat-stroked-button *ngIf="tempNewPacientData" (click)="saveChanges()"> Sacuvaj izmene</button>
+                </mat-list-item>       
+              </div>
+              <!-- Edit mode-->
+              <div *ngIf="tempNewPacientData">
+                <mat-list-item>Visina
+                  <mat-form-field style="margin-left: 25px; width: 40px;">
+                    <input matInput type="text" [(value)]="tempNewPacientData.height" [formControl]="pacientDataControl" name="height" />  
+                  </mat-form-field> cm
+                </mat-list-item>
+  
+                <mat-list-item> Tezina
+                  <mat-form-field  style="margin-left: 25px; width: 40px;">  
+                    <input matInput type="text" [(value)]="tempNewPacientData.weight" [formControl]="pacientDataControl" name="widht" />
+                  </mat-form-field> kg
+                </mat-list-item>
+                <mat-list-item>Krvna grupa: </mat-list-item>
+  
+                <mat-list-item>
+                  <button mat-stroked-button *ngIf="tempNewPacientData" (click)="saveChanges()"> Sacuvaj izmene</button>
+                </mat-list-item>
+              </div>
               
+            </mat-list>
+
+
           </mat-tab>
 
           <mat-tab label="Pregledi">

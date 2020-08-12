@@ -57,15 +57,15 @@ public class ExaminationReportController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReport report)  throws AccessDeniedException{
 		System.out.println(report);
-			for(Medicine med: report.getMedication())
-			{			
-				if(med != null) { 	
-					
-					presservice.addPrescription(med, report.getNurce());
-				}
-			
-			}
-			rpservice.addReport(report);
+//			for(Medicine med: report.getMedication())
+//			{			
+//				if(med != null) { 	
+//					
+//					presservice.addPrescription(med, report.getNurce());
+//				}
+//			
+//			}
+//			rpservice.addReport(report);
 	}
 	
 }

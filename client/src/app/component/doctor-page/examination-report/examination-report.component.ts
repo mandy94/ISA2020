@@ -158,23 +158,17 @@ export class ExaminationReportComponent implements OnInit {
       this.searchView = false;
       return;
     }    
-    // this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
-    //   .subscribe((data) => {
-    //     this.patiens = data;
-    //     this.userService.getMyInfo().subscribe(data =>{
-    //         this.loggedDoctor = data;    
-    //         // this.refreshCalendar("");
-    //       });
-    //        this.filteredOptions = this.myControl.valueChanges.pipe(
-    //       startWith(''),
-    //       map(value => this._filter(value))
-    //     );
-    //   });
-   
-    // this.eventEmitterService.
-    // invoker.subscribe((name: string) => {
-    //   this.testAvaialbility();
-    // });
+    this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
+      .subscribe((data) => {
+        this.patiens = data;
+        this.userService.getMyInfo().subscribe(data =>{
+            this.loggedDoctor = data;   
+          });
+           this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
+      });
     
   }
 
@@ -230,40 +224,24 @@ export class ExaminationReportComponent implements OnInit {
   }
   
 
-//  // ne koristi se nigde xd
-  checkAvailablilty() {
-    this.getRoomTime();
-    this.apiService.get(this.config.api_url + '/operation-rooms/availability/' + this.selected_room.id)
-      .subscribe(data => { 
-        if(data && data.lenght >0)
-        this.calendar = data;
-        else
-        this.calendar = "SVi termini su slobodni"; });
-  }
-
-   testAvaialbility(){
-     if( this.eventEmitterService.pickedDate!= null){
-    this.apiService.get(this.config.api_url +
-        '/operation-room/'+ this.selected_room.id+
-        '/availability/' + this.eventEmitterService.pickedDate)
-    .subscribe((data) => {
-         this.availableTimeList = data;
-    });
-  }
-  }
   
   // nextVisit(){
   //   this.refreshCalendar(this.config.api_url + "/doctor/scheduler/" + this.loggedDoctor.id);
 
   // }
   pacientDataControl = new FormControl('');
+  tempNewPacientData;
   newPacientData(){
-    this.currentPacient.data = { bloodType : '', height : 0, weight: 0};
+    this.tempNewPacientData= { bloodType : '', height : 0, weight: 0};
+  }
+  saveChanges(){
+    this.currentPacient.data = this.tempNewPacientData;
+    this.tempNewPacientData = null;
   }
   showRoomSchedule(){
     this.refreshCalendar(this.config.api_url + "/appointment/room/"+ this.selected_room.id);
   }
-refreshCalendar(new_url: string){
-  this.eventEmitterService.calendarRefresher(new_url);
+  refreshCalendar(new_url: string){
+    this.eventEmitterService.calendarRefresher(new_url);
   }
 }
