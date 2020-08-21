@@ -29,7 +29,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="USERS")
 public class User implements UserDetails {
-
+	public User() {}
+	public User(String username, String password, String firstName, String lastName, Long jmbg) {
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.jmbg = jmbg;
+	}
 	private static final long serialVersionUID = 1L;
 
     @Id
