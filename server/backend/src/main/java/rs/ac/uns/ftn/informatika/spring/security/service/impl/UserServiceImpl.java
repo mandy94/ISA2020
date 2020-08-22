@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,7 +48,9 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+
 	@Override
+	@Transactional
 	public User save(UserRequest userRequest) {
 		User u = new User();
 		u.setUsername(userRequest.getUsername());
@@ -99,6 +103,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User saveUser(User user) {
 		
 		return userRepository.save(user);

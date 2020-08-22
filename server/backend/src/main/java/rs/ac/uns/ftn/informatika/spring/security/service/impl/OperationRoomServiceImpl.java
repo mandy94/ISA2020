@@ -46,6 +46,11 @@ public class OperationRoomServiceImpl implements OperationRoomService {
 		return repo.findVisitRoom();
 	}
 
+	@Override
+	public void save(Room room) {
+		repo.save(room);
+	}
+
 	
 
 

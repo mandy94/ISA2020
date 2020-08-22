@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 	// Funkcija pomocu koje korisnik menja svoju lozinku
+	@Transactional
 	public void changePassword(String oldPassword, String newPassword) {
 
 		// Ocitavamo trenutno ulogovanog korisnika

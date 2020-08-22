@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	}
 
 	@Override
+	@Transactional
 	public void addAppointment(Appointment data) {
 		repo.save(data);
 	}

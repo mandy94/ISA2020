@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class ReportServiceImpl implements ReportsService {
 	}
 
 	@Override
+	@Transactional
 	public ExaminationReport addReport(ExaminationReport report) {
 		return repo.save(report);
 	}

@@ -3,6 +3,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,7 @@ public class CodebookServiceImpl implements CodebookService {
 
 	
 	@Override
+	@Transactional
 	public List<Diagnose> saveDiagnose(Diagnose d) {
 		drepo.save(d);
 		return drepo.findAll();
@@ -58,17 +61,19 @@ public class CodebookServiceImpl implements CodebookService {
 	
 
 	@Override
+	@Transactional
 	public List<Room> saveOperationRoom(Room o) {
 		orepo.save(o);
 		return orepo.findAll();
 	}
 
-	// THERPAIESS
+	// 
 	@Override
 	public List<Therapy> getCodesForTherapies() {
 		return trepo.findAll();
 	}
 	@Override
+	@Transactional
 	public List<Therapy> saveTherapy(Therapy t) {
 		trepo.save(t);
 		return trepo.findAll();
@@ -81,6 +86,7 @@ public class CodebookServiceImpl implements CodebookService {
 
 	// MEDICATIONSS
 	@Override
+	@Transactional
 	public List<Medicine> saveMedicine(Medicine m) {
 		 mrepo.save(m);
 		 return mrepo.findAll();

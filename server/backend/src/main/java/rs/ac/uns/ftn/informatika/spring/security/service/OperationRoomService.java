@@ -11,9 +11,8 @@ public interface OperationRoomService {
 	List<Room> getRooms();
 	List<Room> getOperationRooms();
 	List<Room> getVisitRooms();
-
 	List<Appointment> getAppointments(Long id);
-
 	Room getRoomById(Long room);
+	void save(Room room);
 
 }

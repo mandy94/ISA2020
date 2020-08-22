@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.informatika.spring.security.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 	private PrescriptionRepository prescrepo;
 
 	@Override
+	@Transactional
 	public void addPrescription(Medicine med, User nurce) {
 		
 		Prescription prescription = new Prescription(med);
@@ -43,6 +46,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 	}
 
 	@Override
+	@Transactional
 	public void save(Prescription p) {
 		prescrepo.save(p);
 	}
