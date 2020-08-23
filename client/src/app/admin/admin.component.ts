@@ -22,9 +22,7 @@ public users:any;
   }
   
   public getUsers():void{
-    this.userService.getAll().subscribe( (data)=> this.users = data
-
-    );
+    this.userService.getAll().subscribe((data)=> this.users = data);
   }
  
 }

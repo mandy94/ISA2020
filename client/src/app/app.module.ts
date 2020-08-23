@@ -23,7 +23,7 @@ import {MatIconRegistry} from '@angular/material';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
-import { CodebookComponent } from './codebook/codebook.component';
+import { CodebookComponent } from './admin/codebook/codebook.component';
 import { NurseComponent } from './nurse/nurse.component';
 import { PacientsComponent } from './component/nurce-page/pacients/pacients.component';
 import { CalendarComponent } from './component/nurce-page/calendar/calendar.component';
@@ -31,11 +31,12 @@ import { RecepieComponent } from './component/nurce-page/recepie/recepie.compone
 import { NurceProfileComponent } from './component/nurce-page/nurce-profile/nurce-profile.component';
 import { DoctorComponent , ExaminationReportComponent} from './component/doctor-page';
 import {FullCalendarModule} from '@fullcalendar/angular';
-import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
+import { RegistrationRequestComponent } from './admin/registration-request/registration-request.component';
 import { NewExaminationDialogComponent } from './component/doctor-page/examination-report/new-examination-dialog/new-examination-dialog.component';
 import { NewOperationroomDialogComponent } from './component/doctor-page/examination-report/new-operationroom-dialog/new-operationroom-dialog.component';
 import { NextVisitDialogComponent } from './component/doctor-page/examination-report/next-visit-dialog/next-visit-dialog.component';
 import { DoctorCalendarComponent } from './component/doctor-page/doctor-calendar/doctor-calendar.component';
+import { RegisteredUsersComponent } from './admin/registered-users/registered-users.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { DoctorCalendarComponent } from './component/doctor-page/doctor-calendar
     NewOperationroomDialogComponent,
     NextVisitDialogComponent,
     DoctorCalendarComponent,
+    RegisteredUsersComponent,
     
   ],
   imports: [

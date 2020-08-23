@@ -1,0 +1,11 @@
+
+<h1> Registrovani i aktivni korisntici</h1>
+<div *ngFor="let user of activeUserList">
+  <mat-list>{{ user.username }}</mat-list>
+  
+</div>
+
+<h1> Neregistrovani i odbijani korisnici</h1>
+<div *ngFor="let user of deniedUserList">
+  <mat-list>{{user.id}} {{user.username}}</mat-list>
+</div>

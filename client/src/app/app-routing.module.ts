@@ -10,7 +10,7 @@ import {ForbiddenComponent} from './forbidden';
 import {SignupComponent} from './signup';
 import {PacientsComponent,  CalendarComponent, RecepieComponent, NurceProfileComponent} from './component/index';
 import {DoctorComponent, ExaminationReportComponent} from './component/doctor-page';
-import { RegistrationRequestComponent } from './component/registration-request/registration-request.component';
+import { RegistrationRequestComponent } from './admin/registration-request/registration-request.component';
 import { DoctorCalendarComponent } from './component/doctor-page/doctor-calendar/doctor-calendar.component';
 export const routes: Routes = [
   {

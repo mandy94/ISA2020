@@ -1,0 +1,28 @@
+<div  fxLayout="column" fxLayoutAlign="center strech" >
+  <h1> Korisnicki zahtevi za registraciju</h1>
+  <div *ngIf="pendingUsers()">
+    <h3> Nema korisnika koji cekaju na registraciju.</h3>
+  </div>
+
+  <table mat-table [dataSource]="pendingUserList" >
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef> Korisnik </th>
+      <td mat-cell *matCellDef="let user"> {{ user.firstName }} {{ user.lastName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Akcije</th>
+      <td mat-cell *matCellDef="let user">
+        <button mat-raised-button>Prihvati</button>
+        <button mat-raised-button>Odbi</button></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
