@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
   }
 
+  amIAdmin(){
+    return this.userService.amIAdmin();
+  }
   hasSignedIn() {
     return !!this.userService.currentUser;
   }

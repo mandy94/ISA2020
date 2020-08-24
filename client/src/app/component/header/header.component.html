@@ -1,10 +1,8 @@
 <mat-toolbar class="app-navbar" color="primary">
   <button mat-button mat-ripple routerLink="/">
-   
     <span>Moja mala klinika</span>
   </button>
-
-
+  
   <div class="right">
     <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="flex-end center">
       <button *ngIf="!hasSignedIn()" mat-button mat-ripple routerLink="/signup">
@@ -13,28 +11,31 @@
       <button *ngIf="!hasSignedIn()" mat-button mat-ripple routerLink="/login">
         <span>Login</span>
       </button>
-    
-      <button
-        *ngIf="hasSignedIn()"
-        [matMenuTriggerFor]="accountMenu"
-        class="greeting-button" mat-button
-        mat-ripple>
-        <span>Aloha, {{userName()}}</span>
+
+      <button *ngIf="amIAdmin()" [matMenuTriggerFor]="menu" class="greeting-button" mat-button mat-ripple>
+        <span>Korisnici</span>
       </button>
-      <button
-        *ngIf="hasSignedIn()"
-        [matMenuTriggerFor]="accountMenu"
-        class="greeting-hamburger" mat-icon-button
+
+      <button *ngIf="amIAdmin()" [matMenuTriggerFor]="menu" class="greeting-button" mat-button mat-ripple>
+        <span>Sifrarnici</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/codes-diagnose">Sifrarnik dijagnoza</button>
+        <button mat-menu-item routerLink="/codes-therapies">Sifrarnik terapija</button>
+        <button mat-menu-item routerLink="/codes-rooms">Sifrarnik soba</button>
+        <button mat-menu-item routerLink="/codes-meds">Sifrarnik lekova</button>
+      </mat-menu>
+
+      <button *ngIf="hasSignedIn()" [matMenuTriggerFor]="accountMenu" class="greeting-button" mat-button mat-ripple>
+        <span>{{userName()}}</span>
+      </button>
+      <button *ngIf="hasSignedIn()" [matMenuTriggerFor]="accountMenu" class="greeting-hamburger" mat-icon-button
         mat-ripple>
         <mat-icon>menu</mat-icon>
       </button>
-      <mat-menu #accountMenu
-                [overlapTrigger]="false"
-                class="app-header-accountMenu"
-                yposition="below">
+      <mat-menu #accountMenu [overlapTrigger]="false" class="app-header-accountMenu" yposition="below">
         <app-account-menu></app-account-menu>
       </mat-menu>
     </div>
   </div>
 </mat-toolbar>
-

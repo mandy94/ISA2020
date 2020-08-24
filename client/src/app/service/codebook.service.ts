@@ -7,7 +7,7 @@ import { ApiService } from './api.service';
 export class CodebookService {
 
   constructor( private apiService: ApiService) { }
-  private _api_url = 'http://localhost:8080/api/';
+  private _api_url = 'http://localhost:8180/api/';
 
   getCodesForDiagnoses(){ return  this.apiService.get(this._api_url +"codes/diagnoses/all");}
   getCodesForMedication(){return this.apiService.get(this._api_url +"codes/medications/all");}

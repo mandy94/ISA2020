@@ -1,0 +1,41 @@
+<h1> Sifrafnik dijagnoza </h1>
+<button mat-button> Dodaj dijagnozu <mat-icon> add</mat-icon></button>
+
+<div fxLayout="column" fxLayoutAlign="space-around stretch" >
+<table mat-table [dataSource]="diagnoses" class="mat-elevation-z8">
+  
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> # </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  
+  <!-- Name Column -->
+  <ng-container matColumnDef="code">
+    <th mat-header-cell *matHeaderCellDef> Sifra </th>
+    <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Dijagnoza </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  
+  <!-- Name Column -->
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef> Izmeni </th>
+    <td mat-cell *matCellDef="let element"> <button mat-button><mat-icon>edit</mat-icon></button></td>
+  </ng-container>
+  
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef> Obrisi</th>
+    <td mat-cell *matCellDef="let element"> <button mat-button><mat-icon>delete</mat-icon></button></td>
+  </ng-container>
+
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+</div>
