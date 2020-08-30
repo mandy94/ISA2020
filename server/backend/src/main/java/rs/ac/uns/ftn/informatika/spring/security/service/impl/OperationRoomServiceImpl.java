@@ -27,7 +27,8 @@ public class OperationRoomServiceImpl implements OperationRoomService {
 
 	@Override
 	public List<Appointment> getAppointments(Long id) {
-		return aprepo.getAppointmentsForRoom(id);
+	//	return aprepo.getAppointmentsForRoom(id);
+		return null;
 	}
 
 	@Override

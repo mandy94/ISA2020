@@ -39,8 +39,8 @@
   title='Bog'
 >
 </app-api-card>
-</div>
-<app-admin *ngIf="isSignedAsAdmin()"></app-admin>
+</div >
+<app-admin *ngIf="isSignedAsAdmin()" style="width : 100%;"></app-admin>
 <app-nurse *ngIf="isSignedAsNurse() && !isSignedAsAdmin()" ></app-nurse>
 <app-doctor *ngIf="isSignedAsDoctor() && !isSignedAsAdmin()"></app-doctor>
 </div>

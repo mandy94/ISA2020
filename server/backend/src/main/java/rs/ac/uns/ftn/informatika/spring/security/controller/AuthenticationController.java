@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import rs.ac.uns.ftn.informatika.spring.security.dto.MessageDTO;
 import rs.ac.uns.ftn.informatika.spring.security.exception.ResourceConflictException;
+import rs.ac.uns.ftn.informatika.spring.security.model.AdminResponse;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserRequest;
 import rs.ac.uns.ftn.informatika.spring.security.model.UserTokenState;
@@ -112,11 +114,14 @@ public class AuthenticationController {
 		return userService.getPendingUsers();
 	}
 	
-	@GetMapping(value="/deny/{username}", consumes = "application/json")
-	public List<User> denyRegistration(@PathVariable String username) {
+	@PutMapping(value="/deny/{username}", consumes = "application/json")
+	public List<User> denyRegistration(@PathVariable String username, @RequestBody AdminResponse responce) {
 		User usr = userService.findByUsername(username);
 		usr.setStatus("DENIED");
-		
+		MessageDTO msg = new MessageDTO();
+		msg.setTitle("Razlog odbijanja registracije");
+		msg.setContent(responce.getDescripton());
+		eservice.sendEmail(ADMIN_MAIL_ADRESS, responce.getEmail(), msg );
 		userService.saveUser(usr); 
 		return userService.getPendingUsers();
 	}
