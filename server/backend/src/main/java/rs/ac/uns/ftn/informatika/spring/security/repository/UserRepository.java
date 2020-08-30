@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
@@ -28,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.status = 'DENIED'")
     List<User>getDeniedUsers();
 
+    @Query("Select u from User u ")
+    List<User> getDoctorsTimeTable(@Param(value="id") Long id);
 }
 
 

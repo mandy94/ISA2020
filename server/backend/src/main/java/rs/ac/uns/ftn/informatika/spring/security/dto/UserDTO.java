@@ -1,5 +1,8 @@
 package rs.ac.uns.ftn.informatika.spring.security.dto;
 
+import rs.ac.uns.ftn.informatika.spring.security.model.PacientData;
+import rs.ac.uns.ftn.informatika.spring.security.model.User;
+
 public class UserDTO {
 
 	private Long id;
@@ -10,17 +13,24 @@ public class UserDTO {
 	private String role;
 	private String email;
 	private boolean enabled;
-	public UserDTO(Long id, String firstName, String lastName, String username, Long jmbg, String role, String email,
-			boolean enabled) {
+	private PacientData data;
+	public UserDTO(User user) {
 		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.username = username;
-		this.jmbg = jmbg;
-		this.role = role;
-		this.email = email;
-		this.enabled = enabled;
+		this.id = user.getId();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.username = user.getUsername();
+		this.jmbg = user.getJmbg();
+		this.role = user.getRole();
+		this.email = user.getEmail();
+		this.enabled = user.isEnabled();
+		this.data = user.getData();
+	}
+	public PacientData getData() {
+		return data;
+	}
+	public void setData(PacientData data) {
+		this.data = data;
 	}
 	public Long getId() {
 		return id;

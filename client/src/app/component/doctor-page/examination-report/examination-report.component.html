@@ -2,7 +2,7 @@
   <form class="example-form" fxLayout="row" fxLayoutAlign="start center">
     <mat-form-field class="example-full-width">
       <input type="text" placeholder="Unesite JMBG" aria-label="Number" matInput [matAutocomplete]="auto"
-        [(ngModel)]="pacient_jmbg" (keyup.enter)="onSearchClicked()">
+      [formControl]="pacientJMBGCtrl" (keyup.enter)="onSearchClicked()">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{option}}
@@ -29,7 +29,7 @@
       </mat-card-title>
 
       <mat-card-content>
-        <mat-tab-group>
+        <mat-tab-group [(selectedIndex)]="indexOrder">
           <mat-tab label="Licna anamneza">
             <!-- <mat-card-subtitle> -->
 

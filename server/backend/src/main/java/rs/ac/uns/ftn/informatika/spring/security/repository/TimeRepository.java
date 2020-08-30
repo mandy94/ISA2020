@@ -11,5 +11,5 @@ import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 public interface TimeRepository extends JpaRepository<SchedulerTime, Long> {
 	
 	
-	List<SchedulerTime> findTimeByRoomId(Long id);
+//	List<SchedulerTime> findTimeByRoomId(Long id);
 }

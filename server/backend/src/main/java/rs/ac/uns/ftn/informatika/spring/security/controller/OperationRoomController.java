@@ -81,7 +81,7 @@ public class OperationRoomController {
 			AppointmentsPerDay day = new AppointmentsPerDay();
 			day.setDate(currentDate);
 			
-			for(SchedulerTime time: timeservice.getTimesForOperationRoom(room.getId())) {
+			for(SchedulerTime time: doctor.getTimeTable()) {
 				day.addTerm(time.getStart(), time.getEnding(), null);
 			}	
 			room.getTimeTable().add(day);
@@ -95,44 +95,48 @@ public class OperationRoomController {
 					if(day.getDate().equals(app.getDate()))
 					{
 						User pacient= userService.findById(app.getPacientid());
-						day.compareTimeAndAdd(app.getStart() , app.getEnd(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
+						day.compareTimeAndAdd(app.getTerm().getStart() , app.getTerm().getEnding(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
 					}
 				}
-				
 			}
 			maxLoop--;
 		}
-		System.out.println("gotovi ");
 		return room;
 		
 			
 	}
+	@GetMapping("/test/{id}/availability/{date}")
+	public List<Appointment> test(@PathVariable Long id, @PathVariable String date){
+		String parsed = covertToDate(date);	
+		return  apservice.getAppointmentsForRoomOnDate(id, parsed);
+		}
+	
 	@GetMapping("/operation-room/{id}/availability/{date}")
 	public DoubleArrays getAvailability(@PathVariable Long id, @PathVariable String date){
 		String parsed = covertToDate(date);	
 		List<Appointment> app = apservice.getAppointmentsForRoomOnDate(id, parsed);
-		List<SchedulerTime> terms = timeservice.getTimesForOperationRoom(id);
-//		List<SchedulerTime> available = new ArrayList<SchedulerTime>(terms);
+//		List<SchedulerTime> terms = timeservice.getTimesForOperationRoom(id);
+		List<SchedulerTime> available = new ArrayList<SchedulerTime>();
 		DoubleArrays returnArrays = new DoubleArrays();
-		if(app.size() == terms.size()) return null; // sve je popunjeno
+		//if(app.size() == terms.size()) return null; // sve je popunjeno
 
-		if(app.size() == 0) // znaci da je sve slobodno
-		{
-			returnArrays.available = terms;
-		}
-		for(Appointment a: app) {
-			for(SchedulerTime term : terms) {
+//		if(app.size() == 0) // znaci da je sve slobodno
+//		{
+//			returnArrays.available = terms;
+//		}
+		for(Appointment a: app) {			
 				
-				if(term.getStart().equals(a.getStart()))
-				{
-					returnArrays.notavailable.add(term);				
-				}else {
-					returnArrays.available.add(term);
-				}
+			if(a.getRoom().getId() == id)
+			{
+				returnArrays.notavailable.add(a.getTerm());				
+			}else {
+				//returnArrays.available.add(a.getTerm());
 			}
+		
 		}
 		
 		return returnArrays;
+
 		}
 	
 	@GetMapping("/operation-room/{id}/mandatory-doctors")

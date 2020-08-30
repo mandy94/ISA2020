@@ -47,9 +47,9 @@ export class DoctorCalendarComponent implements OnInit {
 
   showPacientAppointment(jmbg) {
    
-        this.router.navigate(['/pacient-examination', jmbg]);
-   
+        this.router.navigate(['/pacient-examination', jmbg]);   
   }
+  
   getDay() {
     this.loadingData = true;
     this.fromDateRequest = moment().format('DD.MM.YYYY');

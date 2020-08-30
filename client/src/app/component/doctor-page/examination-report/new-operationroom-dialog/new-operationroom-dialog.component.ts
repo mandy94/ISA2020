@@ -19,12 +19,13 @@ export class NewOperationroomDialogComponent {
     private config: ConfigService,
     private formBuilder: FormBuilder
   ) { }
-
+  mandatoryDoctorsControl = new FormControl('');
   ngOnInit() {
     this.groupControl =this.formBuilder.group({
       roomControl : new FormControl({name:''}),
       dateControl :  new FormControl(moment())
     });
+    
     this.loadData();
     this.filteredOptions = this.groupControl.get("roomControl").valueChanges.pipe(
       startWith(''),
@@ -35,7 +36,7 @@ export class NewOperationroomDialogComponent {
   }
 
   isAvailabe;
-
+  availableMandatoryDoctorList;
   filled(){
     return this.groupControl.get("roomControl").value != '' && !this.groupControl.get("dateControl").valid ? false : true;
   }
@@ -57,6 +58,7 @@ export class NewOperationroomDialogComponent {
   }
   roomList;  
   groupControl:FormGroup;
+  
   // Stuff for autocomplete
   filteredOptions: Observable<string[]>;
  

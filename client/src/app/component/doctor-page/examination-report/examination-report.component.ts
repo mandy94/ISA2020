@@ -8,7 +8,7 @@ import { formatDate } from '@angular/common';
 import { Report, Room, Appointment, Medicine } from './report';
 import { EventEmitterService } from 'app/service/event-emitter.service';
 import { NewExaminationDialogComponent } from './new-examination-dialog/new-examination-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { NextVisitDialogComponent } from './next-visit-dialog/next-visit-dialog.component';
 import { NewOperationroomDialogComponent } from './new-operationroom-dialog/new-operationroom-dialog.component';
 import { ReportDTO } from 'app/shared/models/other';
@@ -27,24 +27,24 @@ export class ExaminationReportComponent implements OnInit {
   constructor(private apiService: ApiService,
     private config: ConfigService,
     private userService: UserService,
-    private activatedRoute : ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private eventEmitterService: EventEmitterService,
     public dialog: MatDialog
   ) { }
-  
+
   newExamination = new ReportDTO;
   newOperation = {};
   nextVisit = {};
-  
+
   patiens: any;
   filteredOptions: Observable<any>;
   myControl = new FormControl();
-  pacient_jmbg: String;
-  currentPacient: any;  
+  pacientJMBGCtrl = new FormControl('');
+  currentPacient: any;
   allVisits: any;
   today: any;
   mandatoryDoctorList; any;
-  searchMessage:string;
+  searchMessage: string;
   appointnent: Appointment;
   selected_meds = new Array<any>(); // FOR VIEW ONLY
   selected_med: Medicine;
@@ -54,6 +54,7 @@ export class ExaminationReportComponent implements OnInit {
   description: string;
   new_report = new Report();
   searchView = true;
+  indexOrder = 1; // indexfor mat tab group
 
   nextVisitDialog(): void {
     const dialogRef = this.dialog.open(NextVisitDialogComponent, {
@@ -61,8 +62,8 @@ export class ExaminationReportComponent implements OnInit {
       data: this.nextVisit
     });
 
-    dialogRef.afterClosed().subscribe(result => {      
-      
+    dialogRef.afterClosed().subscribe(result => {
+
     });
   }
   newOperationDialog(): void {
@@ -71,8 +72,8 @@ export class ExaminationReportComponent implements OnInit {
       data: this.newOperation
     });
 
-    dialogRef.afterClosed().subscribe(result => {      
-      
+    dialogRef.afterClosed().subscribe(result => {
+
     });
   }
   newExaminationDialog(): void {
@@ -80,19 +81,19 @@ export class ExaminationReportComponent implements OnInit {
     this.newExamination.doctor = this.loggedDoctor;
     const dialogRef = this.dialog.open(NewExaminationDialogComponent, {
       width: '600px',
-      data: { pacient :  this.currentPacient , doctor: this.loggedDoctor}
+      data: { pacient: this.currentPacient, doctor: this.loggedDoctor }
     });
 
-    dialogRef.afterClosed().subscribe(result => {      
+    dialogRef.afterClosed().subscribe(result => {
       this.getPacientExaminationReports();
     });
   }
 
-  displayedColumns = ['date', 'diagnose', 'details', 'meds','doctor'];
+  displayedColumns = ['date', 'diagnose', 'details', 'meds', 'doctor'];
 
-  isJMBGselected(){
-    if(this.pacient_jmbg === undefined)
-    return false;
+  isJMBGselected() {
+    if (this.pacientJMBGCtrl.value === undefined)
+      return false;
     return true;
   }
   private _filter(value: string): string[] {
@@ -100,26 +101,26 @@ export class ExaminationReportComponent implements OnInit {
 
     return this.patiens.filter(option => option.toString().indexOf(filterValue) === 0);
   }
-  hasPermission(){
+  hasPermission() {
     // ako je izabrani doktor
     return true;
   }
   getPacientByJMBG() {
-    
-    this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacient_jmbg)
+
+    this.apiService.get(this.config.api_url + '/user/pacient/' + this.pacientJMBGCtrl.value)
       .subscribe((data) => {
-        if(data === null)
-        this.searchMessage="Ne postoji pacijent sa trazenim JMBG-om. Probajte ponovo";
-        else{
+        if (data === null)
+          this.searchMessage = "Ne postoji pacijent sa trazenim JMBG-om. Probajte ponovo";
+        else {
           this.searchMessage = null;
           this.currentPacient = data;
-    
+
         }
       });
 
   }
   getPacientExaminationReports() {
-    this.apiService.get(this.config.api_url + '/examination-report/pacient/' + this.pacient_jmbg)
+    this.apiService.get(this.config.api_url + '/examination-report/pacient/' + this.pacientJMBGCtrl.value)
       .subscribe((data) => {
         this.allVisits = data;
       });
@@ -133,43 +134,45 @@ export class ExaminationReportComponent implements OnInit {
   }
   onSearchClicked() {
     this.getPacientByJMBG();
-    this.getPacientExaminationReports();    
+    this.getPacientExaminationReports();
     this.getOperationRooms();
   }
   diagnoseList: any;
   medList: any;
-  
+
   firstVisit() {
     if (this.allVisits != null)
       return this.allVisits.length == 0 ? true : false;
   }
 
   changedInput: boolean;
-  inputHaveChanged(){
+  inputHaveChanged() {
     return this.changedInput;
   }
-  loggedDoctor:any;
+  loggedDoctor: any;
   ngOnInit() {
-    this.pacient_jmbg =this.activatedRoute.snapshot.paramMap.get('jmbg');
-    console.log(this.pacient_jmbg)
+
+    this.pacientJMBGCtrl.setValue(this.activatedRoute.snapshot.paramMap.get('jmbg'));    
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-    if(this.pacient_jmbg != undefined){
+    
+    if (this.pacientJMBGCtrl.value != undefined) {
+      this.indexOrder = 2;
       this.onSearchClicked();
       this.searchView = false;
       return;
-    }    
+    }
     this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
       .subscribe((data) => {
         this.patiens = data;
-        this.userService.getMyInfo().subscribe(data =>{
-            this.loggedDoctor = data;   
-          });
-           this.filteredOptions = this.myControl.valueChanges.pipe(
+        this.userService.getMyInfo().subscribe(data => {
+          this.loggedDoctor = data;
+        });
+        this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filter(value))
         );
       });
-    
+
   }
 
   operationRoomList: any;
@@ -181,37 +184,36 @@ export class ExaminationReportComponent implements OnInit {
     this.appointnent.pacientId = this.currentPacient.id;
     this.appointnent.room = this.selected_room.id;
 
-    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => { this.appointnent = null;});
+    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => { this.appointnent = null; });
   }
-  pickedDate(){
-    
+  pickedDate() {
+
     return this.selected_room ? true : false;
   }
   availableTimeList: any;
   selected_time: any;
-  getRoomTime(){
-    if(this.selected_room!=null)
-    this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
-      .subscribe(data => { this.availableTimeList = data; this.refreshCalendar(this.selected_room.id.toString());});
-    
+  getRoomTime() {
+    if (this.selected_room != null)
+      this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
+        .subscribe(data => { this.availableTimeList = data; this.refreshCalendar(this.selected_room.id.toString()); });
+
   }
-  getMandatoryDoctors(){
+  getMandatoryDoctors() {
     this.apiService.get(this.config.api_url + '/operation-room/' + this.selected_room.id + '/mandatory-doctors')
-    .subscribe(data => this.mandatoryDoctorList = data);
+      .subscribe(data => this.mandatoryDoctorList = data);
   }
-  onRoomChange(){
+  onRoomChange() {
     this.getRoomTime();
     this.getMandatoryDoctors();
     this.refreshCalendar(this.config.api_url + "/appointment/room/" + this.selected_room.id.toString());
   }
-  
-  createAppointment(){
-  
-    if(this.selected_room === null || this.selected_room === undefined)
-    { 
-      alert("Morate odabrati sobu prvi");
+
+  createAppointment() {
+
+    if (this.selected_room === null || this.selected_room === undefined) {
+      alert("Morate odabrati sobu prvo");
       return;
-    } 
+    }
     let data = new Appointment();
     data.room = this.selected_room.id;
     data.start = this.selected_time.start;
@@ -219,29 +221,29 @@ export class ExaminationReportComponent implements OnInit {
     data.pacientId = this.currentPacient.id;
     data.doctorid = this.loggedDoctor.id;
     data.mdoctors = this.mandatoryDoctorList;
-   
-      this.eventEmitterService.createAppointment(data);
-  }
-  
 
-  
+    this.eventEmitterService.createAppointment(data);
+  }
+
+
+
   // nextVisit(){
   //   this.refreshCalendar(this.config.api_url + "/doctor/scheduler/" + this.loggedDoctor.id);
 
   // }
   pacientDataControl = new FormControl('');
   tempNewPacientData;
-  newPacientData(){
-    this.tempNewPacientData= { bloodType : '', height : 0, weight: 0};
+  newPacientData() {
+    this.tempNewPacientData = { bloodType: '', height: 0, weight: 0 };
   }
-  saveChanges(){
+  saveChanges() {
     this.currentPacient.data = this.tempNewPacientData;
     this.tempNewPacientData = null;
   }
-  showRoomSchedule(){
-    this.refreshCalendar(this.config.api_url + "/appointment/room/"+ this.selected_room.id);
+  showRoomSchedule() {
+    this.refreshCalendar(this.config.api_url + "/appointment/room/" + this.selected_room.id);
   }
-  refreshCalendar(new_url: string){
+  refreshCalendar(new_url: string) {
     this.eventEmitterService.calendarRefresher(new_url);
   }
 }

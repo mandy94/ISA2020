@@ -20,7 +20,8 @@ public class SchedulerTimeServiceImpl implements SchedulerTimeService {
 
 	@Override
 	public List<SchedulerTime> getTimesForOperationRoom(Long id) {
-		return repo.findTimeByRoomId(id);
+//		return repo.findTimeByRoomId(id);
+		return null;
 	}
 
 	@Override

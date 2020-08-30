@@ -37,15 +37,7 @@ public class Room {
     @Column(name="type")
     String type;
     
-    @OneToMany(mappedBy="room")
-    @Column(name="time")
-    List<SchedulerTime> workingTime = new ArrayList<SchedulerTime>();
-    
-    @OneToMany(mappedBy="room")
-    @Column(name="scheduler")
-    @JsonIgnore
-    List<Appointment> scheduler = new ArrayList<Appointment>(); 
-	
+  
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "mandatory_doctors",
             joinColumns = {  @JoinColumn(name = "room_id", referencedColumnName = "id")},
@@ -76,24 +68,14 @@ public class Room {
 	}
 	
 	
-	public List<SchedulerTime> getWorkingTime() {
-		return workingTime;
-	}
-	public void setWorkingTime(List<SchedulerTime> workingTime) {
-		this.workingTime = workingTime;
-	}
+
 	public List<User> getMandatoryDoctors() {
 		return mandatoryDoctors;
 	}
 	public void setMandatoryDoctors(List<User> mandatoryDoctors) {
 		this.mandatoryDoctors = mandatoryDoctors;
 	}
-	public List<Appointment> getScheduler() {
-		return scheduler;
-	}
-	public void setScheduler(List<Appointment> scheduler) {
-		this.scheduler = scheduler;
-	}
+
 	public String getType() {
 		return type;
 	}
