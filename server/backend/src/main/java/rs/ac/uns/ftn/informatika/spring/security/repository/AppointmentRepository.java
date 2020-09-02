@@ -10,8 +10,8 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 	
 
-	@Query("Select a from Appointment a")
-	List<Appointment> getAppointmentsForRoom(Long id);
+//	@Query("Select a from Appointment a")
+//	List<Appointment> getAppointmentsForRoom(Long id);
 	
 	@Query("Select a from Appointment a where a.room.id = :id and a.date = :date")
 	List<Appointment> getAppointmentsForRoomOnDate(Long id, String date);

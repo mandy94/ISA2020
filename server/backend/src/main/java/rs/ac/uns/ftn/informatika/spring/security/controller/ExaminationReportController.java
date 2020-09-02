@@ -57,15 +57,29 @@ public class ExaminationReportController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReport report)  throws AccessDeniedException{
 		System.out.println(report);
-//			for(Medicine med: report.getMedication())
-//			{			
-//				if(med != null) { 	
-//					
-//					presservice.addPrescription(med, report.getNurce());
-//				}
-//			
-//			}
-//			rpservice.addReport(report);
+			for(Medicine med: report.getMedication())
+			{			
+				if(med != null) { 	
+					
+					presservice.addPrescription(med, report.getNurce());
+				}
+			
+			}
+			rpservice.addReport(report);
 	}
+	
+	@PostMapping(value = "/schedule",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public void scheduleVisit(@RequestBody ExaminationReportDTO report)  throws AccessDeniedException{
+		ExaminationReport newVisit = new ExaminationReport();
+		newVisit.setDoctor(userservice.findById(report.getDoctorid()));
+		newVisit.setPacient(userservice.findById(report.getPacientid()));
+		newVisit.setVisitDate(report.getVisitDate());
+		newVisit.setVisitTime(report.getVisitTime());
+		
+		rpservice.addReport(newVisit);
+	}
+			
 	
 }

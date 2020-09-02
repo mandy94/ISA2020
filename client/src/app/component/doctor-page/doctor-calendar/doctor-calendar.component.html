@@ -60,10 +60,8 @@
     </div>
     <div *ngFor="let day of dedicatedRoom.timeTable">
       <mat-grid-tile class="grid-tile">
-        <mat-grid-tile-header style="height: 28px; background:transparent; color:black">
-          <!-- <button mat-flat-button class="title"> -->
-          <b>{{day.date}}</b>
-          <!-- </button> -->
+        <mat-grid-tile-header style="height: 28px; background:transparent; color:black">          
+          <b>{{day.date}}</b>          
         </mat-grid-tile-header>
         <div fxLayout="column" fxLayoutAlign="end" fxLayoutAlign="start start">
           <div *ngFor="let term of day.terms">

@@ -20,11 +20,12 @@ public class Appointment {
 	Long id;
 	
 	Long pacientid;
-	//List<User> mandatoryDoctors = new ArrayList<User>();
-	@Column(name="start")
-	String start;
-	@Column(name="ending")
-	String end;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="term")
+	SchedulerTime term;	
+	
 	
 	@Column(name="date")
 	String date;
@@ -39,8 +40,8 @@ public class Appointment {
 	public Appointment() {}
 	public Appointment(AppointmentDTO appoint) {
 		pacientid = appoint.getPacientId();
-		start =  appoint.getBegining();
-		end = appoint.getEnding();
+		term.setStart(appoint.getBegining());
+		term.setEnding(appoint.getEnding());
 		date = appoint.getDate();
 	}
 
@@ -62,7 +63,12 @@ public class Appointment {
 	}
 
 
-
+	public SchedulerTime getTerm() {
+		return term;
+	}
+	public void setTerm(SchedulerTime term) {
+		this.term = term;
+	}
 
 	public Room getRoom() {
 		return room;
@@ -73,23 +79,12 @@ public class Appointment {
 	}
 
 	
-	public String getStart() {
-		return start;
-	}
-	public void setStart(String start) {
-		this.start = start;
-	}
-	public String getEnd() {
-		return end;
-	}
-	public void setEnd(String end) {
-		this.end = end;
-	}
+	
 	public String getDateStart() {
-		return date+"T"+start;
+		return date+"T"+ term.getStart();
 	}
 	public String getDateEnd() {
-		return date + "T" +end;
+		return date + "T" + term.getEnding();
 	}
 	public String getDate() {
 		return date;

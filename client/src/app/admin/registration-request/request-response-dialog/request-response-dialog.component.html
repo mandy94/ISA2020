@@ -1,0 +1,11 @@
+<mat-card>
+<mat-card-title>Obavestenje za korisnika</mat-card-title>
+<mat-card-content>
+  <mat-form-field class="full-width">
+    <mat-label>Navedite razlog odbijanja prijave korisniku</mat-label>
+    <input matInput [formControl] = "requestResponseCtrl">
+  </mat-form-field>
+</mat-card-content>
+<button mat-button (click)="submit()"> Posalji poruku</button>
+<button mat-button (click)="exit()"> Odustani</button>
+</mat-card>

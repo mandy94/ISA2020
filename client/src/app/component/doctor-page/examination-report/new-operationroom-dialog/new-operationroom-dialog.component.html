@@ -1,8 +1,5 @@
 <mat-card>
-
-  <!-- <div fxLayout="row" fxLayoutAlign="start center">
-    <button (click)="nextVisit()">Proveri doktorov kalendar</button>
-  </div> -->
+  <mat-card-title> Zakazivanje operacije</mat-card-title>
   <form [formGroup]="groupControl">
     <mat-form-field class="room">
       <input type="text" matInput placeholder="Pronadji operacionu salu" aria-label="Number"
@@ -20,10 +17,11 @@
       <mat-datepicker touchUi #picker name="selected_date"></mat-datepicker>
     </mat-form-field>
 
+    
+
     <button mat-raised-button (click)="showRoomSchedule()" [disabled]="!filled()"> Trazi </button>
   </form>
-  <div *ngIf="termTable" fxLayout="column" fxLayoutAlign="space-around center">
-    <p *ngIf="termTable.notavailable.length != 0"> Slobodni termini su: </p>
+  <div *ngIf="termTable" fxLayout="column" fxLayoutAlign="space-around center">    
     <p *ngIf="termTable.notavailable.length == 0"> Svi termini su slobodni </p>
     <div *ngFor="let term of termTable.available">
       <button mat-stroked-button color="primary" class="terms"> 

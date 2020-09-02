@@ -40,6 +40,7 @@ import { DiagnosesComponent } from './admin/codebook/diagnoses/diagnoses.compone
 import { ThrapiesComponent } from './admin/codebook/thrapies/thrapies.component';
 import { RoomsComponent } from './admin/codebook/rooms/rooms.component';
 import { MedicationComponent } from './admin/codebook/medication/medication.component';
+import { RequestResponseDialogComponent } from './admin/registration-request/request-response-dialog/request-response-dialog.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { MedicationComponent } from './admin/codebook/medication/medication.comp
     ThrapiesComponent,
     RoomsComponent,
     MedicationComponent,
+    RequestResponseDialogComponent,
     
   ],
   imports: [
@@ -101,7 +103,7 @@ import { MedicationComponent } from './admin/codebook/medication/medication.comp
     MatIconRegistry,
   ],
   bootstrap: [AppComponent],
-  entryComponents:[NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
+  entryComponents:[RequestResponseDialogComponent,NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
 })
 export class AppModule {
 }

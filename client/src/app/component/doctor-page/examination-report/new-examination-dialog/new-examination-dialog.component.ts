@@ -29,7 +29,7 @@ export class NewExaminationDialogComponent {
   diagnoseList;
   selected_diagnose;
   medList;
-  selected_med = [];
+  selected_med;
   therapyList;
   selected_therapy = [];
   new_report;
@@ -37,6 +37,9 @@ export class NewExaminationDialogComponent {
   nurceList=[];
   selected_nurce;
 
+  ifMedicationEmpty(){
+    return this.selected_med === undefined ? true : false;
+  }
   getData() {
     this.apiService.get(this.config.api_url + '/user/nurces')
       .subscribe((data) => {

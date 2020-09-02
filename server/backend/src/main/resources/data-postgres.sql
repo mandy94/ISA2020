@@ -28,9 +28,10 @@ INSERT INTO PACIENTDATA ( height, weight,  blood_type_id) VALUES (175, 86,4);
 INSERT INTO PACIENTDATA ( height, weight,  blood_type_id) VALUES (166, 65,7);
 
 
+INSERT INTO CLINICROOM (name) VALUES ('Soba za preglede');
 -- DOCTORS
 
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'timadust@gmail.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1980');
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate, my_clinic_id) VALUES (0804298745362, 'DOCTOR',  'dokt', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Damir', 'Jeftic', 'timadust@gmail.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1980',1);
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (1804298745362, 'DOCTOR',  'dokt1', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Teodor', 'Radasic', 'glavni@gmail.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1980');
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate) VALUES (0904298745362, 'DOCTOR',  'dokt2', '$2a$04$LHvrD8cHuPEFT4tRjbdYGehDJ9Awgs5CACcNkMj8kKOeXr6HMlRZ2', 'Emilija', 'Colic', 'netolikoglavni@gmail.com', true,'ACTIVE', '2017-10-01 21:58:58.508-07', '10.1.1981');
 
@@ -40,7 +41,7 @@ INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email,
 
 -- PACIENTS
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (1102026842654, 'PACIENT', 'pacient1', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Ivo', 'Loncar', 'majasavic@gmail.com', true, 'ACTIVE','2017-10-01 21:58:58.508-07', '30.11.2007',1);
-INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (2304966758967, 'PACIENT', 'pacient2', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Milana', 'Jorgic', 'nesto@example.com', true,'PENDING' ,'2017-10-01 21:58:58.508-07', '25.12.2005',2);
+INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (2304966758967, 'PACIENT', 'pacient2', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Milana', 'Jorgic', 'majasavic199@gmail.com', true,'PENDING' ,'2017-10-01 21:58:58.508-07', '25.12.2005',2);
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (1510994683002, 'PACIENT', 'pacient3', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Sara', 'Kostic', 'kostic12@example.com', true, 'PENDING', '2017-10-01 21:58:58.508-07', '10.12.2001',3);
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (1210982356651, 'PACIENT', 'pacient4', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Igor', 'Trbic', 'mackaborbena@example.com', true, 'ACTIVE', '2017-10-01 21:58:58.508-07', '8.7.2003',4);
 INSERT INTO USERS (jmbg, role, username, password, first_name, last_name, email, enabled, status, last_password_reset_date,birthdate,pacient_data) VALUES (1907970482220, 'PACIENT', 'pacient5', '$2a$04$4fpToZOBmdxk81f0aqSXuOl3GBH43qb713asB.sP2RkSCCAMq3MNq', 'Sasa', 'Milivojevic', 'majasavic199@gmail.com',true,'ACTIVE' , '2017-10-01 21:58:58.508-07', '11.3.2002',5);
@@ -78,42 +79,37 @@ INSERT INTO MEDICATIONS ( name, dosage) VALUES ('Ventolin' , 'suspenzija100 ug' 
 
 INSERT INTO ROOMS ( name, code, type) VALUES ( 'Operaciona sala 1', 'T1', 'OPERATION');
 INSERT INTO ROOMS ( name, code, type) VALUES ( 'Operaciona sala 2', 'T2', 'OPERATION');
-INSERT INTO ROOMS ( name, code, type) VALUES ( 'Soba za pregled', '102', 'VISIT'); -- id=3
-INSERT INTO ROOMS ( name, code, type) VALUES ( 'Soba za pregled', '103', 'VISIT'); -- id=4
-INSERT INTO ROOMS ( name, code, type) VALUES ( 'Soba za pregled', '104', 'VISIT'); -- id=5
 INSERT INTO ROOMS ( name, code, type) VALUES ( 'Velika sala', 'MM0', 'OPERATION');
 INSERT INTO ROOMS ( name, code, type) VALUES ( 'Mala sala', 'MM1', 'OPERATION');
 
----- EXAMINATION REPORTS DATA ----
-INSERT INTO EXAMINATIONREPORTS (date,time, is_doctor, is_examined, details, diagnose) VALUES ('24.06.2020', '08:00', 1 , 6, 'Pacijent se zali na jak bol u grlu', 2);
-INSERT INTO EXAMINATIONREPORTS (date,time, is_doctor, is_examined, details,diagnose) VALUES ('03.07.2020', '08:00', 1 , 6, 'Pacijent se zali na sekret, nesanicu i povremeno visoku temperaturu.', 5);
-INSERT INTO EXAMINE_MEDICATION(examination_id, medication_id) VALUES( 1, 2); -- prepisan je nixar
-INSERT INTO EXAMINATIONREPORTS (date,time,is_doctor, is_examined, details, diagnose)VALUES('27.06.2020', '09:00', 1, 6, 'Pacijent se zali na povisenu temperaturu i tesko disanje',4);
-INSERT INTO EXAMINATIONREPORTS (date,time,is_doctor, is_examined, diagnose) VALUES('28.06.2020', '08:30', 1, 4,4);
-INSERT INTO EXAMINE_MEDICATION(examination_id, medication_id) VALUES( 3, 3); -- 
-INSERT INTO EXAMINE_MEDICATION(examination_id, medication_id) VALUES( 3, 4); -- prepisan je insulin i ventolin
 
--- TIME FOR AVAILABLE OPERATION ROOM
+-- TIME EXAMPLES
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '08:00', '10:30' );--1
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '08:00', '08:30' );--2
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '08:15', '10:45' );--3
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '08:30', '09:00' );--4
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '10:30', '12:30' );--5
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '13:00', '14:30' );--6
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '14:30', '16:00' );--7
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '10:15', '12:45' );--8
+INSERT INTO SCHEDULERTIMES (  start , ending) VALUES ( '14:15', '16:45' );--9
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '09:00', '09:30' );--10
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '09:30', '10:00' );
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '10:00', '10:30' );
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '10:30', '11:00' );
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '11:00', '11:30' );
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '12:00', '12:30' );
+INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '12:30', '13:00' );
 
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '08:00', '10:30' );
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '10:30', '12:30' );
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '13:00', '14:30' );
-INSERT INTO SCHEDULERTIMES ( room, start , ending) VALUES (1 , '14:30', '16:00' );
+-- DOCTORS TIME TABLR
+INSERT INTO TIME_TABLE VALUES ( 1 , 2);
+INSERT INTO TIME_TABLE VALUES ( 1 , 4);
+INSERT INTO TIME_TABLE VALUES( 1 , 11);
+INSERT INTO TIME_TABLE VALUES( 2 , 1);
+INSERT INTO TIME_TABLE VALUES( 3 , 3);
+INSERT INTO TIME_TABLE VALUES( 3 , 6);
 
-INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '08:15', '10:45' );
-INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '10:15', '12:45' );
-INSERT INTO SCHEDULERTIMES (room, start , ending) VALUES (2 , '14:15', '16:45' );
 
--- TIME FOR VISITING DOCTOR
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '08:00', '08:30' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '08:30', '09:00' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '09:00', '09:30' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '09:30', '10:00' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '10:00', '10:30' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '10:30', '11:00' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '11:00', '11:30' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '12:00', '12:30' );
-INSERT INTO SCHEDULERTIMES (room, start , ending ) VALUES (3 , '12:30', '13:00' );
 
 -- DOCTORS DEDICATED TO ROOM
 
@@ -122,17 +118,17 @@ INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(1, 3);
 INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(2, 3);
 INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(3, 1);
 
--- APPOINTMENTS AS VISIT - room is null
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, doctorid, room ) VALUES ( '06.08.2020','10:30', '12:30', 4, 1, 3);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  doctorid , room) VALUES ('06.08.2020','08:00', '10:30', 3, 1, 3);
+-- APPOINTMENTS AS VISIT - room
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 5, 4, 1, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 2, 3, 1, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '26.08.2020', 2, 3, 1, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '17.08.2020', 5, 4, 1, 3);
 
 
--- APPOINTMETS AS OOPERATIONS - doctor id is null
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, room) VALUES ( '06.08.2020','10:30', '12:30', 4, 1);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid, room) VALUES ( '07.08.2020','08:00', '10:30', 3, 1);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  room) VALUES ('07.08.2020','10:30', '12:30', 2, 1);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  room) VALUES ('07.08.2020','13:00', '14:30', 5, 1);
-INSERT INTO APPOINTMENTS ( date, start, ending, pacientid,  room) VALUES ('07.08.2020','14:30', '16:00', 5, 1);
+-- APPOINTMETS AS OOPERATIONS - doctor 
+INSERT INTO APPOINTMENTS ( date, term, pacientid, room) VALUES ( '06.08.2020',5, 4, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, room) VALUES ( '07.08.2020',5, 3, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid,  room) VALUES ('17.08.2020',13, 2, 1);
 
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);

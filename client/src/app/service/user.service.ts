@@ -75,6 +75,15 @@ export class UserService {
         return user;
       }));
   }
+  
+  getMyId() {
+    return this.apiService.get(this.config.whoami_url)
+      .pipe(map(user => {
+        this.currentUser = user;        
+        return user.id;
+      }));
+  }
+
 
   getAll() {
     return this.apiService.get(this.config.users_url);

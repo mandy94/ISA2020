@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.informatika.spring.security.dto.DoctorTimeTableDTO;
+import rs.ac.uns.ftn.informatika.spring.security.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
@@ -51,12 +53,10 @@ public class UserController {
 	}
 	@GetMapping("/user/pacient/{jmbg}")
 	@PreAuthorize("hasRole('DOCTOR')")
-	public User loadByJMBG(@PathVariable Long jmbg) {
+	public UserDTO loadByJMBG(@PathVariable Long jmbg) {
 		User ret =  this.userService.findByJMBG(jmbg);
-		if(ret.getData() != null)
 		System.out.println(ret.getData());
-//		ret.setData( this.pacientDataService.findPacinetData(ret.getData().getId()));
-		return ret;
+		return new UserDTO(ret);
 	}
 	@GetMapping("/users/pending")
 	public List<User> getPendingUsers(){
@@ -77,14 +77,22 @@ public class UserController {
 		return this.userService.findByUsername(user.getName());
 	}
 	
+	@GetMapping(value="/doctor/{id}/timetable")
+	public List<SchedulerTime> getDoctorsTimetable(@PathVariable Long id)
+	{
+		DoctorTimeTableDTO data = new DoctorTimeTableDTO();
+		User u = userService.findById(id);				
+		return u.getTimeTable();
+		
+	}
 	@GetMapping(value="/doctor/scheduler/{id}")
 	public List<Appointment> getDoctorsShcedulerTime(@PathVariable Long id)
 	{
 		List<Appointment> tt = userService.getDoctorsSchedule(id);
 		for(Appointment t : tt)
 		{
-			t.setEnd(t.getDateEnd());
-			t.setStart(t.getDateStart());
+			t.getTerm().setEnding(t.getDateEnd());
+			t.getTerm().setStart(t.getDateStart());
 		}
 		return tt;
 	}

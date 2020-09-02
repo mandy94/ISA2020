@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -81,13 +83,15 @@ public class User implements UserDetails {
     @JoinColumn(name="pacient_data")
     private PacientData data;
     
-    public PacientData getData() {
-		return data;
-	}
-
-	public void setData(PacientData data) {
-		this.data = data;
-	}
+    @ManyToOne
+    @JoinColumn    
+    ClinicRoom myClinic = new ClinicRoom();
+    
+    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "timeTable")
+    List<SchedulerTime> timeTable = new ArrayList<SchedulerTime>();
+    
 
 	@ManyToMany(mappedBy="mandatoryDoctors", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -105,8 +109,21 @@ public class User implements UserDetails {
     
     @OneToMany(mappedBy = "doctor")
     @JsonIgnore
-    private List<ExaminationReport> visits=new ArrayList<ExaminationReport>(); // same as report but from doctor side of view
+    private List<ExaminationReport> visits = new ArrayList<ExaminationReport>(); // same as report but from doctor side of view
 
+
+	public ClinicRoom getMyClinic() {
+		return myClinic;
+	}
+	public void setMyClinic(ClinicRoom myClinic) {
+		this.myClinic = myClinic;
+	}
+	public List<SchedulerTime> getTimeTable() {
+		return timeTable;
+	}
+	public void setTimeTable(List<SchedulerTime> timeTable) {
+		this.timeTable = timeTable;
+	}
 
     public List<ExaminationReport> getReports() {
 		return reports;
@@ -116,6 +133,15 @@ public class User implements UserDetails {
 		this.reports = reports;
 	}
 
+    public PacientData getData() {
+		return data;
+	}
+
+	public void setData(PacientData data) {
+		this.data = data;
+	}
+
+	
 	public Long getId() {
         return id;
     }

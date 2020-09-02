@@ -20,7 +20,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public List<Appointment> getAppointmentsForRoom(Long id) {
-		return repo.getAppointmentsForRoom(id);
+//		return repo.getAppointmentsForRoom(id);
+		return null;
 	}
 
 	@Override

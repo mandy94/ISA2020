@@ -38,7 +38,7 @@
           </mat-select>
         </mat-form-field>
         <!-- <button (click)="addAnotherRecepie()">+</button> -->
-        <mat-form-field>
+        <mat-form-field *ngIf="!ifMedicationEmpty()">
           <mat-label>Medicinska sestra zaduzena za overu:</mat-label>
           <mat-select [(ngModel)]="selected_nurce" name="selected_nurce">
             <mat-option *ngFor="let nurce of nurceList" [value]="nurce">
