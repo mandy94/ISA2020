@@ -61,5 +61,8 @@ export class RegistrationRequestComponent implements OnInit {
       });    
     }
 
-   
+    back(){
+      this.router.navigate(['/admin']);
+    }
+    
 }

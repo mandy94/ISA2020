@@ -115,13 +115,15 @@ public class AuthenticationController {
 	}
 	
 	@PutMapping(value="/deny/{username}", consumes = "application/json")
-	public List<User> denyRegistration(@PathVariable String username, @RequestBody AdminResponse responce) {
+	public List<User> denyRegistration(@PathVariable String username, @RequestBody AdminResponse response) {
 		User usr = userService.findByUsername(username);
 		usr.setStatus("DENIED");
+		usr.setRegistrationResponse(response.getDescripton());
 		MessageDTO msg = new MessageDTO();
 		msg.setTitle("Razlog odbijanja registracije");
-		msg.setContent(responce.getDescripton());
-		eservice.sendEmail(ADMIN_MAIL_ADRESS, responce.getEmail(), msg );
+		msg.setContent(response.getDescripton());
+		
+		eservice.sendEmail(ADMIN_MAIL_ADRESS, response.getEmail(), msg );
 		userService.saveUser(usr); 
 		return userService.getPendingUsers();
 	}

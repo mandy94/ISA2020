@@ -73,8 +73,16 @@ public class User implements UserDetails {
 
     @Column(name = "enabled")
     private boolean enabled;
+    @Column
+    private String  registrationResponse;
     
-    @Column(name="status")
+    public String getRegistrationResponse() {
+		return registrationResponse;
+	}
+	public void setRegistrationResponse(String registrationResponse) {
+		this.registrationResponse = registrationResponse;
+	}
+	@Column(name="status")
     private String status;
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;

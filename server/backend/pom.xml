@@ -25,10 +25,8 @@
 	<dependencies>
 <dependency>
 	<groupId>org.springframework</groupId>
-	<artifactId>spring-context-support</artifactId>
-	
+	<artifactId>spring-context-support</artifactId>	
 </dependency>
-<!-- Thanks for using https://jar-download.com -->
 <dependency>
 			<groupId>org.awaitility</groupId>
 			<artifactId>awaitility</artifactId>
@@ -39,7 +37,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+         
 
+			<dependency>
+   <groupId>com.sun.mail</groupId>
+   <artifactId>javax.mail</artifactId>
+   <version>1.6.1</version>
+</dependency>
 			
 		<!-- ukljucena podrska za Spring Security -->
 		<dependency>

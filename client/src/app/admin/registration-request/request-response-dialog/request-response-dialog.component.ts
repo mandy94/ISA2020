@@ -16,8 +16,10 @@ export class RequestResponseDialogComponent implements OnInit {
   requestResponseCtrl = new FormControl('');
   ngOnInit() {
   }
-  submit(){}
+  submit(){
+        this.dialogRef.close(this.requestResponseCtrl.value);
+  }
   exit(){
-    this.dialogRef.close(this.requestResponseCtrl.value);
+    this.dialogRef.close();
   }
 }

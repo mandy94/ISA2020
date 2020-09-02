@@ -16,6 +16,8 @@ import { DiagnosesComponent } from './admin/codebook/diagnoses/diagnoses.compone
 import { ThrapiesComponent } from './admin/codebook/thrapies/thrapies.component';
 import { RoomsComponent } from './admin/codebook/rooms/rooms.component';
 import { MedicationComponent } from './admin/codebook/medication/medication.component';
+import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
+import { RegisteredUsersComponent } from './admin/registered-users/registered-users.component';
 export const routes: Routes = [
   {
     path: '',
@@ -72,6 +74,19 @@ export const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path:'registration-requests',
+    component: RegistrationRequestComponent
+  },
+  {
+    path: 'denied-users',
+    component: DeniedUsersComponent
+
+  },
+  {
+    path: 'active-users',
+    component: RegisteredUsersComponent
   },
   {
     path: 'admin',
