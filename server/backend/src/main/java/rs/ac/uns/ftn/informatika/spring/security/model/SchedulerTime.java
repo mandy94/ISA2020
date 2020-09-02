@@ -22,13 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="SCHEDULERTIMES")
 public class SchedulerTime {
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	private static final long serialVersionUID = 1L;
 	@Id

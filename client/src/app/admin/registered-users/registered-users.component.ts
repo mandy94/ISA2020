@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, ApiService, ConfigService } from 'app/service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registered-users',
@@ -10,7 +11,8 @@ export class RegisteredUsersComponent implements OnInit {
 
   constructor(private userservice: UserService,
     private apiservice: ApiService,
-    private conf: ConfigService) { }
+    private conf: ConfigService,
+    private router: Router) { }
 
     
     activeUserList: any;
@@ -23,6 +25,9 @@ export class RegisteredUsersComponent implements OnInit {
 
   this.apiservice.get(this.conf.denied_users_url)
     .subscribe(data => this.deniedUserList = data);
+  }
+  back(){
+    this.router.navigate(['/admin']);
   }
 
 }

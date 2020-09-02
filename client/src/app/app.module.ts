@@ -41,6 +41,7 @@ import { ThrapiesComponent } from './admin/codebook/thrapies/thrapies.component'
 import { RoomsComponent } from './admin/codebook/rooms/rooms.component';
 import { MedicationComponent } from './admin/codebook/medication/medication.component';
 import { RequestResponseDialogComponent } from './admin/registration-request/request-response-dialog/request-response-dialog.component';
+import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { RequestResponseDialogComponent } from './admin/registration-request/req
     RoomsComponent,
     MedicationComponent,
     RequestResponseDialogComponent,
+    DeniedUsersComponent,
     
   ],
   imports: [

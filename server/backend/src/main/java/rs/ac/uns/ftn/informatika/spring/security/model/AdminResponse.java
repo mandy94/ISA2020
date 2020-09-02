@@ -4,6 +4,10 @@ public class AdminResponse {
 
 	String descripton;
 	String email;
+	@Override
+	public String toString() {
+		return "AdminResponse [descripton=" + descripton + ", email=" + email + "]";
+	}
 	public String getDescripton() {
 		return descripton;
 	}

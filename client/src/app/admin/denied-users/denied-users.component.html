@@ -1,0 +1,5 @@
+<button mat-stroked-button (click)="back()"> Nazad</button>
+<h1> Neregistrovani i odbijani korisnici</h1>
+<div *ngFor="let user of usersList">
+  <mat-list>{{user.id}} {{user.username}} {{user.registrationResponse}}</mat-list>
+</div>

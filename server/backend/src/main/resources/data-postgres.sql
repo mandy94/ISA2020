@@ -105,9 +105,12 @@ INSERT INTO SCHEDULERTIMES ( start , ending ) VALUES ( '12:30', '13:00' );
 INSERT INTO TIME_TABLE VALUES ( 1 , 2);
 INSERT INTO TIME_TABLE VALUES ( 1 , 4);
 INSERT INTO TIME_TABLE VALUES( 1 , 11);
-INSERT INTO TIME_TABLE VALUES( 2 , 1);
+INSERT INTO TIME_TABLE VALUES( 2 , 3);
+INSERT INTO TIME_TABLE VALUES( 2 , 4);
+INSERT INTO TIME_TABLE VALUES( 2 , 10);
 INSERT INTO TIME_TABLE VALUES( 3 , 3);
 INSERT INTO TIME_TABLE VALUES( 3 , 6);
+INSERT INTO TIME_TABLE VALUES( 3 , 10);
 
 
 
@@ -119,16 +122,16 @@ INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(2, 3);
 INSERT INTO MANDATORY_DOCTORS (room_id, user_id) VALUES(3, 1);
 
 -- APPOINTMENTS AS VISIT - room
-INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 5, 4, 1, 3);
-INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 2, 3, 1, 3);
-INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '26.08.2020', 2, 3, 1, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 5, 4, 2, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020', 2, 3, 3, 3);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '26.08.2020', 2, 3, 3, 3);
 INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '17.08.2020', 5, 4, 1, 3);
 
 
 -- APPOINTMETS AS OOPERATIONS - doctor 
-INSERT INTO APPOINTMENTS ( date, term, pacientid, room) VALUES ( '06.08.2020',5, 4, 1);
-INSERT INTO APPOINTMENTS ( date, term, pacientid, room) VALUES ( '07.08.2020',5, 3, 1);
-INSERT INTO APPOINTMENTS ( date, term, pacientid,  room) VALUES ('17.08.2020',13, 2, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.08.2020',5, 4,1, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid,doctorid,  room) VALUES ( '07.08.2020',5, 3,2, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid,  room) VALUES ('17.08.2020',13, 2,2, 1);
 
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);

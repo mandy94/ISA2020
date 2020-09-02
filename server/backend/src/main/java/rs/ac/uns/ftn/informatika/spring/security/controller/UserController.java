@@ -16,6 +16,7 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.UserDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
+import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.PacientDataService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 
@@ -30,6 +31,9 @@ public class UserController {
 	@Autowired
 	private PacientDataService pacientDataService;
 
+	@Autowired
+	private AppointmentService appointmentService;
+	
 	@GetMapping("/user/{userId}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public User loadById(@PathVariable Long userId) {
@@ -85,6 +89,8 @@ public class UserController {
 		return u.getTimeTable();
 		
 	}
+
+	
 	@GetMapping(value="/doctor/scheduler/{id}")
 	public List<Appointment> getDoctorsShcedulerTime(@PathVariable Long id)
 	{

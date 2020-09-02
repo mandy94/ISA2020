@@ -37,6 +37,8 @@ export class NewOperationroomDialogComponent {
 
   isAvailabe;
   availableMandatoryDoctorList;
+  doctorsSchedule;
+
   filled(){
     return this.groupControl.get("roomControl").value != '' && !this.groupControl.get("dateControl").valid ? false : true;
   }
@@ -46,10 +48,18 @@ export class NewOperationroomDialogComponent {
   showRoomSchedule(){
     console.log(this.formatDate(this.groupControl.get("dateControl").value));
     
+    this.apiService.get(this.config.api_url + '/operation-room/' +
+                      + this.groupControl.get("roomControl").value.id 
+                      +'/mandatory-doctors').subscribe(data => {
+                        this.availableMandatoryDoctorList = data;                        
+                      });
     this.apiService.get(this.config.api_url + '/operation-room/' 
                       + this.groupControl.get("roomControl").value.id 
                       + '/availability/' +this.formatDate(this.groupControl.get("dateControl").value)).subscribe(data => this.termTable = data);
-
+  }
+  checkDoctorsAvaialbleTime(doctor){
+    this.apiService.get(this.config.api_url + '/doctor/'+ doctor.id
+                        +'/is-available/'+ this.formatDate(this.groupControl.get("dateControl").value)).subscribe(data => doctor.schedule = data);
   }
   
   termTable = {
@@ -66,8 +76,7 @@ export class NewOperationroomDialogComponent {
     return moment(input).format("DDMMYYYY");    
   }
   private _filter(value:string): string[] {
-    const filterValue = value.toLowerCase();
-    console.log("promena");
+    const filterValue = value.toLowerCase();    
     return this.roomList.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
   displayRoomAs(room){

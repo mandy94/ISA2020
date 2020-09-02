@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { UserService, CodebookService } from 'app/service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouteReuseStrategy, Router} from '@angular/router';
 
 
 @Component({
@@ -12,18 +12,27 @@ import {ActivatedRoute} from '@angular/router';
 export class AdminComponent implements OnInit {
 
 constructor(private userService: UserService,
-        private codebookService: CodebookService){
+        private codebookService: CodebookService,
+        private router: Router){
   
 }
 response:{};
 public users:any;
   ngOnInit() {
-    this.getUsers();
+    
+  }
+  gotoRegistrationPage(){
+    this.router.navigate(['/registration-requests']);
+  }
+  gotoDeniedUsersPage(){
+    this.router.navigate(['/denied-users']);  
+  }
+  gotoActiveUsrsPage(){
+    this.router.navigate(['/active-users']);
+  
   }
   
-  public getUsers():void{
-    this.userService.getAll().subscribe((data)=> this.users = data);
-  }
+
  
 }
 
