@@ -29,6 +29,14 @@
       </button>
     </div>
     <div fxLayout="column" fxLayoutAlign="space-around center">
+      <h3> Obavezni doktori su:</h3>
+      <div *ngFor="let doctor of availableMandatoryDoctorList">
+        <li>
+          {{doctor.firstName}}   <button (click)="checkDoctorsAvaialbleTime(doctor)">?</button>
+          {{doctor.schedule | json}}
+        </li>
+      </div>
+
     <p *ngIf="termTable.notavailable.length != 0"> Zauzeti termini su</p>
     <div *ngFor="let term of termTable.notavailable"> {{term.start}} - {{term.ending}}</div>
   

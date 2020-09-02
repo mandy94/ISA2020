@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sun.jmx.snmp.Timestamp;
 
+import javassist.compiler.ast.Pair;
 import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentsPerDay;
 import rs.ac.uns.ftn.informatika.spring.security.dto.RoomDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
@@ -31,6 +32,7 @@ import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
 import rs.ac.uns.ftn.informatika.spring.security.repository.AppointmentRepository;
+import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
 import rs.ac.uns.ftn.informatika.spring.security.service.SchedulerTimeService;
 import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
@@ -39,22 +41,23 @@ import rs.ac.uns.ftn.informatika.spring.security.service.UserService;
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OperationRoomController {
-	private TaskScheduler scheduler;
+	
 	
 	@Autowired
 	private OperationRoomService orservice;
 	
 	@Autowired
-	private AppointmentRepository apservice;
+	private AppointmentService apservice;
 	
-	@Autowired
-	private SchedulerTimeService timeservice;
+//	@Autowired
+//	private SchedulerTimeService timeservice;
+	
 	@Autowired
 	private UserService userService;
 	
-	private class DoubleArrays{
-		public List<SchedulerTime> available = new ArrayList<SchedulerTime>();
-		public List<SchedulerTime> notavailable = new ArrayList<SchedulerTime>();
+	 private class  DoubleArrays<T>{
+		public List<T> available = new ArrayList<T>();
+		public List<T> notavailable = new ArrayList<T>();
 	}
 	
 	@GetMapping("/operation-rooms/all")
@@ -69,69 +72,58 @@ public class OperationRoomController {
 	@GetMapping("/room-schedule/{doctorid}/{from}/{to}")
 	public RoomDTO getRoomScheduleByWeek(@PathVariable Long doctorid, @PathVariable String from, @PathVariable String to){	
 	
-		String fromDate = covertToDate(from);
-		String toDate = covertToDate(to);
+//		String fromDate = covertToDate(from);
+//		String toDate = covertToDate(to);
 		User doctor = userService.findById(doctorid);
 		RoomDTO room = new RoomDTO(doctor.getDedicatedRoom().get(0));
-		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
-		String currentDate = fromDate;
-		int maxLoop = 32;
-		while(!currentDate.equals(toDate) )
-		{
-			AppointmentsPerDay day = new AppointmentsPerDay();
-			day.setDate(currentDate);
-			
-			for(SchedulerTime time: doctor.getTimeTable()) {
-				day.addTerm(time.getStart(), time.getEnding(), null);
-			}	
-			room.getTimeTable().add(day);
-			currentDate = nextDay(currentDate);
-		}
-		
-		for(Appointment app : appointmets) {
-			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
-					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
-				for(AppointmentsPerDay day: room.getTimeTable()) {
-					if(day.getDate().equals(app.getDate()))
-					{
-						User pacient= userService.findById(app.getPacientid());
-						day.compareTimeAndAdd(app.getTerm().getStart() , app.getTerm().getEnding(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
-					}
-				}
-			}
-			maxLoop--;
-		}
+//		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
+//		String currentDate = fromDate;
+//		int maxLoop = 32;
+//		while(!currentDate.equals(toDate) )
+//		{
+//			AppointmentsPerDay day = new AppointmentsPerDay();
+//			day.setDate(currentDate);
+//			
+//			for(SchedulerTime time: doctor.getTimeTable()) {
+//				day.addTerm(time.getStart(), time.getEnding(), null);
+//			}	
+//			room.getTimeTable().add(day);
+//			currentDate = nextDay(currentDate);
+//		}
+//		
+//		for(Appointment app : appointmets) {
+//			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
+//					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
+//				for(AppointmentsPerDay day: room.getTimeTable()) {
+//					if(day.getDate().equals(app.getDate()))
+//					{
+//						User pacient= userService.findById(app.getPacientid());
+//						day.compareTimeAndAdd(app.getTerm().getStart() , app.getTerm().getEnding(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
+//					}
+//				}
+//			}
+//			maxLoop--;
+//		}
 		return room;
 		
 			
 	}
 	@GetMapping("/test/{id}/availability/{date}")
 	public List<Appointment> test(@PathVariable Long id, @PathVariable String date){
-		String parsed = covertToDate(date);	
-		return  apservice.getAppointmentsForRoomOnDate(id, parsed);
+		
+		return  apservice.getAppointmentsForRoomOnDate(id, date);
 		}
 	
 	@GetMapping("/operation-room/{id}/availability/{date}")
-	public DoubleArrays getAvailability(@PathVariable Long id, @PathVariable String date){
-		String parsed = covertToDate(date);	
-		List<Appointment> app = apservice.getAppointmentsForRoomOnDate(id, parsed);
-//		List<SchedulerTime> terms = timeservice.getTimesForOperationRoom(id);
+	public DoubleArrays<SchedulerTime> getAvailability(@PathVariable Long id, @PathVariable String date){
+		List<Appointment> app = apservice.getAppointmentsForRoomOnDate(id, date);
 		List<SchedulerTime> available = new ArrayList<SchedulerTime>();
-		DoubleArrays returnArrays = new DoubleArrays();
-		//if(app.size() == terms.size()) return null; // sve je popunjeno
+		DoubleArrays<SchedulerTime> returnArrays = new DoubleArrays<SchedulerTime>();
 
-//		if(app.size() == 0) // znaci da je sve slobodno
-//		{
-//			returnArrays.available = terms;
-//		}
 		for(Appointment a: app) {			
 				
 			if(a.getRoom().getId() == id)
-			{
 				returnArrays.notavailable.add(a.getTerm());				
-			}else {
-				//returnArrays.available.add(a.getTerm());
-			}
 		
 		}
 		
@@ -139,6 +131,17 @@ public class OperationRoomController {
 
 		}
 	
+	@GetMapping(value="/doctor/{id}/is-available/{date}")
+	public DoubleArrays<SchedulerTime> getDoctorsAvailableAcordingToDate(@PathVariable Long id, @PathVariable String date)
+	{		
+		User u = userService.findById(id);
+		DoubleArrays<SchedulerTime> pair = new DoubleArrays<SchedulerTime>();
+		pair.notavailable = apservice.getDoctorsBusyHours(id, date);		
+		pair.available = apservice.getDoctorsAvaialbleHourse(id, date);
+		
+		return pair;
+	
+	}
 	@GetMapping("/operation-room/{id}/mandatory-doctors")
 	public List<User> getMandatoryDoctors(@PathVariable Long id){
 		return orservice.getRoomById(id).getMandatoryDoctors();
@@ -148,50 +151,9 @@ public class OperationRoomController {
 	void makeReservation(@RequestBody Appointment data) {
 	}
 	
-	@PostMapping("/operation-room/request")
-	void requestAppointmentFromAdmin() {
-		executeTaskT(4);
-		
-	}
-	private String covertToDate(String date) {
-		
-		return date.substring(0, 2) + "."+date.substring(2,4)+"."+date.substring(4,8);
-	}
-
-	Long getTimeStampFromStringDate(String date){
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-		Date parsed;
-		try {
-			parsed = df.parse(date);
-			return parsed.getTime()/1000*1000;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	String getTimeFromTimeStampToString(Long stamp) {
-		return new SimpleDateFormat("dd.MM.yyyy").format(new Date(stamp));
-	}
-	
-	String nextDay(String date) {
-		Long ts = getTimeStampFromStringDate(date); // IN MILISECONDS
-		return getTimeFromTimeStampToString(ts+24*60*60*1000);
-		
-	}
-
-	Runnable exampleRunnable = new Runnable(){
-	    @Override
-	    public void run() {
-	        System.out.println("Works");
-	    }
-	};
-	@Async
-	public void executeTaskT(int seconds) {
-	    ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
-	    scheduler = new ConcurrentTaskScheduler(localExecutor);
-	
-	    scheduler.schedule(exampleRunnable,
-	            new Date(System.currentTimeMillis()+1000L*seconds));
-	}
-
+//	@PostMapping("/operation-room/request")
+//	void requestAppointmentFromAdmin() {
+//		executeTaskT(4);
+//		
+//	}
 }
