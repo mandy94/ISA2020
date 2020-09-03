@@ -31,6 +31,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("Select u from User u ")
     List<User> getDoctorsTimeTable(@Param(value="id") Long id);
+
+	
 }
 
 

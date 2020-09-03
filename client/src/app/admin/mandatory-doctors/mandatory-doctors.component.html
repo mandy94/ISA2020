@@ -1,0 +1,18 @@
+<h1> Spisak operacionih sala i sala za preglede</h1>
+<div *ngFor="let room of roomList">
+    <mat-card>
+        <mat-card-title>{{room.id}}#     {{room.name}} </mat-card-title>
+        <div *ngFor="let doct of room.mandatoryDoctors">
+
+
+            <li>{{doct.firstName}}
+                {{doct.lastName}}
+              
+                JMBG : {{doct.jmbg}}
+
+                <button mat-button (click)="deleteDoctor(doct, room)"> X </button> 
+            </li>
+        </div>
+        <button mat-button (click)="showAddDialog(room)"> Dodaj obaveznog doktora</button>
+    </mat-card>
+</div>

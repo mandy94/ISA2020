@@ -119,6 +119,11 @@ public class UserServiceImpl implements UserService {
 		return  appservice.getDoctorsVisit(id);
 	}
 
+	@Override
+	public List<User> getDoctors() {
+	return userRepository.getUsersFromRole("DOCTOR");
+	}
+
 	
 
 }

@@ -31,7 +31,10 @@ public users:any;
     this.router.navigate(['/active-users']);
   
   }
+  gotomandatoryDoctorsPage(){
+    this.router.navigate(['/mandatory-doctors']);
   
+  }
 
  
 }

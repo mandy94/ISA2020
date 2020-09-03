@@ -2,36 +2,29 @@ package rs.ac.uns.ftn.informatika.spring.security.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+
+import javax.jws.WebResult;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sun.jmx.snmp.Timestamp;
-
-import javassist.compiler.ast.Pair;
 import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentsPerDay;
 import rs.ac.uns.ftn.informatika.spring.security.dto.RoomDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.Room;
 import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
-import rs.ac.uns.ftn.informatika.spring.security.repository.AppointmentRepository;
 import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
 import rs.ac.uns.ftn.informatika.spring.security.service.SchedulerTimeService;
@@ -176,8 +169,25 @@ public class OperationRoomController {
 	public List<User> getMandatoryDoctors(@PathVariable Long id){
 		return orservice.getRoomById(id).getMandatoryDoctors();
 	}
-		
+	@DeleteMapping("/delete/doctor/{id}/from-room")
+	public List<Room> removeMandatoryDoctor(@PathVariable Long id, @RequestBody Long roomId){
+		Room room = orservice.getRoomById(roomId);
+		 User u = userService.findById(id);
+		 room.getMandatoryDoctors().remove(u);
+		 orservice.save(room);
+		 return orservice.getOperationRooms();
+	}
 	
+		
+	@PutMapping("/add/mandatory-doctor/{id}/room")
+	public List<Room> addMandatoryDoctor(@PathVariable Long id, @RequestBody Long roomId){
+		Room room= orservice.getRoomById(roomId);
+		 User u = userService.findById(id);
+		 room.getMandatoryDoctors().add(u);
+		 orservice.save(room);
+		 return orservice.getOperationRooms();
+	}
+		
 	private boolean isInside(SchedulerTime time, List<SchedulerTime> timeTable) {
 		for(SchedulerTime temp: timeTable) {
 			if(time.getStart().equals(temp.getStart()) && time.getEnding().equals(temp.getEnding()))
@@ -187,6 +197,7 @@ public class OperationRoomController {
 		}
 		return false;
 	}
+	
 	@PostMapping("/operation-room/{id}")
 	void makeReservation(@RequestBody Appointment data) {
 	}

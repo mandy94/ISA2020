@@ -22,4 +22,5 @@ public interface UserService {
 	List<User> getDeniedUsers();
 	List<Appointment> getDoctorsSchedule(Long id);
 	List<User> getNurces();
+	List<User> getDoctors();
 }

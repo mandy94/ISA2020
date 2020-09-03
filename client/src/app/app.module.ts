@@ -42,6 +42,8 @@ import { RoomsComponent } from './admin/codebook/rooms/rooms.component';
 import { MedicationComponent } from './admin/codebook/medication/medication.component';
 import { RequestResponseDialogComponent } from './admin/registration-request/request-response-dialog/request-response-dialog.component';
 import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
+import { MandatoryDoctorsComponent } from './admin/mandatory-doctors/mandatory-doctors.component';
+import { AddMandatoryDoctorDialogComponent } from './admin/mandatory-doctors/add-mandatory-doctor-dialog/add-mandatory-doctor-dialog.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,8 @@ import { DeniedUsersComponent } from './admin/denied-users/denied-users.componen
     MedicationComponent,
     RequestResponseDialogComponent,
     DeniedUsersComponent,
+    MandatoryDoctorsComponent,
+    AddMandatoryDoctorDialogComponent,
     
   ],
   imports: [
@@ -105,7 +109,7 @@ import { DeniedUsersComponent } from './admin/denied-users/denied-users.componen
     MatIconRegistry,
   ],
   bootstrap: [AppComponent],
-  entryComponents:[RequestResponseDialogComponent,NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
+  entryComponents:[AddMandatoryDoctorDialogComponent,RequestResponseDialogComponent,NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
 })
 export class AppModule {
 }

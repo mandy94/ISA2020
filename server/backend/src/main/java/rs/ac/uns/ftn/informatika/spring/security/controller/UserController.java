@@ -76,6 +76,11 @@ public class UserController {
 		return this.userService.findAll();
 	}
 
+	@GetMapping("/user/doctor")
+	public List<User> getDoctors() {
+		return this.userService.getDoctors();
+	}
+
 	@GetMapping("/whoami")
 	public User user(Principal user) {
 		return this.userService.findByUsername(user.getName());

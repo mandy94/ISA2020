@@ -18,6 +18,7 @@ import { RoomsComponent } from './admin/codebook/rooms/rooms.component';
 import { MedicationComponent } from './admin/codebook/medication/medication.component';
 import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
 import { RegisteredUsersComponent } from './admin/registered-users/registered-users.component';
+import { MandatoryDoctorsComponent } from './admin/mandatory-doctors/mandatory-doctors.component';
 export const routes: Routes = [
   {
     path: '',
@@ -75,6 +76,9 @@ export const routes: Routes = [
     component: ChangePasswordComponent,
     canActivate: [LoginGuard]
   },
+  
+  
+
   {
     path:'registration-requests',
     component: RegistrationRequestComponent
@@ -92,6 +96,11 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'mandatory-doctors',
+    component: MandatoryDoctorsComponent,
+    
   },
   {
     path: 'codes-diagnose',

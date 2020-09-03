@@ -33,8 +33,5 @@ public class PrescriptionController {
 		pservice.save(drug);
 	}
 	
-	@PutMapping(consumes="application/json")
-	String testPut() {
-		return "radi";	
-	}
+	
 }

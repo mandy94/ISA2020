@@ -1,0 +1,11 @@
+<h2> Rad sa obaveznim doktorima</h2>
+<mat-form-field>
+  <mat-label>Dodaj doktore koje zelis</mat-label>
+  <mat-select multiple [formControl]="selDoctorControl" >
+    
+      <mat-option *ngFor="let doctor of otherDoctorList" [value]="doctor.id" >
+        {{doctor.dedicated}} {{doctor.firstName}}    
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-button (click)="addDoctor()"> Dodaj </button>

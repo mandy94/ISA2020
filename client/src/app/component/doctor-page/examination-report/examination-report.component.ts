@@ -77,8 +77,7 @@ export class ExaminationReportComponent implements OnInit {
     });
   }
   newExaminationDialog(): void {
-    this.newExamination.pacient = this.currentPacient;
-    this.newExamination.doctor = this.loggedDoctor;
+
     const dialogRef = this.dialog.open(NewExaminationDialogComponent, {
       width: '600px',
       data: { pacient: this.currentPacient, doctor: this.loggedDoctor }
@@ -126,16 +125,9 @@ export class ExaminationReportComponent implements OnInit {
       });
   }
 
-  getOperationRooms() {
-    this.apiService.get(this.config.api_url + '/operation-rooms/all')
-      .subscribe(data => {
-        this.operationRoomList = data;
-      });
-  }
   onSearchClicked() {
     this.getPacientByJMBG();
     this.getPacientExaminationReports();
-    this.getOperationRooms();
   }
   diagnoseList: any;
   medList: any;
@@ -152,9 +144,9 @@ export class ExaminationReportComponent implements OnInit {
   loggedDoctor: any;
   ngOnInit() {
 
-    this.pacientJMBGCtrl.setValue(this.activatedRoute.snapshot.paramMap.get('jmbg'));    
+    this.pacientJMBGCtrl.setValue(this.activatedRoute.snapshot.paramMap.get('jmbg'));
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
-    
+
     if (this.pacientJMBGCtrl.value != undefined) {
       this.indexOrder = 2;
       this.onSearchClicked();
@@ -179,27 +171,12 @@ export class ExaminationReportComponent implements OnInit {
   therapyList: any;
   calendar: any;
 
-  createAppointent() {
-    this.appointnent = new Appointment();
-    this.appointnent.pacientId = this.currentPacient.id;
-    this.appointnent.room = this.selected_room.id;
-
-    this.apiService.post(this.config.api_url + '/operation-room/new-appointment', this.appointnent).subscribe(() => { this.appointnent = null; });
-  }
-  pickedDate() {
-
-    return this.selected_room ? true : false;
-  }
+  
   availableTimeList: any;
   selected_time: any;
-  
- 
 
 
-  // nextVisit(){
-  //   this.refreshCalendar(this.config.api_url + "/doctor/scheduler/" + this.loggedDoctor.id);
 
-  // }
   pacientDataControl = new FormControl('');
   tempNewPacientData;
   newPacientData() {
@@ -209,5 +186,5 @@ export class ExaminationReportComponent implements OnInit {
     this.currentPacient.data = this.tempNewPacientData;
     this.tempNewPacientData = null;
   }
- 
+
 }
