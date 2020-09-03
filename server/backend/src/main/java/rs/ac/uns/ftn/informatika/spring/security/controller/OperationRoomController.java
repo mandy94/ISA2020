@@ -49,8 +49,8 @@ public class OperationRoomController {
 	@Autowired
 	private AppointmentService apservice;
 	
-//	@Autowired
-//	private SchedulerTimeService timeservice;
+	@Autowired
+	private SchedulerTimeService timeservice;
 	
 	@Autowired
 	private UserService userService;
@@ -142,11 +142,50 @@ public class OperationRoomController {
 		return pair;
 	
 	}
+	@GetMapping(value="/available-doctor-list/room/{id}/{date}")
+	public List<SchedulerTime> getDoctorsListAvailableAcordingToDate(@PathVariable Long id , @PathVariable String date)
+	{
+		
+		List<User> doctorList = orservice.getRoomById(id).getMandatoryDoctors();
+		if(doctorList.size() == 1)
+				return apservice.getDoctorsAvaialbleHourse(id, date);
+
+		List<SchedulerTime> candiates = timeservice.findAll();
+		List<SchedulerTime> result = new ArrayList<>();
+		Boolean isAvaialble = false;
+		for(SchedulerTime time: candiates )
+		{
+			isAvaialble = false;
+			Boolean control = true; // for a total true false 
+				for(User u: doctorList) {
+					if(isInside(time, apservice.getDoctorsAvaialbleHourse(u.getId(), date))) {
+						isAvaialble = true;
+					}else {
+						control = false; // this one is not oke
+					}
+				}
+				if(isAvaialble && control)
+					result.add(time);
+		}
+		if(result.size() == 0)
+			return null;
+		return result;
+	}
 	@GetMapping("/operation-room/{id}/mandatory-doctors")
 	public List<User> getMandatoryDoctors(@PathVariable Long id){
 		return orservice.getRoomById(id).getMandatoryDoctors();
 	}
+		
 	
+	private boolean isInside(SchedulerTime time, List<SchedulerTime> timeTable) {
+		for(SchedulerTime temp: timeTable) {
+			if(time.getStart().equals(temp.getStart()) && time.getEnding().equals(temp.getEnding()))
+				{
+				System.out.println(temp.getStart() + " " + time.getStart());
+				return true;}
+		}
+		return false;
+	}
 	@PostMapping("/operation-room/{id}")
 	void makeReservation(@RequestBody Appointment data) {
 	}

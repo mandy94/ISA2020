@@ -10,6 +10,9 @@ import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 
 public interface TimeRepository extends JpaRepository<SchedulerTime, Long> {
 	
+	@Query("Select t from SchedulerTime t where t.ending = :ending and t.start = :begining ")
+	SchedulerTime findByValue(String begining, String ending);
+	
 	
 //	List<SchedulerTime> findTimeByRoomId(Long id);
 }

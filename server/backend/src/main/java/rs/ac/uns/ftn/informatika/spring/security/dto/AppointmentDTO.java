@@ -5,6 +5,7 @@ public class AppointmentDTO {
 	Long id;
 	Long room;
 	Long pacientId;
+	Long doctorId;
 	String date;
 	String begining, ending;
 	// docss
@@ -40,13 +41,19 @@ public class AppointmentDTO {
 	}
 	@Override
 	public String toString() {
-		return "AppointmentDTO [id=" + id + ", room=" + room + ", pacientId=" + pacientId + ", begining=" + begining
-				+ ", ending=" + ending + "]";
+		return "AppointmentDTO [id=" + id + ", room=" + room + ", pacientId=" + pacientId + ", doctorId=" + doctorId
+				+ ", date=" + date + ", begining=" + begining + ", ending=" + ending + "]";
 	}
 	public String getDate() {
 		return date;
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public Long getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(Long doctorId) {
+		this.doctorId = doctorId;
 	}
 }

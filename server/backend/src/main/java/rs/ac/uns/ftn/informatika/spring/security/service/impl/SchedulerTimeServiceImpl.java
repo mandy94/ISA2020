@@ -30,6 +30,16 @@ public class SchedulerTimeServiceImpl implements SchedulerTimeService {
 		repo.save(data);
 		}
 
+	@Override
+	public List<SchedulerTime> findAll() {
+		return 	repo.findAll();
+	}
+
+	@Override
+	public SchedulerTime findByValue(String begining, String ending) {
+		return repo.findByValue(begining, ending);
+	}
+
 
 	
 }

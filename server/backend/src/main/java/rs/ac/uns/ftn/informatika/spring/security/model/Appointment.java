@@ -24,7 +24,7 @@ public class Appointment {
 	
 	@ManyToOne
 	@JoinColumn(name="term")
-	SchedulerTime term;	
+	SchedulerTime term ;
 	
 	
 	@Column(name="date")
@@ -38,8 +38,10 @@ public class Appointment {
 	Long doctorid;
 
 	public Appointment() {}
-	public Appointment(AppointmentDTO appoint) {
+	public void generateObject(AppointmentDTO appoint) {
 		pacientid = appoint.getPacientId();
+		doctorid = appoint.getDoctorId();
+		term = new SchedulerTime();
 		term.setStart(appoint.getBegining());
 		term.setEnding(appoint.getEnding());
 		date = appoint.getDate();
@@ -97,6 +99,11 @@ public class Appointment {
 	}
 	public void setDoctorid(Long doctorid) {
 		this.doctorid = doctorid;
+	}
+	@Override
+	public String toString() {
+		return "Appointment [id=" + id + ", pacientid=" + pacientid + ", term=" + term + ", date=" + date + ", room="
+				+ room + ", doctorid=" + doctorid + "]";
 	}
 
 

@@ -17,8 +17,10 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.AppointmentDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.Appointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.CalendarAppointment;
 import rs.ac.uns.ftn.informatika.spring.security.model.Room;
+import rs.ac.uns.ftn.informatika.spring.security.model.SchedulerTime;
 import rs.ac.uns.ftn.informatika.spring.security.service.AppointmentService;
 import rs.ac.uns.ftn.informatika.spring.security.service.OperationRoomService;
+import rs.ac.uns.ftn.informatika.spring.security.service.SchedulerTimeService;
 
 // Primer kontrolera cijim metodama mogu pristupiti samo autorizovani korisnici
 @RestController
@@ -29,6 +31,8 @@ public class AppointmentController {
 	private AppointmentService appService;
 	@Autowired
 	private OperationRoomService orservice;
+	@Autowired
+	private SchedulerTimeService timeService;
 	
 	
 	@GetMapping(value = "/room/{id}")
@@ -43,13 +47,17 @@ public class AppointmentController {
 	}
 	@PostMapping(value = "/room/new")
 	public List<Appointment> createAppointment( @RequestBody AppointmentDTO appoint) {
-		System.out.println(appoint);
 		Room room = orservice.getRoomById(appoint.getRoom());
 		if(room!= null)
 		{
-			Appointment  app = new Appointment(appoint);
+			Appointment  app = new Appointment();
 			app.setRoom(room);
+			app.generateObject(appoint);
+			app.setTerm(timeService.findByValue(appoint.getBegining() , appoint.getEnding()));
 			
+			
+			
+			System.out.println(app);
 			appService.addAppointment(app);
 		}
 		return appService.getAppointmentsForRoom(appoint.getRoom());

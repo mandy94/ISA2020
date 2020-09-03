@@ -9,6 +9,8 @@ public interface SchedulerTimeService {
 
 	List<SchedulerTime> getTimesForOperationRoom(Long id);
 	void addTime(SchedulerTime data);
+	List<SchedulerTime> findAll();
+	SchedulerTime findByValue(String begining, String ending);
     
 }
 
