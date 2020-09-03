@@ -72,38 +72,38 @@ public class OperationRoomController {
 	@GetMapping("/room-schedule/{doctorid}/{from}/{to}")
 	public RoomDTO getRoomScheduleByWeek(@PathVariable Long doctorid, @PathVariable String from, @PathVariable String to){	
 	
-//		String fromDate = covertToDate(from);
-//		String toDate = covertToDate(to);
+		String fromDate = covertToDate(from);
+		String toDate = covertToDate(to);
 		User doctor = userService.findById(doctorid);
 		RoomDTO room = new RoomDTO(doctor.getDedicatedRoom().get(0));
-//		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
-//		String currentDate = fromDate;
-//		int maxLoop = 32;
-//		while(!currentDate.equals(toDate) )
-//		{
-//			AppointmentsPerDay day = new AppointmentsPerDay();
-//			day.setDate(currentDate);
-//			
-//			for(SchedulerTime time: doctor.getTimeTable()) {
-//				day.addTerm(time.getStart(), time.getEnding(), null);
-//			}	
-//			room.getTimeTable().add(day);
-//			currentDate = nextDay(currentDate);
-//		}
-//		
-//		for(Appointment app : appointmets) {
-//			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
-//					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
-//				for(AppointmentsPerDay day: room.getTimeTable()) {
-//					if(day.getDate().equals(app.getDate()))
-//					{
-//						User pacient= userService.findById(app.getPacientid());
-//						day.compareTimeAndAdd(app.getTerm().getStart() , app.getTerm().getEnding(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
-//					}
-//				}
-//			}
-//			maxLoop--;
-//		}
+		List<Appointment> appointmets = apservice.getDoctorsVisit(doctorid);
+		String currentDate = fromDate;
+		int maxLoop = 32;
+		while(!currentDate.equals(toDate) )
+		{
+			AppointmentsPerDay day = new AppointmentsPerDay();
+			day.setDate(currentDate);
+			
+			for(SchedulerTime time: doctor.getTimeTable()) {
+				day.addTerm(time.getStart(), time.getEnding(), null);
+			}	
+			room.getTimeTable().add(day);
+			currentDate = nextDay(currentDate);
+		}
+		
+		for(Appointment app : appointmets) {
+			if(getTimeStampFromStringDate(app.getDate()) >= getTimeStampFromStringDate(fromDate)
+					&& getTimeStampFromStringDate(app.getDate()) <= getTimeStampFromStringDate(toDate)) {
+				for(AppointmentsPerDay day: room.getTimeTable()) {
+					if(day.getDate().equals(app.getDate()))
+					{
+						User pacient= userService.findById(app.getPacientid());
+						day.compareTimeAndAdd(app.getTerm().getStart() , app.getTerm().getEnding(),app.getPacientid(), pacient.getJmbg(), pacient.getFullName());
+					}
+				}
+			}
+			maxLoop--;
+		}
 		return room;
 		
 			
@@ -138,7 +138,8 @@ public class OperationRoomController {
 		DoubleArrays<SchedulerTime> pair = new DoubleArrays<SchedulerTime>();
 		pair.notavailable = apservice.getDoctorsBusyHours(id, date);		
 		pair.available = apservice.getDoctorsAvaialbleHourse(id, date);
-		
+		if(pair.notavailable.size()==0) pair.notavailable = null;
+		if(pair.available.size() == 0) pair.available = null;
 		return pair;
 	
 	}
@@ -188,6 +189,31 @@ public class OperationRoomController {
 	}
 	@PostMapping("/operation-room/{id}")
 	void makeReservation(@RequestBody Appointment data) {
+	}
+private String covertToDate(String date) {
+		
+		return date.substring(0, 2) + "."+date.substring(2,4)+"."+date.substring(4,8);
+	}
+
+	Long getTimeStampFromStringDate(String date){
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		Date parsed;
+		try {
+			parsed = df.parse(date);
+			return parsed.getTime()/1000*1000;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	String getTimeFromTimeStampToString(Long stamp) {
+		return new SimpleDateFormat("dd.MM.yyyy").format(new Date(stamp));
+	}
+	
+	String nextDay(String date) {
+		Long ts = getTimeStampFromStringDate(date); // IN MILISECONDS
+		return getTimeFromTimeStampToString(ts+24*60*60*1000);
+		
 	}
 	
 //	@PostMapping("/operation-room/request")

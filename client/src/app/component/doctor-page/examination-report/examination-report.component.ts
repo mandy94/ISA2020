@@ -59,7 +59,7 @@ export class ExaminationReportComponent implements OnInit {
   nextVisitDialog(): void {
     const dialogRef = this.dialog.open(NextVisitDialogComponent, {
       width: '710px',
-      data: this.nextVisit
+      data: { pacient: this.currentPacient, doctor: this.loggedDoctor }
     });
 
     dialogRef.afterClosed().subscribe(result => {

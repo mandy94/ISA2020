@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService, ConfigService, UserService } from 'app/service';
 import { FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { injectTemplateRef } from '@angular/core/src/render3/view_engine_compatibility';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-next-visit-dialog',
@@ -15,29 +17,41 @@ export class NextVisitDialogComponent implements OnInit {
     private apiService: ApiService,
     private config: ConfigService,
     private formBuilder: FormBuilder,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public data: any) 
+ { }
 
   ngOnInit() {
-    this.groupControl =this.formBuilder.group({      
-      dateControl :  new FormControl(moment())
-    });
-
-    this.apiService
-  
+   this.apiService.get(this.config.api_url + '/operation-rooms/all')
+                      .subscribe(data => this.roomList = data);
   }
   new_visit;
+  roomList;
+  myTimeTable;
+  dateControl = new FormControl(moment());
+  roomControl= new FormControl('');
+  checkMe(){
 
-  schedule(){
+    this.apiService.get(this.config.api_url +  '/doctor/' + this.data.doctor.id+
+                       '/is-available/'+this.formatDate(this.dateControl.value))
+                      .subscribe( retdata => this.myTimeTable = retdata);
+                  
+  }
+  makeAnAppointment(time){
     this.new_visit = {
-      doctorid: this.userService.getMyId(),
-      pacientid: {},
-      visitDate: 0,
-      visitTime:0
+      doctorId: this.data.doctor.id,
+      pacientId: this.data.pacient.id,
+      date: this.formatDateWithDots(this.dateControl.value),
+      begining: time.start,
+      ending: time.ending,
+      room: this.roomControl.value.id
     }
-    this.apiService.post(this.config.api_url + '/examination-report/add', this.new_visit).subscribe();
+    console.log(this.new_visit)
+    this.apiService.post(this.config.api_url + '/appointment/room/new', this.new_visit).subscribe();
   }
   formatDate(input:any){  
     return moment(input).format("DDMMYYYY");    
   }
-}
+  formatDateWithDots(input:any){  
+    return moment(input).format("DD.MM.YYYY");    
+  }}

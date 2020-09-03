@@ -15,6 +15,7 @@ public interface AppointmentService {
 	void addAppointment(Appointment data);
 	List<SchedulerTime> getDoctorsBusyHours(Long id, String date);
 	List<SchedulerTime> getDoctorsAvaialbleHourse(Long id, String date);
+	
     
 }
 

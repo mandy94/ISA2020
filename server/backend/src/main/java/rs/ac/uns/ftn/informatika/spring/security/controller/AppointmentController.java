@@ -34,6 +34,17 @@ public class AppointmentController {
 	@Autowired
 	private SchedulerTimeService timeService;
 	
+
+	@GetMapping(value = "/visits/{id}")
+	public List<CalendarAppointment> getAppointmentByDoctroId(@PathVariable Long id){
+		List<CalendarAppointment> calendar = new ArrayList<CalendarAppointment>();
+		//for(Appointment temp: appService.getDoctorsVisit(id)) {
+		//	if(temp.getRoom()!=null)
+			//if(temp.getRoom().getId() == id)
+//			calendar.add(new CalendarAppointment(temp.getDateStart(), temp.getDateEnd(),"Operacija u "+ temp.getRoom().getName()));
+	//	}
+		return calendar;
+	}
 	
 	@GetMapping(value = "/room/{id}")
 	public List<CalendarAppointment> getAppointmentfForOperationRoom(@PathVariable Long id){

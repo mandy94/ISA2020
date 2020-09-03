@@ -30,6 +30,7 @@ export class DoctorCalendarComponent implements OnInit {
   lastMonth;
   wholeMonth;
   currentDay;
+  currentWeek;
   fromDateRequest;
   toDateRequest;
   currentMonth;
@@ -37,8 +38,7 @@ export class DoctorCalendarComponent implements OnInit {
 
   makeRequest() {
 
-    let formatedRequestDate = '/' + (this.fromDateRequest + '/' + this.toDateRequest).split('.').join("");
-    console.log(formatedRequestDate);
+    let formatedRequestDate = '/' + (this.fromDateRequest + '/' + this.toDateRequest).split('.').join("");    
     return this.api.get(this.conf.api_url + "/room-schedule/" + this.doctor.id + formatedRequestDate)
 
   }
@@ -62,6 +62,7 @@ export class DoctorCalendarComponent implements OnInit {
   }
   getWeek() {
     this.loadingData = true;
+    
     this.currentDay = moment().startOf('week').add(1, 'week');
     this.fromDateRequest = moment().startOf('week').format("DD.MM.YYYY");
     this.toDateRequest = moment().startOf('week').add(7, 'days').format('DD.MM.YYYY');

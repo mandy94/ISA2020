@@ -1,11 +1,35 @@
 <mat-card>
   <mat-card-title>Zakazivanje sledeceg pregleda</mat-card-title>
-<mat-form-field class="date">
-  <mat-label>Odaberi datum</mat-label>
-  <input matInput [matDatepicker]="picker" formControlName="dateControl">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker touchUi #picker name="selected_date"></mat-datepicker>
-</mat-form-field>
+  <mat-form-field class="date">
 
-<button mat-button (click)="schedule()"> Zakazi</button>
+    <mat-label>Odaberi datum</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="dateControl">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker name="selected_date"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="date">
+
+    <mat-label>Odaberite sobu za pregled</mat-label>
+    <mat-select  [formControl]="roomControl">
+      <mat-option *ngFor="let room of roomList" [value]="room">
+        {{room.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button (click)="checkMe()"> Proveri mi raspored</button>
+  <div *ngIf="myTimeTable">
+    <div *ngIf="myTimeTable.available">
+      <p> Slobodni termini</p>
+      <div *ngFor="let time of myTimeTable.available">
+        <button mat-stroked-button (click)="makeAnAppointment(time)"> {{ time | json}} </button>
+      </div>
+    </div>
+    <div *ngIf="myTimeTable.notavailable">
+      <p> Zauzeti termini</p>
+      <div *ngFor="let time of myTimeTable.notavailable">
+        <button mat-stroked-button color="warn"> {{ time | json}} </button>
+      </div>
+    </div>
+  </div>
 </mat-card>

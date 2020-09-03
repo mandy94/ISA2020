@@ -1,41 +1,47 @@
-<div fxLayout="row"  fxLayoutAlign="end">
-    <mat-button-toggle-group name="timeTableView" aria-label="Font Style" [disabled]="loadingData" >
-      <mat-button-toggle (click)="getDay()"> Dnevni prikaz</mat-button-toggle>
-      <mat-button-toggle (click)="getWeek('today')"> Nedeljni prikaz</mat-button-toggle>
-      <mat-button-toggle (click)="getMonth('today')"> Mesecni prikaz</mat-button-toggle>
-    </mat-button-toggle-group>
+<div fxLayout="row" fxLayoutAlign="end">
+  <mat-button-toggle-group name="timeTableView" aria-label="Font Style" [disabled]="loadingData">
+    <mat-button-toggle (click)="getDay()"> Dnevni prikaz</mat-button-toggle>
+    <mat-button-toggle (click)="getWeek('today')"> Nedeljni prikaz</mat-button-toggle>
+    <mat-button-toggle (click)="getMonth('today')"> Mesecni prikaz</mat-button-toggle>
+  </mat-button-toggle-group>
 
-    <mat-button-toggle-group name="navigation">
-      <mat-button-toggle (click)="previous()">
-        < </mat-button-toggle>
-          <mat-button-toggle (click)="next()"> > </mat-button-toggle>
-    </mat-button-toggle-group>
-  
+  <mat-button-toggle-group name="navigation">
+    <mat-button-toggle (click)="previous()">
+      < </mat-button-toggle>
+        <mat-button-toggle (click)="next()"> > </mat-button-toggle>
+  </mat-button-toggle-group>
+
 </div>
-<p *ngIf="loadingData" fxLayout="row" fxLayoutAlign="center center"> Loading <mat-spinner> </mat-spinner> </p>
+<p *ngIf="loadingData" fxLayout="row" fxLayoutAlign="center center"> Loading <mat-spinner> </mat-spinner>
+</p>
 
-<!-- <div *ngIf="dedicatedRoom" ><b>{{dedicatedRoom.name}} {{dedicatedRoom.code}}</b></div> -->
-<div *ngIf="dedicatedRoom && dayView" fxLayout="row" fxLayoutAlign="start">
+<div *ngIf="!loadingData && dedicatedRoom && dayView" fxLayout="row" fxLayoutAlign="start">
   <div *ngFor="let day of dedicatedRoom.timeTable" fxLayout="column" fxLayoutAlign="start stretch">
     <button mat-flat-button class="title" style="margin-top: -55px;">
       <h2> {{printDayAsAString(day.date)}} {{day.date}}</h2>
     </button>
-    <div *ngFor="let term of day.terms" >
+    <div *ngFor="let term of day.terms">
       <button mat-stroked-button class="fullBtn" (click)="showPacientAppointment(term.jmbg)">{{term.start}}
         <span class="hasPacient" *ngIf="term.pacientId!=null"> {{term.pacientFullName}} </span>
       </button>
     </div>
   </div>
 </div>
-<div *ngIf="dedicatedRoom && weekView" fxLayout="row" fxLayoutAlign="start start">
-  <div *ngFor="let day of dedicatedRoom.timeTable" fxLayout="column" fxLayoutAlign="start start">
-    <button mat-flat-button class="title">
-      <b> {{printDayAsAString(day.date)}}</b>
-    </button>
-    <div *ngFor="let term of day.terms">
-      <button mat-stroked-button class="btn"  (click)="showPacientAppointment(term.jmbg)">{{term.start}}
-        <span class="hasPacient" *ngIf="term.pacientId!=null"> {{term.pacientFullName}} </span>
-      </button>
+<div *ngIf="!loadingData && dedicatedRoom && weekView" fxLayout="row" fxLayoutAlign="start start">
+  <div fxLayout="column" fxLayoutAlign="start start">
+    <h1> Nedelja: {{fromDateRequest}} - {{toDateRequest}}</h1>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      <div *ngFor="let day of dedicatedRoom.timeTable">
+        <button mat-flat-button class="title">
+          <b> {{printDayAsAString(day.date)}}</b>
+        </button>
+        <div *ngFor="let term of day.terms">
+          <button mat-stroked-button class="btn" (click)="showPacientAppointment(term.jmbg)">{{term.start}}
+            <span class="hasPacient" *ngIf="term.pacientId!=null"> {{term.pacientFullName}} </span>
+          </button>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -60,8 +66,8 @@
     </div>
     <div *ngFor="let day of dedicatedRoom.timeTable">
       <mat-grid-tile class="grid-tile">
-        <mat-grid-tile-header style="height: 28px; background:transparent; color:black">          
-          <b>{{day.date}}</b>          
+        <mat-grid-tile-header style="height: 28px; background:transparent; color:black">
+          <b>{{day.date}}</b>
         </mat-grid-tile-header>
         <div fxLayout="column" fxLayoutAlign="end" fxLayoutAlign="start start">
           <div *ngFor="let term of day.terms">
