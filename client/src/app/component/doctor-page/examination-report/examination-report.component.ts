@@ -69,7 +69,7 @@ export class ExaminationReportComponent implements OnInit {
   newOperationDialog(): void {
     const dialogRef = this.dialog.open(NewOperationroomDialogComponent, {
       width: '710px',
-      data: this.newOperation
+      data: { pacient: this.currentPacient, doctor: this.loggedDoctor }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -192,39 +192,8 @@ export class ExaminationReportComponent implements OnInit {
   }
   availableTimeList: any;
   selected_time: any;
-  getRoomTime() {
-    if (this.selected_room != null)
-      this.apiService.get(this.config.api_url + '/time/room/' + this.selected_room.id)
-        .subscribe(data => { this.availableTimeList = data; this.refreshCalendar(this.selected_room.id.toString()); });
-
-  }
-  getMandatoryDoctors() {
-    this.apiService.get(this.config.api_url + '/operation-room/' + this.selected_room.id + '/mandatory-doctors')
-      .subscribe(data => this.mandatoryDoctorList = data);
-  }
-  onRoomChange() {
-    this.getRoomTime();
-    this.getMandatoryDoctors();
-    this.refreshCalendar(this.config.api_url + "/appointment/room/" + this.selected_room.id.toString());
-  }
-
-  createAppointment() {
-
-    if (this.selected_room === null || this.selected_room === undefined) {
-      alert("Morate odabrati sobu prvo");
-      return;
-    }
-    let data = new Appointment();
-    data.room = this.selected_room.id;
-    data.start = this.selected_time.start;
-    data.ending = this.selected_time.ending;
-    data.pacientId = this.currentPacient.id;
-    data.doctorid = this.loggedDoctor.id;
-    data.mdoctors = this.mandatoryDoctorList;
-
-    this.eventEmitterService.createAppointment(data);
-  }
-
+  
+ 
 
 
   // nextVisit(){
@@ -240,10 +209,5 @@ export class ExaminationReportComponent implements OnInit {
     this.currentPacient.data = this.tempNewPacientData;
     this.tempNewPacientData = null;
   }
-  showRoomSchedule() {
-    this.refreshCalendar(this.config.api_url + "/appointment/room/" + this.selected_room.id);
-  }
-  refreshCalendar(new_url: string) {
-    this.eventEmitterService.calendarRefresher(new_url);
-  }
+ 
 }

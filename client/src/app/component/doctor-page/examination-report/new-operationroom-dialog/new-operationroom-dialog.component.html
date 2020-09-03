@@ -17,32 +17,32 @@
       <mat-datepicker touchUi #picker name="selected_date"></mat-datepicker>
     </mat-form-field>
 
-    
+
 
     <button mat-raised-button (click)="showRoomSchedule()" [disabled]="!filled()"> Trazi </button>
   </form>
-  <div *ngIf="termTable" fxLayout="column" fxLayoutAlign="space-around center">    
-    <p *ngIf="termTable.notavailable.length == 0"> Svi termini su slobodni </p>
-    <div *ngFor="let term of termTable.available">
-      <button mat-stroked-button color="primary" class="terms"> 
-        {{term.start}} - {{term.ending}}
-      </button>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-around center">
-      <h3> Obavezni doktori su:</h3>
-      <div *ngFor="let doctor of availableMandatoryDoctorList">
-        <li>
-          {{doctor.firstName}}   <button (click)="checkDoctorsAvaialbleTime(doctor)">?</button>
-          {{doctor.schedule | json}}
-        </li>
+  <div *ngIf="availableMandatoryDoctorList" >   
+    
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <div fxLayout="column" fxLayoutAlign="space-around start">
+        <h3> Obavezni doktori su:</h3>
+        <div *ngFor="let doctor of availableMandatoryDoctorList">
+          <li>
+            {{doctor.fullName}} ( {{doctor.email}} )
+          </li>
+        </div>
+      </div>
+      <div>
+        <p *ngIf="!doctorTermTable" >Za datu sobu i datum ,doktroi nemaju ni jedan slobodan termin. </p>
+        <h3 *ngIf="doctorTermTable"> Njihovi slobodni termini su</h3>
+        <div *ngFor="let term of doctorTermTable">
+          <button mat-stroked-button (click)="makeRequest(term)"> {{term.start}} - {{term.ending}} <mat-icon>add</mat-icon></button>
+        </div>
       </div>
 
-    <p *ngIf="termTable.notavailable.length != 0"> Zauzeti termini su</p>
-    <div *ngFor="let term of termTable.notavailable"> {{term.start}} - {{term.ending}}</div>
-  
     </div>
   </div>
-  
+
 
   <div *ngIf="termTable==null" fxLayout="column" fxLayoutAlign="space-around center">
 
