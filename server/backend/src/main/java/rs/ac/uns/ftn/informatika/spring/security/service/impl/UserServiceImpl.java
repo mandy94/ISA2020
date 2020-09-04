@@ -62,6 +62,15 @@ public class UserServiceImpl implements UserService {
 		u.setEmail(userRequest.getEmail());
 		u.setEnabled(false);
 		u.setStatus("PENDING");
+		u.setDoIHaveToChangePassword(true);
+		if(userRequest.getRole().equals("Administrator"))
+			u.setRole("ADMIN");
+		if(userRequest.getRole().equals("Korisnik"))
+			u.setRole("PACIENT");
+		if(userRequest.getRole().equals("Doktor"))
+			u.setRole("DOCTOR");
+		if(userRequest.getRole().equals("Medicinska sestra"))
+			u.setRole("NURCE");
 		
 		List<Authority> auth = authService.findByname("ROLE_USER");
 		// u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER

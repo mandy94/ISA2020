@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DisplayMessage} from '../shared/models/display-message';
 import {AuthService, UserService} from '../service';
@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) {
 
   }
-
+  authList = ['Korsnik', 'Doktor', 'Medicinska sestra', 'Administrator'];
   ngOnInit() {
     this.route.params
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -54,7 +54,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       password: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(32)])],
       firstname: [''],
       lastname: [''],
-      email: ['']
+      email: [''],
+      role:['']
     });
   }
 
@@ -62,14 +63,14 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
-
+  
   onSubmit() {
     /**
      * Innocent until proven guilty
      */
     this.notification = undefined;
     this.submitted = true;
-
+    
     this.authService.signup(this.form.value)
       .subscribe(data => {
           console.log(data);

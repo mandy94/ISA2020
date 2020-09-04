@@ -32,40 +32,31 @@ export class UserService {
 
   amIAdmin(){
     if(this.currentUser != null){
-      var auths = this.currentUser.authorities;
-      for(var auth of auths)
-        if(auth.authority === "ROLE_ADMIN")
-          return true;
-      return false;
+      if(this.currentUser.role == "ADMIN")
+      return true;
     }
+    return false;
   }
   amIDoctor(){
-    
     if(this.currentUser != null){
-      var auths = this.currentUser.authorities;
-      for(var auth of auths)
-        if(auth.authority === "ROLE_DOCTOR")
-          return true;
-      return false;
+      if(this.currentUser.role == "DOCTOR")
+      return true;
     }
+    return false;
   }
   amIPacient(){
     if(this.currentUser != null){
-      var auths = this.currentUser.authorities;
-      for(var auth of auths)
-        if(auth.authority === "ROLE_PACIENT")
-          return true;
-      return false;
+      if(this.currentUser.role == "PACIENT")
+      return true;
     }
+    return false;
   }
   amINurce(){
     if(this.currentUser != null){
-      var auths = this.currentUser.authorities;
-      for(var auth of auths)
-        if(auth.authority === "ROLE_NURCE")
-          return true;
-      return false;
+      if(this.currentUser.role == "NURCE")
+      return true;
     }
+    return false;
   }
 
   getMyInfo() {

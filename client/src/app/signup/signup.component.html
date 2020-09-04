@@ -31,6 +31,16 @@
           <label>Email adresa: </label>
           <input formControlName="email" matInput>
         </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Tip korisnika</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let auth of authList" [value]="auth">
+              {{auth}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">registruj se</button>
       </form>
       <br>

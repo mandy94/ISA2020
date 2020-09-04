@@ -73,7 +73,17 @@ public class User implements UserDetails {
 
     @Column(name = "enabled")
     private boolean enabled;
+    
     @Column
+    private Boolean doIHaveToChangePassword;
+    
+    public Boolean getDoIHaveToChangePassword() {
+		return doIHaveToChangePassword;
+	}
+	public void setDoIHaveToChangePassword(Boolean doIHaveToChangePassword) {
+		this.doIHaveToChangePassword = doIHaveToChangePassword;
+	}
+	@Column
     private String  registrationResponse;
     
     public String getRegistrationResponse() {
