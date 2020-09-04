@@ -29,6 +29,19 @@ public class ReportServiceImpl implements ReportsService {
 		return repo.save(report);
 	}
 
+	@Override
+	@Transactional
+	public void save(ExaminationReport report) {
+		repo.save(report);
+		
+	}
+
+	@Override
+	public ExaminationReport findById(Long id) {
+		return repo.findById(id).orElse(null);
+		
+	}
+
 	
 
 	

@@ -1,0 +1,4 @@
+<h1> Zahtevi za prvi slobodan termin </h1>
+<div *ngFor="let item of reservationList">
+  {{item | json}} <button mat-stroked-button (click)="makeReservation(item)"> Odaberi (automatski)</button>
+</div>

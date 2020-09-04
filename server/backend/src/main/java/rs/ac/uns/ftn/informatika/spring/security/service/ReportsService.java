@@ -9,7 +9,9 @@ public interface ReportsService {
 	List<ExaminationReport> getReportsForUser(Long jmbg);
 
 	ExaminationReport addReport(ExaminationReport report);
-	
+	void save(ExaminationReport report);
+
+	ExaminationReport findById(Long id);
     
 }
 

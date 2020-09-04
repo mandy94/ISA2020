@@ -36,7 +36,9 @@ export class NextVisitDialogComponent implements OnInit {
                        '/is-available/'+this.formatDate(this.dateControl.value))
                       .subscribe( retdata => this.myTimeTable = retdata);
                   
-  }
+  
+                                        }
+  msg;
   makeAnAppointment(time){
     this.new_visit = {
       doctorId: this.data.doctor.id,
@@ -47,7 +49,7 @@ export class NextVisitDialogComponent implements OnInit {
       room: this.roomControl.value.id
     }
     console.log(this.new_visit)
-    this.apiService.post(this.config.api_url + '/appointment/room/new', this.new_visit).subscribe();
+    this.apiService.post(this.config.api_url + '/appointment/room/new', this.new_visit).subscribe(()=>this.msg = "Uspesno ste zakazali sledecu posetu.");
   }
   formatDate(input:any){  
     return moment(input).format("DDMMYYYY");    

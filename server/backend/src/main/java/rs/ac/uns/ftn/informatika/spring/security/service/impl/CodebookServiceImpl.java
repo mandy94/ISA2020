@@ -109,5 +109,41 @@ public class CodebookServiceImpl implements CodebookService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
+
+	@Override
+	public void deleteDiagnoseById(Long id) {
+		 drepo.deleteById(id);
+	}
+
+
+
+	@Override
+	public void deleteRoomById(Long id) {
+		 orepo.deleteById(id);
+		
+	}
+
+
+
+	@Override
+	public void deleteTherapyById(Long id) {
+		 trepo.deleteById(id);		
+	}
+
+
+
+	@Override
+	public void removeMedicineById(Long id) {
+		mrepo.deleteById(id);
+		
+	}
+
+
+
+	
 	
 }

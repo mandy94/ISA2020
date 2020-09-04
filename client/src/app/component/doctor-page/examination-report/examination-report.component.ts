@@ -14,6 +14,8 @@ import { NewOperationroomDialogComponent } from './new-operationroom-dialog/new-
 import { ReportDTO } from 'app/shared/models/other';
 import { ActivatedRoute } from '@angular/router';
 import { noUndefined } from '@angular/compiler/src/util';
+import { thisExpression } from '../../../../../node_modulmore/@babel/types/lib';
+import { EditExaminationDialogComponent } from './edit-examination-dialog/edit-examination-dialog.component';
 
 @Component({
   selector: 'app-examination-report',
@@ -56,6 +58,16 @@ export class ExaminationReportComponent implements OnInit {
   searchView = true;
   indexOrder = 1; // indexfor mat tab group
 
+  editReport(visit) {
+    const dialogRef = this.dialog.open(EditExaminationDialogComponent, {
+      width: '710px',
+      data: visit
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPacientExaminationReports();
+    });
+  }
   nextVisitDialog(): void {
     const dialogRef = this.dialog.open(NextVisitDialogComponent, {
       width: '710px',
@@ -88,7 +100,7 @@ export class ExaminationReportComponent implements OnInit {
     });
   }
 
-  displayedColumns = ['date', 'diagnose', 'details', 'meds', 'doctor'];
+  displayedColumns = ['date', 'diagnose','therapy', 'details', 'meds', 'doctor', 'edit'];
 
   isJMBGselected() {
     if (this.pacientJMBGCtrl.value === undefined)
@@ -146,6 +158,10 @@ export class ExaminationReportComponent implements OnInit {
 
     this.pacientJMBGCtrl.setValue(this.activatedRoute.snapshot.paramMap.get('jmbg'));
     this.today = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+    this.userService.getMyInfo().subscribe(me => {
+      this.loggedDoctor = me;
+      console.log(this.loggedDoctor);
+    });
 
     if (this.pacientJMBGCtrl.value != undefined) {
       this.indexOrder = 2;
@@ -153,12 +169,11 @@ export class ExaminationReportComponent implements OnInit {
       this.searchView = false;
       return;
     }
+   
     this.apiService.get(this.config.api_url + '/user/pacient/jmbg')
       .subscribe((data) => {
         this.patiens = data;
-        this.userService.getMyInfo().subscribe(data => {
-          this.loggedDoctor = data;
-        });
+       
         this.filteredOptions = this.myControl.valueChanges.pipe(
           startWith(''),
           map(value => this._filter(value))

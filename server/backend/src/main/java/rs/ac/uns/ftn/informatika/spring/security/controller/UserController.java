@@ -35,28 +35,23 @@ public class UserController {
 	private AppointmentService appointmentService;
 	
 	@GetMapping("/user/{userId}")
-	@PreAuthorize("hasRole('ADMIN')")
 	public User loadById(@PathVariable Long userId) {
 		return this.userService.findById(userId);
 	}
 
 	@GetMapping("/user/pacient/jmbg")
-	@PreAuthorize("hasRole('DOCTOR')")
 	public List<Long> getPatientsJMBGs() {
 		return this.userService.getJMBGs("PACIENT");
 	}
 	@GetMapping("/user/nurces")
-	@PreAuthorize("hasRole('DOCTOR')")
 	public List<User> getNurces(){
 		return this.userService.getNurces();
 	}
 	@GetMapping("/user/pacients")
-	@PreAuthorize("hasRole('DOCTOR')")
 	public List<User> getPatients() {
 		return this.userService.getPacients();
 	}
 	@GetMapping("/user/pacient/{jmbg}")
-	@PreAuthorize("hasRole('DOCTOR')")
 	public UserDTO loadByJMBG(@PathVariable Long jmbg) {
 		User ret =  this.userService.findByJMBG(jmbg);
 		System.out.println(ret.getData());
@@ -71,7 +66,6 @@ public class UserController {
 		return this.userService.getDeniedUsers();
 	}
 	@GetMapping("/user/all")
-	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> loadAll() {
 		return this.userService.findAll();
 	}

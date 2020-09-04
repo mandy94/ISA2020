@@ -18,6 +18,7 @@ import { MedicationComponent } from './admin/codebook/medication/medication.comp
 import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
 import { RegisteredUsersComponent } from './admin/registered-users/registered-users.component';
 import { MandatoryDoctorsComponent } from './admin/mandatory-doctors/mandatory-doctors.component';
+import { ReservationsRequestComponent } from './admin/reservations-request/reservations-request.component';
 export const routes: Routes = [
   {
     path: '',
@@ -87,6 +88,9 @@ export const routes: Routes = [
     path: 'mandatory-doctors',
     component: MandatoryDoctorsComponent,
     
+  },{
+    path: 'reservation-requests',
+    component: ReservationsRequestComponent,
   },
   {
     path: 'codes-diagnose',

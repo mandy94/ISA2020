@@ -81,7 +81,7 @@ public class AuthenticationController {
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn));
 	}
 
-	private String ADMIN_MAIL_ADRESS = "enkoder94@gmail.com";
+	
 	private String linkForAllowingRegistration = "http://localhost:4200/";
 	// Endpoint za registraciju novog korisnika
 	@PostMapping("/signup")
@@ -95,7 +95,7 @@ public class AuthenticationController {
 		
 		User user = this.userService.save(userRequest);
 		eservice.sendEmail(user.getEmail(), 
-				ADMIN_MAIL_ADRESS,
+				eservice.getMainAdminAdress(),
 				new MessageDTO("Zahtev za registraciju" , 
 				"Novi korisnik " + user.getEmail() + " zahteva da se registruje. Ako zelite da ga prihvatite kliknite na sledeci link: "
 						 + linkForAllowingRegistration  +" ako zelite da odbijte, kliknite na ovaj <a href=''> link </a>"));
@@ -107,7 +107,7 @@ public class AuthenticationController {
 	@GetMapping(value="/allow/{username}", consumes = "application/json")
 	public List<User> allowRegistration(@PathVariable String username) {
 		User usr = userService.findByUsername(username);
-		usr.setStatus("REGISTERED");
+		usr.setStatus("ACTIVE");
 		usr.setEnabled(true);
 		
 		userService.saveUser(usr); 
@@ -123,7 +123,7 @@ public class AuthenticationController {
 		msg.setTitle("Razlog odbijanja registracije");
 		msg.setContent(response.getDescripton());
 		
-		eservice.sendEmail(ADMIN_MAIL_ADRESS, response.getEmail(), msg );
+		eservice.sendEmail(eservice.getMainAdminAdress(), response.getEmail(), msg );
 		userService.saveUser(usr); 
 		return userService.getPendingUsers();
 	}

@@ -19,12 +19,14 @@
 
   <button mat-button (click)="checkMe()"> Proveri mi raspored</button>
   <div *ngIf="myTimeTable">
-    <div *ngIf="myTimeTable.available">
+    <div *ngIf="myTimeTable.available && !msg">
       <p> Slobodni termini</p>
       <div *ngFor="let time of myTimeTable.available">
         <button mat-stroked-button (click)="makeAnAppointment(time)"> {{ time | json}} </button>
       </div>
     </div>
+    <p>{{msg}}
+    </p>
     <div *ngIf="myTimeTable.notavailable">
       <p> Zauzeti termini</p>
       <div *ngFor="let time of myTimeTable.notavailable">

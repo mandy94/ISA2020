@@ -36,6 +36,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 	}
 
 	@Override
+	@Transactional
 	public void updatePrescriptionById(Long id) {
 		prescrepo.updatePrescriptionById(true, id);
 	}

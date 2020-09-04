@@ -1,0 +1,42 @@
+{{data | json}}
+<div fxLayout="column" fxLayoutAlign="center start">
+  <mat-card>
+    <mat-card-title>Izmena</mat-card-title>
+    <mat-card-subtitle> Datum pregleda: {{ today }}</mat-card-subtitle>
+    <mat-card-content>
+
+      <form class="example-form" fxLayout="column">
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Sta muci pacijenta?</mat-label>
+          <textarea matInput [(ngModel)]="description" name="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Dijagnoza</mat-label>
+          <mat-select [(ngModel)]="selected_diagnose" name="selected_diagnose">
+            <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose">
+              {{diagnose.code}} - {{diagnose.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Prepisi terapiju</mat-label>
+          <mat-select [(ngModel)]="selected_therapy" name="selected_therapy" multiple>
+            <mat-option *ngFor="let therapy of therapyList" [value]="therapy">
+              {{therapy.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+ 
+
+   
+
+
+      </form>
+      <button mat-stroked-button (click)="editReport()"> Zavrsi izmene</button>
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

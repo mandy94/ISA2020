@@ -40,6 +40,9 @@ import { RequestResponseDialogComponent } from './admin/registration-request/req
 import { DeniedUsersComponent } from './admin/denied-users/denied-users.component';
 import { MandatoryDoctorsComponent } from './admin/mandatory-doctors/mandatory-doctors.component';
 import { AddMandatoryDoctorDialogComponent } from './admin/mandatory-doctors/add-mandatory-doctor-dialog/add-mandatory-doctor-dialog.component';
+import { AddNewItemDialogComponent } from './admin/codebook/add-new-item-dialog/add-new-item-dialog.component';
+import { ReservationsRequestComponent } from './admin/reservations-request/reservations-request.component';
+import { EditExaminationDialogComponent } from './component/doctor-page/examination-report/edit-examination-dialog/edit-examination-dialog.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +74,9 @@ import { AddMandatoryDoctorDialogComponent } from './admin/mandatory-doctors/add
     DeniedUsersComponent,
     MandatoryDoctorsComponent,
     AddMandatoryDoctorDialogComponent,
+    AddNewItemDialogComponent,
+    ReservationsRequestComponent,
+    EditExaminationDialogComponent,
     
   ],
   imports: [
@@ -101,7 +107,7 @@ import { AddMandatoryDoctorDialogComponent } from './admin/mandatory-doctors/add
     MatIconRegistry,
   ],
   bootstrap: [AppComponent],
-  entryComponents:[AddMandatoryDoctorDialogComponent,RequestResponseDialogComponent,NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
+  entryComponents:[EditExaminationDialogComponent,AddNewItemDialogComponent,AddMandatoryDoctorDialogComponent,RequestResponseDialogComponent,NewExaminationDialogComponent,NextVisitDialogComponent,NewOperationroomDialogComponent]
 })
 export class AppModule {
 }

@@ -1,0 +1,21 @@
+<h1> Dodavanje {{data.resourceName}}</h1>
+
+<mat-form-field>
+  <mat-label>Naziv</mat-label>
+  <input matInput [formControl]="nameCotrl">
+</mat-form-field>
+
+<mat-form-field *ngIf="data.resourceName == 'dijagnozu' || data.resourceName == 'operacione sobe'">
+  <mat-label>Sifra</mat-label>
+  <input matInput [formControl]="codeCtrl">
+</mat-form-field>
+
+<mat-form-field *ngIf="data.resourceName == 'leka'">
+  <mat-label>Doza</mat-label>
+  <input matInput [formControl]="dosageCtrle">
+</mat-form-field>
+
+<button mat-button *ngIf="data.resourceName == 'dijagnoze'" (click)="submitDiagnose()"> Unesi</button>
+<button mat-button *ngIf="data.resourceName == 'terapije'" (click)="submitTherapy()"> Unesi</button>
+<button mat-button *ngIf="data.resourceName == 'leka'" (click)="submitMeds()"> Unesi</button>
+<button mat-button *ngIf="data.resourceName == 'operacione sobe'" (click)="submitRoom()"> Unesi</button>

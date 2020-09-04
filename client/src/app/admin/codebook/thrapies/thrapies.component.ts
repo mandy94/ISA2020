@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CodebookService } from 'app/service';
 import { FormControl } from '@angular/forms';
 import { Therapy } from '..';
+import { AddNewItemDialogComponent } from '../add-new-item-dialog/add-new-item-dialog.component';
+import { MatDialog } from '@angular/material';
+import { ApiService, ConfigService } from 'app/service';
 
 @Component({
   selector: 'app-thrapies',
@@ -11,7 +14,9 @@ import { Therapy } from '..';
 export class ThrapiesComponent implements OnInit {
 
 
-  constructor( private codebookservice : CodebookService) { }
+  constructor(private codebookservice : CodebookService,private apiService: ApiService,
+    private conf: ConfigService,public dialog: MatDialog) { }
+
 
 
   therapies: any;
@@ -22,16 +27,21 @@ export class ThrapiesComponent implements OnInit {
     
     this.getTherapies();
   }
-
+  delete(therapy){
+    this.apiService.delete(this.conf.api_url + "/codes/therapy", therapy.id).subscribe(()=>this.getTherapies());  
+  }
   getTherapies(){
     this.codebookservice.getCodesForTherapies()
     .subscribe( data => {this.therapies = data});
 
-  }
-  postTherapy(){
-    let therapy = new Therapy();
-    therapy.name = this.newTherapy.value;
-    
-    this.codebookservice.postTherapy(therapy).subscribe((data) => this.therapies = data);
+  }openDialog(): void {
+    const dialogRef = this.dialog.open(AddNewItemDialogComponent, {
+      width: '350px',
+      data: { resourceName:"terapije" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getTherapies();
+    });
   }
 }

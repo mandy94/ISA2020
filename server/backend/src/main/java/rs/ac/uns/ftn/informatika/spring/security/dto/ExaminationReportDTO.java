@@ -35,6 +35,7 @@ public class ExaminationReportDTO {
 			this.details = report.getDetails();
 			this.pacient = report.getPacient().getFirstName() + " " + report.getPacient().getLastName();
 			this.doctor = report.getDoctor().getFirstName() + " " + report.getDoctor().getLastName();
+			this.doctorid = report.getDoctor().getId();
 			this.diagnose = report.getDiagnose().getName();
 			this.medication = report.getMedication();
 			this.therapies = report.getTherapies();

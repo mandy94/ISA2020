@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,13 +38,29 @@ public class CodebookController {
 		return codebookService.saveDiagnose(ndiag);
 	}
 	
+	@DeleteMapping(value= "/codes/diagnose",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteDiagnose(@RequestBody Long id){
+		codebookService.deleteDiagnoseById(id);
+	}
+	@DeleteMapping(value = "/codes/med",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteMed(@RequestBody Long id){		
+		codebookService.removeMedicineById(id);
+	}
+	
+	@DeleteMapping(value= "/codes/room",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteRoom(@RequestBody Long id){
+		codebookService.deleteRoomById(id);
+	}
+	@DeleteMapping(value= "/codes/therapy",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteTherpay(@RequestBody Long id){
+		codebookService.deleteTherapyById(id);
+	}
 	@PostMapping(value = "/codes/therapy",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Therapy> addTherapy(@RequestBody Therapy t){
-//		
 		Therapy nt= new Therapy();
 		nt.setName(t.getName());
 		return codebookService.saveTherapy(nt);
-
+		
 	}
 	@PostMapping(value = "/codes/room",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<Room> addRoom(@RequestBody Room o){

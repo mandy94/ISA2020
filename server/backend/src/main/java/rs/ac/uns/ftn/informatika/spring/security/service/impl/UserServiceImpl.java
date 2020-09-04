@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private AppointmentService appservice;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public User findByUsername(String username) throws UsernameNotFoundException {
@@ -54,9 +56,7 @@ public class UserServiceImpl implements UserService {
 	public User save(UserRequest userRequest) {
 		User u = new User();
 		u.setUsername(userRequest.getUsername());
-		// pre nego sto postavimo lozinku u atribut hesiramo je
-//		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-		u.setPassword(userRequest.getPassword());
+		u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 		u.setFirstName(userRequest.getFirstname());
 		u.setLastName(userRequest.getLastname());
 		u.setEmail(userRequest.getEmail());

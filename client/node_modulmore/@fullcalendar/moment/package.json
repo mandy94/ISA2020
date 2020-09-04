@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      "@fullcalendar/moment@4.4.2",
+      "C:\\Users\\Dragon\\Documents\\GitHub\\ISA2020\\client"
+    ]
+  ],
+  "_from": "@fullcalendar/moment@4.4.2",
+  "_id": "@fullcalendar/moment@4.4.2",
+  "_inBundle": false,
+  "_integrity": "sha512-PBrjxxDEG3RO+8SOA3a1YA7yoGI3bgnltiGY3ehOtJwFIMsUQDSSr5aMoWyRpz7MXgp2YOQY5rzMEIp2A8eK9w==",
+  "_location": "/@fullcalendar/moment",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@fullcalendar/moment@4.4.2",
+    "name": "@fullcalendar/moment",
+    "escapedName": "@fullcalendar%2fmoment",
+    "scope": "@fullcalendar",
+    "rawSpec": "4.4.2",
+    "saveSpec": null,
+    "fetchSpec": "4.4.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@fullcalendar/moment/-/moment-4.4.2.tgz",
+  "_spec": "4.4.2",
+  "_where": "C:\\Users\\Dragon\\Documents\\GitHub\\ISA2020\\client",
+  "author": {
+    "name": "Adam Shaw",
+    "email": "arshaw@arshaw.com",
+    "url": "http://arshaw.com/"
+  },
+  "bugs": {
+    "url": "https://fullcalendar.io/reporting-bugs"
+  },
+  "copyright": "2019 Adam Shaw",
+  "description": "A connector to the MomentJS date library",
+  "docs": "https://fullcalendar.io/docs/moment-plugins",
+  "homepage": "https://fullcalendar.io/",
+  "keywords": [
+    "calendar",
+    "event",
+    "full-sized"
+  ],
+  "license": "MIT",
+  "main": "main.js",
+  "module": "main.esm.js",
+  "name": "@fullcalendar/moment",
+  "peerDependencies": {
+    "@fullcalendar/core": "~4.4.0",
+    "moment": "^2.24.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullcalendar/fullcalendar.git",
+    "homepage": "https://github.com/fullcalendar/fullcalendar"
+  },
+  "title": "FullCalendar Moment Plugin",
+  "types": "main.d.ts",
+  "unpkg": "main.min.js",
+  "version": "4.4.2"
+}

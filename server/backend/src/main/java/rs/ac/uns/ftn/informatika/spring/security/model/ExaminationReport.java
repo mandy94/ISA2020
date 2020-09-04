@@ -43,7 +43,7 @@ public class ExaminationReport {
 	@JoinColumn(name="diagnose")	
 	private Diagnose diagnose;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(name = "examine_medication",
             joinColumns = {  @JoinColumn(name = "examination_id", referencedColumnName = "id")},
             inverseJoinColumns = {  @JoinColumn(name = "medication_id", referencedColumnName = "id")})

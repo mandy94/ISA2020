@@ -4,6 +4,10 @@ import rs.ac.uns.ftn.informatika.spring.security.dto.MessageDTO;
 
 public interface EmailService {
 
-	void sendEmail(String sender, String receiver, MessageDTO msg);    
+	
+	 
+	void sendEmail(String sender, String receiver, MessageDTO msg);
+
+	String getMainAdminAdress();    
 }
 

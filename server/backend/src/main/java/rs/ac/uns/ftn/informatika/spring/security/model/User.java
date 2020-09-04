@@ -91,8 +91,9 @@ public class User implements UserDetails {
     @JoinColumn(name="pacient_data")
     private PacientData data;
     
-    @ManyToOne
-    @JoinColumn    
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn
+    @JsonIgnore
     ClinicRoom myClinic = new ClinicRoom();
     
     

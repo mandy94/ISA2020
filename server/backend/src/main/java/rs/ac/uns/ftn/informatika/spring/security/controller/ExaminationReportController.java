@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.informatika.spring.security.dto.ExaminationReportDTO;
 import rs.ac.uns.ftn.informatika.spring.security.model.ExaminationReport;
+import rs.ac.uns.ftn.informatika.spring.security.model.ExaminationReportCanges;
 import rs.ac.uns.ftn.informatika.spring.security.model.Medicine;
 import rs.ac.uns.ftn.informatika.spring.security.model.Therapy;
 import rs.ac.uns.ftn.informatika.spring.security.model.User;
@@ -56,16 +58,26 @@ public class ExaminationReportController {
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public void addReport(@RequestBody ExaminationReport report)  throws AccessDeniedException{
-		System.out.println(report);
 			for(Medicine med: report.getMedication())
 			{			
-				if(med != null) { 	
-					
+				if(med != null) {						
 					presservice.addPrescription(med, report.getNurce());
-				}
-			
+				}			
 			}
 			rpservice.addReport(report);
+	}
+	
+
+	@PutMapping(value = "/edit",
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public void editReport(@RequestBody ExaminationReportCanges report)  throws AccessDeniedException{
+		ExaminationReport editedReport = rpservice.findById(report.getId());
+		editedReport.setDetails(report.getDetails());
+		editedReport.setDiagnose(report.getDiagnose());
+		editedReport.setTherapies(report.getTherapies());
+	
+		rpservice.save(editedReport);
 	}
 	
 	@PostMapping(value = "/schedule",

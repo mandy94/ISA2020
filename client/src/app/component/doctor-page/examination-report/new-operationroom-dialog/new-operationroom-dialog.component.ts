@@ -17,6 +17,7 @@ export class NewOperationroomDialogComponent {
   constructor(
     private apiService: ApiService,
     private config: ConfigService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
    @Inject(MAT_DIALOG_DATA) public data: any) {                       
   }
@@ -77,6 +78,7 @@ export class NewOperationroomDialogComponent {
         ending: selTerm.ending
         
       }
+      this.message = "Uspesno zakazali operciju";
       this.apiService.post(this.config.api_url + '/appointment/room/new',appointment).subscribe((data)=>
         console.log("Poslali doktoru: " + doctor + data)
       );
@@ -84,6 +86,19 @@ export class NewOperationroomDialogComponent {
     
   }
   
+  askAdminForTerm(){
+    let request;
+    this.userService.getMyId().subscribe(id=>{
+     request ={
+        doctorId :id,
+        roomId: this.groupControl.get("roomControl").value.id,  
+        date: this.formatDateWithDots(this.groupControl.get("dateControl").value)
+      };
+        this.apiService.post(this.config.api_url + '/appointment/room/next-free',request).subscribe(()=>{this.message="Zahtev poslat administratoru klinike. Sacekati odgovor."});
+    }
+      );
+  }
+  message;
   termTable = {
     available : [],
     notavailable: []

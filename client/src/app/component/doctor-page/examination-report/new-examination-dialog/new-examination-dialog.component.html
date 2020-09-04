@@ -13,7 +13,7 @@
 
         <mat-form-field>
           <mat-label>Dijagnoza</mat-label>
-          <mat-select [(ngModel)]="selected_diagnose" name="selected_diagnose">
+          <mat-select [formControl]="selected_diagnose">
             <mat-option *ngFor="let diagnose of diagnoseList" [value]="diagnose">
               {{diagnose.code}} - {{diagnose.name}}
             </mat-option>

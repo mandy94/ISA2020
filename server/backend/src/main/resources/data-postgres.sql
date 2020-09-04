@@ -135,6 +135,14 @@ INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '06.0
 INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ( '07.08.2020', 5, 3, 2, 1);
 INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('17.08.2020',13, 2, 2, 1);
 
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',3, 2, 2, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',4, 2, 2, 1);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',10, 2, 2, 1);
+
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',3, 2, 3, 2);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',6, 2, 3, 2);
+INSERT INTO APPOINTMENTS ( date, term, pacientid, doctorid, room) VALUES ('05.09.2020',10, 2, 3, 2);
+
 
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (1, 1);
 INSERT INTO USER_AUTHORITY (user_id, authority_id) VALUES (2, 1);

@@ -22,4 +22,8 @@ public interface CodebookService {
 	 
 	 Therapy getTherapyById(Long id);
 	 Medicine getMedicineById(Long id);
+	void deleteDiagnoseById(Long id);
+	void deleteRoomById(Long id);
+	void deleteTherapyById(Long id);
+	void removeMedicineById(Long id);
 }

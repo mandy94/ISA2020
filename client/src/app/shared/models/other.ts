@@ -1,5 +1,6 @@
 export class ReportDTO{
-    details;
+  id;  
+  details;
     doctor;
     pacient;
     nurce;

@@ -4,6 +4,7 @@ import { ApiService, ConfigService, UserService } from 'app/service';
 import { ReportDTO } from 'app/shared/models/other';
 import * as moment from 'moment';
 import { ShowOnDirtyErrorStateMatcher } from '@angular/material';
+import { FormControl } from '../../../../../../node_modulmore/@angular/forms';
 @Component({
   selector: 'app-new-examination-dialog',
   templateUrl: './new-examination-dialog.component.html',
@@ -27,7 +28,7 @@ export class NewExaminationDialogComponent {
   }
   today;
   diagnoseList;
-  selected_diagnose;
+  selected_diagnose = new FormControl('');
   medList;
   selected_med;
   therapyList;
@@ -68,7 +69,7 @@ finished(){
   saveReport() {
     this.new_report = new ReportDTO();
     this.new_report.details = this.description;
-    this.new_report.diagnose  = this.selected_diagnose;
+    this.new_report.diagnose  = this.selected_diagnose.value;
     this.new_report.therapies = this.selected_therapy;
     this.new_report.medication = this.selected_med;
     this.new_report.pacient = this.data.pacient;

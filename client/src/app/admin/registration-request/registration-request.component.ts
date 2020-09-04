@@ -34,12 +34,12 @@ export class RegistrationRequestComponent implements OnInit {
       .subscribe(data => this.pendingUserList = data);
   }
 
-  allow(username: string) {
+  allow(user) {
 
-    this.apiservice.get(this.conf.auth_url + "/allow/" + username)
+    this.apiservice.get(this.conf.auth_url + "/allow/" + user.username)
       .subscribe((data) => {
         this.pendingUserList = data;
-        this.status_message = " Korisnik " + username + " uspesno registrovan";
+        this.status_message = " Korisnik " + user.username + " uspesno registrovan";
       });
   }
   decline(user) {

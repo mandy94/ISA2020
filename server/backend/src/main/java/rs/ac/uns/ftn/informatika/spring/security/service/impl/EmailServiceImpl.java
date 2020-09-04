@@ -24,4 +24,9 @@ public class EmailServiceImpl implements EmailService {
 	
 		
 	}
+
+	@Override
+	public String getMainAdminAdress() {
+		return  "enkoder94@gmail.com";
+	}
 }
