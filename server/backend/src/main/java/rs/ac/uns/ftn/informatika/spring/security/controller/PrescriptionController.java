@@ -21,7 +21,7 @@ public class PrescriptionController {
 	@Autowired
 	private PrescriptionService pservice;
 	
-	@GetMapping(value="/nurse/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/nurce/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	List<Prescription> getPrescrptionByNurseId(@PathVariable Long id){
 		return pservice.getPrescptionByNurseId(id);	
 	}
