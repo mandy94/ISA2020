@@ -19,11 +19,11 @@ constructor(private userService: UserService,
 response:{};
 public users:any;
   ngOnInit() {
-    // this.userService.getMyInfo().subscribe(me =>{
-      // if(me.doIHaveToChangePassword){
-      //   this.router.navigate(['/change-password']);
-      // }
-    // })
+    this.userService.getMyInfo().subscribe(me =>{
+      if(me.doIHaveToChangePassword){
+        this.router.navigate(['/change-password']);
+      }
+    })
   }
   gotoRegistrationPage(){
     this.router.navigate(['/registration-requests']);
