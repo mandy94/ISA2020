@@ -8,7 +8,6 @@ import { NotFoundComponent } from './not-found';
 import { ChangePasswordComponent } from './change-password';
 import { ForbiddenComponent } from './forbidden';
 import { SignupComponent } from './signup';
-import { PacientsComponent, CalendarComponent, RecepieComponent, NurceProfileComponent } from './component/index';
 import { DoctorComponent, ExaminationReportComponent } from './component/doctor-page';
 import { RegistrationRequestComponent } from './admin/registration-request/registration-request.component';
 import { DoctorCalendarComponent } from './component/doctor-page/doctor-calendar/doctor-calendar.component';
@@ -37,26 +36,13 @@ export const routes: Routes = [
     path: 'pacient-examination/:jmbg',
     component: ExaminationReportComponent
   },
-  {
-    path: 'pacients',
-    component: PacientsComponent
-  },
+  
   {
     path: 'doctor-calendar',
     component: DoctorCalendarComponent
   },
-  {
-    path: 'calendar',
-    component: CalendarComponent
-  },
-  {
-    path: 'recepie',
-    component: RecepieComponent
-  },
-  {
-    path: 'nurce-profile',
-    component: NurceProfileComponent
-  },
+  
+  
   {
     path: 'signup',
     component: SignupComponent,

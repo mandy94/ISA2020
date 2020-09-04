@@ -6,7 +6,7 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Report, Room, Appointment, Medicine } from './report';
-import { EventEmitterService } from 'app/service/event-emitter.service';
+
 import { NewExaminationDialogComponent } from './new-examination-dialog/new-examination-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NextVisitDialogComponent } from './next-visit-dialog/next-visit-dialog.component';
@@ -28,7 +28,7 @@ export class ExaminationReportComponent implements OnInit {
     private config: ConfigService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private eventEmitterService: EventEmitterService,
+    
     public dialog: MatDialog
   ) { }
 

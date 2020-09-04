@@ -1,5 +1,9 @@
-
-<button mat-button mat-ripple routerLink="/pacients">Pacijenti</button>
-  <button mat-button mat-ripple routerLink="/calendar">Radni kalendar</button>
-  <button mat-button mat-ripple routerLink="/nurce-profile">Profil</button>
-  <button mat-button mat-ripple routerLink="/recepie">Overa recepta</button>
+<div>
+  <h1> Overa recepta</h1>
+  <div *ngFor="let item of prescription_drug">
+    {{item.medicineName}} 
+    {{item.dosage}}
+    {{item.signed}}
+    <button mat-stroked-button (click)="signPrescription(item)"> Overi recept </button>
+  </div>
+</div>
