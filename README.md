@@ -1,9 +1,9 @@
 # ISA2020
 ## Uputstva za koriscenje programa
-1. Klonirati SVE fajlove ( cak i node_moduless)
+1. Klonirati SVE fajlove
 2. Server pokrenuti spring boot application
-3. Clienta pokrenuti kao ng serve ( NIKAKO npm install. Postoji greska u package.json fajlu zbog promenjenih verzija i zato treba pokretati sa vec napravljenim okrenuzenjem )
-4. Nadati se da radi
+3. Clienta pokrenuti kao npm install i  ng serve 
+
 
 ## Odradjenje funckionalnosti
 1. Registracija sva 4 tipa korisnika
@@ -20,9 +20,6 @@
 12. Overa recepta i informacija o medicinskoj sestrija ja je to uradila
 13. Administrativno dodeljivanje obaveznih doktora po operacionim salama
 14. Opcija slanja zahteva administratoru ako nepostoji slobodan obavezan doktor za operaciju 
-15. I jos svasta nesto
 
-## Neodradjene funkcionalnosti
-1. E pa sad. Nacete vec koje su :D
 
 ![Model podataka](/ModelPodataka.jpg)
